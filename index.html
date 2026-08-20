@@ -89,7 +89,13 @@ body.has-tabbar .app-tabbar{display:flex}
 .hero-date{margin-top:18px;color:var(--muted);font-size:13.5px;font-weight:600}
 .hero-tag{margin:14px auto 0;width:max-content;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800;display:flex;align-items:center;gap:6px}
 .streak-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#55bd7e;box-shadow:0 0 0 4px rgba(85,189,126,.1)}
-.message{margin:20px 3px 0;padding:13px 14px;border-radius:16px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center}
+.message{margin:20px 3px 0;padding:15px 14px;border-radius:17px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center;box-shadow:0 5px 16px rgba(0,0,0,.025)}
+.checkin{margin-top:14px!important;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.035)}
+.streak-dot{position:relative;width:7px;height:7px;box-shadow:0 0 0 4px rgba(85,189,126,.10);animation:statusPulse 2.2s ease-in-out infinite}
+.streak-dot:after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(85,189,126,.35);animation:statusRing 2.2s ease-out infinite}
+@keyframes statusPulse{0%,100%{transform:scale(.92);opacity:.8}50%{transform:scale(1.16);opacity:1}}
+@keyframes statusRing{0%{transform:scale(.75);opacity:.7}70%,100%{transform:scale(1.75);opacity:0}}
+@media(prefers-reduced-motion:reduce){.streak-dot,.streak-dot:after{animation:none!important}}
 .message strong{color:var(--text);font-weight:800}
 
 .button{
@@ -143,7 +149,7 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 
 .section-title{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.3px;margin:0 0 14px}
 
-.checkin{margin-top:0;padding:15px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
+.checkin{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
 .checkin-text{color:var(--muted);font-size:11px;font-weight:750}
 .checkin-button{margin-top:9px;width:100%;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;transition:.15s}
 .checkin-button:active{transform:scale(.985)}
@@ -315,8 +321,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .note-item{position:relative;padding:13px!important;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.035);margin-top:9px}
 .note-item>b{display:block;font-size:10px;letter-spacing:.15px}
 .note-item p{margin:7px 0 10px!important;color:var(--muted);font-size:11px!important;line-height:1.5!important}
-.note-actions{display:flex;justify-content:flex-end;gap:7px!important;margin-top:8px!important}
+.note-actions{display:flex;justify-content:flex-end;gap:7px!important;margin-top:10px!important;padding-top:9px;border-top:1px solid var(--line)}
 .note-actions button{
+  min-height:32px!important;padding:0 11px!important;border:1px solid var(--line)!important;border-radius:10px!important;background:var(--soft)!important;color:var(--text)!important;font-size:9px!important;font-weight:900!important;letter-spacing:.3px!important;transition:transform .15s,background .2s,border-color .2s!important;
   flex:0 0 auto!important;min-width:72px!important;height:34px!important;min-height:34px!important;
   padding:0 11px!important;border:1px solid var(--line)!important;border-radius:10px!important;
   background:var(--soft)!important;color:var(--text)!important;font-size:9px!important;
@@ -335,8 +342,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .note-actions button{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important}
 .note-actions .note-edit::before{content:"✎";margin:0!important}
 .note-actions .note-delete::before{content:"×";margin:0!important;font-size:15px!important;line-height:1}
-.note-actions .note-edit{background:var(--accent-soft)!important}
-.note-actions .note-delete{background:color-mix(in srgb,var(--danger) 7%,var(--surface))!important}
+.note-actions .note-edit{background:var(--accent-soft)!important;border-color:color-mix(in srgb,var(--accent) 28%,var(--line))!important;color:var(--accent)!important}
+.note-actions .note-delete{background:color-mix(in srgb,var(--danger) 7%,var(--surface))!important;border-color:color-mix(in srgb,var(--danger) 24%,var(--line))!important;color:var(--danger)!important}
 /* Awards: richer progress header and badge states */
 .awards-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
 .award-stat{padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
@@ -359,6 +366,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .award-mini-row b{display:block;margin-top:4px;font-size:11px;font-weight:900}
 .award-next{margin-top:10px;padding:12px 13px;border:1px dashed var(--line);border-radius:15px;background:var(--soft)}
 .award-next b{font-size:10px}.award-next span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.4}
+.award-stat{position:relative;overflow:hidden}
+.award-stat:first-child:after{content:"";position:absolute;width:70px;height:70px;right:-24px;top:-28px;border-radius:50%;background:var(--accent-soft);pointer-events:none}
+.badge:active{transform:scale(.97)}
+.badge.unlocked{transform:translateY(-1px)}
+.badge.unlocked:hover{transform:translateY(-2px)}
+.share-row{margin-top:18px}
+
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
 </style>
 
@@ -1180,7 +1194,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         ${checked?`<div class="mood-hint">How are you feeling today?</div>
         <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
-      <div class="milestone">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
+      <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
     </div>`;
   }
