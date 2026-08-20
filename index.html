@@ -89,8 +89,9 @@ body.has-tabbar .app-tabbar{display:flex}
 .hero-date{margin-top:18px;color:var(--muted);font-size:13.5px;font-weight:600}
 .hero-tag{margin:14px auto 0;width:max-content;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800;display:flex;align-items:center;gap:6px}
 .streak-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#55bd7e;box-shadow:0 0 0 4px rgba(85,189,126,.1)}
-.message{margin:20px 3px 0;padding:15px 14px;border-radius:17px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center;box-shadow:0 5px 16px rgba(0,0,0,.025)}
-.checkin{margin-top:14px!important;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.035)}
+.message{margin:20px 3px 0 3px;padding:16px 14px;border-radius:17px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center;box-shadow:0 5px 16px rgba(0,0,0,.025)}
+.message + .checkin{margin-top:20px!important;}
+.checkin{margin-top:20px!important;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.035)}
 .streak-dot{position:relative;width:7px;height:7px;box-shadow:0 0 0 4px rgba(85,189,126,.10);animation:statusPulse 2.2s ease-in-out infinite}
 .streak-dot:after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(85,189,126,.35);animation:statusRing 2.2s ease-out infinite}
 @keyframes statusPulse{0%,100%{transform:scale(.92);opacity:.8}50%{transform:scale(1.16);opacity:1}}
@@ -216,6 +217,53 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 
 @media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* HAYGER FINAL-FINAL POLISH */
+.hero-panel{padding-top:14px}
+.hero-date{margin-top:20px;font-size:14px;letter-spacing:.05px}
+.hero-tag{margin-top:16px;padding:8px 14px;box-shadow:0 5px 16px rgba(0,0,0,.035)}
+.message{margin-top:22px!important;margin-bottom:0!important;min-height:68px;display:flex;align-items:center;justify-content:center}
+.message + .checkin{margin-top:20px!important}
+.checkin{padding:18px 16px 17px;border-radius:21px;box-shadow:0 10px 28px rgba(0,0,0,.045)}
+.checkin-text{font-size:11.5px}
+.checkin-button{min-height:52px;margin-top:11px;border-radius:15px;letter-spacing:.1px}
+.checkin-button.done{box-shadow:0 5px 16px rgba(0,0,0,.08)}
+.mood-row{gap:8px;margin-top:12px}
+.mood-chip{width:42px;height:42px;border-radius:13px}
+.milestone{margin-top:17px;font-size:11px}
+.goal-card{box-shadow:0 7px 20px rgba(0,0,0,.03)}
+.tab-btn{position:relative}
+.tab-btn.active:after{content:"";position:absolute;bottom:1px;width:18px;height:2px;border-radius:99px;background:var(--accent);opacity:.8}
+.tab-btn.active svg{transform:translateY(-1px)}
+.tab-btn svg{transition:transform .18s ease}
+/* Premium note actions */
+.note-item{padding:14px!important;border-radius:17px!important;box-shadow:0 8px 22px rgba(0,0,0,.04)!important}
+.note-actions{justify-content:stretch!important;gap:8px!important;margin-top:11px!important;padding-top:10px!important}
+.note-actions button{flex:1 1 0!important;min-width:0!important;height:36px!important;border-radius:11px!important;font-size:9px!important}
+.note-actions .note-edit{background:var(--accent-soft)!important}
+.note-actions .note-delete{background:color-mix(in srgb,var(--danger) 7%,var(--surface))!important}
+/* Awards */
+.award-stat,.award-mini-row>div,.award-progress,.award-next{box-shadow:0 6px 18px rgba(0,0,0,.025)}
+.badge{min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.badge.unlocked{transform:translateY(-1px)}
+.badge.unlocked:active{transform:scale(.97)}
+/* Profile */
+.profile-hero{padding:17px;border-radius:21px}
+.profile-avatar{box-shadow:0 6px 18px rgba(0,0,0,.10)}
+.settings-card{box-shadow:0 6px 18px rgba(0,0,0,.025)}
+/* Better empty states */
+.note-empty{padding:18px 10px;border:1px dashed var(--line);border-radius:14px;background:var(--soft)}
+/* Prevent accidental horizontal overflow on tiny Android screens */
+.app-scroll{scrollbar-width:none}
+.app-scroll::-webkit-scrollbar{display:none}
+@media(max-width:380px){
+  .app-scroll{padding-left:14px;padding-right:14px}
+  .message{font-size:12px;padding-left:11px;padding-right:11px}
+  .checkin{padding-left:13px;padding-right:13px}
+  .mood-chip{width:40px;height:40px}
+  .badges-grid{gap:6px}
+}
 
 /* PWA update banner */
 .update-banner{
@@ -940,7 +988,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
-    const checkinRate=Math.min(100,Math.round((s.total/day)*100));
+    const validCheckins=Object.keys(checkins()).filter(k=>{const d=parseDate(k);return d&&d>=start&&d<=today()&&checkins()[k]}).length;
+    const checkinRate=Math.min(100,Math.round((validCheckins/day)*100));
     const g=goal(), gp=challengeProgress(day);
     const noteMap=notes();
     const q=noteSearchQuery.trim().toLowerCase();
@@ -1131,9 +1180,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
+      app:"HAYGER",version:2,exportedAt:new Date().toISOString(),
       startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
-      goal:goal(),reminder:reminder(),theme:theme()
+      goal:goal(),reminder:reminder(),theme:theme(),
+      profile:readJSON("hayger_profile_v2",{}),profileName:get("hayger_profile_name_v1")||null
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1147,7 +1197,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     reader.onload=()=>{
       try{
         const d=JSON.parse(reader.result);
-        if(d.app!=="HAYGER" || !d.version) throw new Error("Invalid backup");
+        if(d.app!=="HAYGER" || ![1,2].includes(Number(d.version))) throw new Error("Invalid backup");
         if(d.startDate){
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
@@ -1159,6 +1209,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
+        if(d.profile&&typeof d.profile==="object"){writeJSON("hayger_profile_v2",d.profile);if(d.profile.name)set("hayger_profile_name_v1",String(d.profile.name).slice(0,40));}
+        else if(d.profileName) set("hayger_profile_name_v1",String(d.profileName).slice(0,40));
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1353,7 +1405,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1482,7 +1534,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
 
   document.getElementById("cancel").addEventListener("click",closeModal);
-  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);closeModal();render()});
+  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);remove("hayger_profile_v2");remove("hayger_profile_name_v1");closeModal();render()});
   modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();}});
 
@@ -1550,24 +1602,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
-<script id="hayger-note-actions-js">
-(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
-function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
-function write(x){localStorage.setItem(key(),JSON.stringify(x))}
-window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
-window.addEventListener("load",()=>{
- document.querySelectorAll("[data-note-index]").forEach((el)=>{
-   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
-   if(el.querySelector(".note-actions"))return;
-   const box=document.createElement("div");box.className="note-actions";
-   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
-   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
-   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
-   el.appendChild(box);
- });
-});
-})();
-</script>
+
 
 
 

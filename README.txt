@@ -1,11 +1,6 @@
-HAYGER ULTRA FINAL POLISH V2
+HAYGER ULTRA — FINAL-FINAL POLISH
 
-Highlights:
-- Fixed Home spacing between the quote/status message and check-in card.
-- Added subtle breathing/pulse animation to the green status dot.
-- Refined Notes Edit/Delete action UI to match HAYGER styling.
-- Polished Awards cards, badge interactions and progress presentation.
-- Removed duplicate profile gender option.
-- Bumped service-worker cache version for a reliable PWA refresh.
+Upload/replace all files in your GitHub Pages repository.
+This build keeps local HAYGER data, adds polished spacing, premium note actions, profile backup/restore, improved stats accuracy, smoother navigation, awards polish, and a versioned service-worker update.
 
-Replace the repository files with all files from this folder/ZIP.
+Files: index.html, manifest.json, sw.js, icon-192.png, icon-512.png
