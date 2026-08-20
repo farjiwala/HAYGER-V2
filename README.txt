@@ -1,6 +1,14 @@
-HAYGER ULTRA — FINAL-FINAL POLISH
+HAYGER ULTRA V3 — PREMIUM FINAL BUILD
 
-Upload/replace all files in your GitHub Pages repository.
-This build keeps local HAYGER data, adds polished spacing, premium note actions, profile backup/restore, improved stats accuracy, smoother navigation, awards polish, and a versioned service-worker update.
+Replace the existing GitHub Pages files with all files in this folder.
+Includes:
+- Premium home dashboard with momentum/consistency insights
+- 7-day activity strip and quick navigation
+- Mood insights in Stats
+- Consistency coaching text
+- Profile-aware welcome message
+- PWA install prompt when supported
+- Existing history, stats, notes, awards, profile, reminders, PIN and backup features preserved
+- Updated service-worker cache version
 
-Files: index.html, manifest.json, sw.js, icon-192.png, icon-512.png
+Data is stored locally in the browser. Do not clear site data if you want to keep existing progress.
