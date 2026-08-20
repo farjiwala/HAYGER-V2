@@ -300,6 +300,53 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .profile-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.profile-form label:first-child{grid-column:1/-1}.profile-form label span{display:block;font-size:9px;font-weight:850;color:var(--muted);margin:0 0 5px}
 .profile-form input,.profile-form select{width:100%;height:43px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:12px}
 .profile-save{width:100%;margin-top:10px}
+
+/* HAYGER polish: live status dot */
+.streak-dot{
+  animation: haygerPulse 1.7s ease-in-out infinite;
+  will-change:transform,box-shadow,opacity;
+}
+@keyframes haygerPulse{
+  0%,100%{transform:scale(.92);opacity:.72;box-shadow:0 0 0 3px rgba(85,189,126,.08),0 0 0 rgba(85,189,126,0)}
+  50%{transform:scale(1.18);opacity:1;box-shadow:0 0 0 5px rgba(85,189,126,.16),0 0 12px rgba(85,189,126,.18)}
+}
+@media(prefers-reduced-motion:reduce){.streak-dot{animation:none;opacity:1}}
+/* Notes: premium compact actions */
+.note-item{position:relative;padding:13px!important;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.035);margin-top:9px}
+.note-item>b{display:block;font-size:10px;letter-spacing:.15px}
+.note-item p{margin:7px 0 10px!important;color:var(--muted);font-size:11px!important;line-height:1.5!important}
+.note-actions{display:flex;justify-content:flex-end;gap:7px!important;margin-top:8px!important}
+.note-actions button{
+  flex:0 0 auto!important;min-width:72px!important;height:34px!important;min-height:34px!important;
+  padding:0 11px!important;border:1px solid var(--line)!important;border-radius:10px!important;
+  background:var(--soft)!important;color:var(--text)!important;font-size:9px!important;
+  font-weight:900!important;letter-spacing:.5px!important;transition:transform .15s,background .2s,border-color .2s!important;
+}
+.note-actions button:active{transform:scale(.95)}
+.note-actions .note-edit{color:var(--accent)!important;border-color:color-mix(in srgb,var(--accent) 35%,var(--line))!important}
+.note-actions .note-delete{color:var(--danger)!important}
+.note-actions button::before{display:inline-block;margin-right:5px;font-size:11px}
+.note-actions .note-edit::before{content:"✎"}
+.note-actions .note-delete::before{content:"⌫"}
+/* Awards: richer progress header and badge states */
+.awards-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.award-stat{padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+.award-stat b{display:block;font-family:var(--font-display);font-size:24px;line-height:1}
+.award-stat span{display:block;margin-top:5px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.8px}
+.award-progress{margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--surface)}
+.award-progress-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.award-progress-top b{font-size:11px;font-weight:900}
+.award-progress-top span{font-size:9px;color:var(--muted);font-weight:800}
+.award-progress-track{height:7px;margin-top:10px;border-radius:99px;background:var(--soft2);overflow:hidden}
+.award-progress-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .5s ease}
+.badge{position:relative;overflow:hidden}
+.badge.unlocked::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.08),transparent 70%);transform:translateX(-100%);animation:badgeShine 4.5s ease-in-out infinite}
+@keyframes badgeShine{0%,65%,100%{transform:translateX(-100%)}78%{transform:translateX(100%)}}
+.badge.unlocked .badge-icon{filter:saturate(1.1);transform:translateY(-1px)}
+.badge-icon{transition:transform .2s}
+.award-next{margin-top:10px;padding:12px 13px;border:1px dashed var(--line);border-radius:15px;background:var(--soft)}
+.award-next b{font-size:10px}.award-next span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.4}
+@media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
 </style>
 
 
@@ -757,10 +804,27 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function renderAwards(){
     const start=parseDate(get(START_KEY)), day=dayCount(start), best=streakStats().best;
     const b=unlockedBadges(day,best);
-    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}"><div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div><div class="badge-label">${x.label}</div></div>`).join("")}</div>`;
+    const total=b.journey.length+b.streak.length;
+    const unlocked=b.journey.filter(x=>x.unlocked).length+b.streak.filter(x=>x.unlocked).length;
+    const pct=total?Math.round(unlocked/total*100):0;
+    const all=[...b.journey,...b.streak].filter(x=>!x.unlocked);
+    const next=all[0];
+    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}">
+      <div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div>
+      <div class="badge-label">${x.label}</div>
+    </div>`).join("")}</div>`;
     return `<div class="container">
       <h2 class="section-title">Awards</h2>
-      <div class="badge-section" style="margin-top:0">
+      <div class="awards-summary">
+        <div class="award-stat"><b>${unlocked}</b><span>BADGES UNLOCKED</span></div>
+        <div class="award-stat"><b>${pct}%</b><span>JOURNEY COMPLETE</span></div>
+      </div>
+      <div class="award-progress">
+        <div class="award-progress-top"><b>Your achievement journey</b><span>${unlocked} / ${total}</span></div>
+        <div class="award-progress-track"><div class="award-progress-fill" style="width:${pct}%"></div></div>
+      </div>
+      ${next?`<div class="award-next"><b>Next achievement · ${next.label}</b><span>Keep going — your next badge is waiting for you.</span></div>`:`<div class="award-next"><b>🏆 All achievements unlocked</b><span>You completed every HAYGER badge currently available.</span></div>`}
+      <div class="badge-section" style="margin-top:16px">
         <div class="badge-section-title">Journey badges</div>
         ${grid(b.journey)}
       </div>
@@ -774,7 +838,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
     </div>`;
   }
-
   function heatmapWeeks(weeks){
     const data=checkins();
     const out=[];
@@ -897,7 +960,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
 
       <input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">
-      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item" data-note-key="${escapeHTML(k)}"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
+      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item" data-note-key="${escapeHTML(k)}"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}" aria-label="Edit note">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}" aria-label="Delete note">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
     </div>`;
   }
 
