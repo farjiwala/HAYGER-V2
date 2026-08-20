@@ -156,7 +156,8 @@ button,input{font:inherit}button{cursor:pointer}
 .cal-nav{width:32px;height:32px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);font-weight:900}
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
 .cal-dow{text-align:center;color:var(--muted);font-size:8px;font-weight:900;padding-bottom:3px}
-.cal-day{aspect-ratio:1;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:9px;font-weight:800}
+.cal-day{position:relative;aspect-ratio:1;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:9px;font-weight:800}
+.cal-mood{position:absolute;bottom:1px;right:2px;font-size:7px;line-height:1}
 .cal-day.done{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
 .cal-day.today{box-shadow:inset 0 0 0 2px var(--text)}
 .cal-day.empty{visibility:hidden}
@@ -167,8 +168,8 @@ button,input{font:inherit}button{cursor:pointer}
 .note-meta{margin-top:7px;color:var(--muted);font-size:9px;text-align:center}
 
 
-.ultimate-nav{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:15px 0 0}
-.ultimate-tab{min-height:38px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--muted);font-size:9px;font-weight:900}
+.ultimate-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:15px 0 0}
+.ultimate-tab{min-height:38px;padding:0 2px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--muted);font-size:8px;font-weight:900}
 .ultimate-tab.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
 .goal-card,.settings-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .goal-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -214,12 +215,66 @@ button,input{font:inherit}button{cursor:pointer}
   flex:0 0 auto;width:30px;height:30px;border:1px solid var(--line);border-radius:9px;
   background:var(--soft);color:var(--text);font-size:15px;line-height:1;
 }
+
+/* Ultra: badges */
+.badge-section{margin-top:14px}
+.badge-section-title{margin:0 0 8px 2px;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase}
+.badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.badge{padding:11px 4px 9px;border:1px solid var(--line);border-radius:15px;background:var(--soft);text-align:center;opacity:.4;transition:.2s}
+.badge.unlocked{opacity:1;background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.07)}
+.badge-icon{font-size:19px;line-height:1}
+.badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
+.badge.unlocked .badge-label{color:var(--text)}
+
+/* Ultra: mood */
+.mood-row{display:flex;gap:6px;margin-top:11px;justify-content:center}
+.mood-chip{width:39px;height:39px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--soft);font-size:17px;transition:.15s}
+.mood-chip.active{background:var(--primary);border-color:var(--primary);transform:scale(1.06)}
+.mood-hint{margin-top:8px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
+
+/* Ultra: charts */
+.chart-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
+.chart-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
+.chart-title b{font-size:11px;font-weight:900}
+.chart-title span{color:var(--muted);font-size:9px;font-weight:750}
+.chart-card canvas{display:block;width:100%;height:74px}
+
+/* Ultra: notes search */
+.note-search{width:100%;height:40px;padding:0 12px;margin-top:10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);outline:none;font-size:11px}
+.note-search:focus{border-color:var(--text)}
+.note-empty{margin-top:10px;color:var(--muted);font-size:10px;text-align:center}
+
+/* Ultra: share */
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+
+/* Ultra: PIN lock */
+.pin-dots{display:flex;gap:12px;justify-content:center;margin:22px 0}
+.pin-dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;transition:.15s}
+.pin-dot.filled{background:var(--text);border-color:var(--text)}
+.pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:270px;margin:0 auto}
+.pin-key{min-height:56px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--text);font-size:19px;font-weight:800}
+.pin-key:active{transform:scale(.94)}
+.pin-key.ghost{background:transparent;border-color:transparent;color:var(--muted);font-size:11px;font-weight:800}
+.pin-error{min-height:16px;margin-top:14px;color:var(--danger);font-size:11px;font-weight:700;text-align:center}
+.pin-setup-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
+.pin-setup-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.pin-box{width:38px;height:44px;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;outline:none}
+.pin-box:focus{border-color:var(--text)}
+.lock-footer{margin-top:16px;text-align:center}
+.lock-footer button{background:none;border:0;color:var(--muted);font-size:10px;font-weight:800;text-decoration:underline;padding:6px}
+
+/* Ultra: confetti overlay */
+#confettiCanvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+
+/* Ultra: generic confirm modal reuse */
+.modal.danger h2{color:var(--danger)}
 </style>
 </head>
 
 <body>
 <main class="app"><div id="app" class="container"></div></main>
 <div id="toast" class="toast" role="status"></div>
+<canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
 <div id="modal" class="modal-backdrop" aria-hidden="true">
   <section class="modal" role="dialog" aria-modal="true">
@@ -228,6 +283,17 @@ button,input{font:inherit}button{cursor:pointer}
     <div class="modal-actions">
       <button id="cancel" class="button secondary" type="button">Cancel</button>
       <button id="confirm" class="button primary" type="button">Change Date</button>
+    </div>
+  </section>
+</div>
+
+<div id="confirmModal" class="modal-backdrop" aria-hidden="true">
+  <section class="modal danger" role="dialog" aria-modal="true">
+    <h2 id="confirmModalTitle">Are you sure?</h2>
+    <p id="confirmModalText"></p>
+    <div class="modal-actions">
+      <button id="confirmModalCancel" class="button secondary" type="button">Cancel</button>
+      <button id="confirmModalOk" class="button primary" type="button">Confirm</button>
     </div>
   </section>
 </div>
@@ -242,10 +308,26 @@ button,input{font:inherit}button{cursor:pointer}
   const GOAL_KEY="hayger_goal";
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
+  const PIN_KEY="hayger_pin";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
   let toastTimer;
+
+  const JOURNEY_BADGES=[
+    {day:3,icon:"🌱",label:"DAY 3"},{day:7,icon:"🔥",label:"1 WEEK"},
+    {day:14,icon:"⚡",label:"2 WEEKS"},{day:30,icon:"🌙",label:"1 MONTH"},
+    {day:50,icon:"⭐",label:"50 DAYS"},{day:75,icon:"💎",label:"75 DAYS"},
+    {day:100,icon:"🏅",label:"100 DAYS"},{day:150,icon:"🚀",label:"150 DAYS"},
+    {day:200,icon:"🛡️",label:"200 DAYS"},{day:365,icon:"🏆",label:"1 YEAR"},
+    {day:500,icon:"👑",label:"500 DAYS"},{day:730,icon:"🌟",label:"2 YEARS"}
+  ];
+  const STREAK_BADGES=[
+    {day:3,icon:"🔺",label:"3-STREAK"},{day:7,icon:"🔶",label:"7-STREAK"},
+    {day:14,icon:"🔷",label:"14-STREAK"},{day:30,icon:"🟣",label:"30-STREAK"},
+    {day:60,icon:"🟢",label:"60-STREAK"},{day:100,icon:"🔴",label:"100-STREAK"}
+  ];
+  const MOODS=["😊","🙂","😐","😔","😣"];
 
   const icons={
     sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>',
@@ -300,6 +382,155 @@ button,input{font:inherit}button{cursor:pointer}
   function milestoneFor(day){
     const a=[7,30,50,100,365];
     return a.find(x=>day<=x)||Math.ceil(day/100)*100;
+  }
+
+  // ---- Ultra: badges ----
+  function unlockedBadges(day,best){
+    return {
+      journey:JOURNEY_BADGES.map(b=>({...b,unlocked:day>=b.day})),
+      streak:STREAK_BADGES.map(b=>({...b,unlocked:best>=b.day}))
+    };
+  }
+
+  // ---- Ultra: PIN lock (SHA-256, device-local only — no recovery) ----
+  async function sha256Hex(text){
+    const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+  function pinRecord(){return readJSON(PIN_KEY,null)}
+  async function setPin(pin){
+    writeJSON(PIN_KEY,{hash:await sha256Hex(pin)});
+  }
+  async function verifyPin(pin){
+    const rec=pinRecord();
+    if(!rec) return true;
+    return (await sha256Hex(pin))===rec.hash;
+  }
+  function pinEnabled(){return !!pinRecord()}
+
+  // ---- Ultra: weekly activity chart ----
+  function weeksAgoMonday(offset){
+    const d=today();
+    const dow=(d.getDay()+6)%7;
+    d.setDate(d.getDate()-dow-offset*7);
+    return d;
+  }
+  function weeklyCounts(weeks){
+    const data=checkins();
+    const out=[];
+    for(let w=weeks-1;w>=0;w--){
+      const monday=weeksAgoMonday(w);
+      let count=0;
+      for(let i=0;i<7;i++){
+        const d=new Date(monday);d.setDate(d.getDate()+i);
+        if(d>today()) continue;
+        if(data[toInputDate(d)]) count++;
+      }
+      out.push(count);
+    }
+    return out;
+  }
+  function drawWeeklyChart(canvas){
+    if(!canvas) return;
+    const counts=weeklyCounts(8);
+    const dpr=window.devicePixelRatio||1;
+    const w=canvas.clientWidth||280, h=canvas.clientHeight||74;
+    canvas.width=w*dpr;canvas.height=h*dpr;
+    const ctx=canvas.getContext("2d");
+    ctx.scale(dpr,dpr);
+    ctx.clearRect(0,0,w,h);
+    const styles=getComputedStyle(document.documentElement);
+    const line=styles.getPropertyValue("--line").trim();
+    const primary=styles.getPropertyValue("--primary").trim();
+    const barW=Math.max(8,(w/counts.length)-8);
+    counts.forEach((c,i)=>{
+      const x=i*(w/counts.length)+((w/counts.length)-barW)/2;
+      const barH=Math.max(3,(c/7)*(h-14));
+      ctx.fillStyle=line;
+      ctx.fillRect(x,h-14,barW,3);
+      ctx.fillStyle=c>0?primary:line;
+      ctx.beginPath();
+      const r=Math.min(4,barW/2);
+      const top=h-14-barH;
+      ctx.moveTo(x,top+r);
+      ctx.arcTo(x,top,x+r,top,r);
+      ctx.lineTo(x+barW-r,top);
+      ctx.arcTo(x+barW,top,x+barW,top+r,r);
+      ctx.lineTo(x+barW,h-14);
+      ctx.lineTo(x,h-14);
+      ctx.closePath();
+      ctx.fill();
+    });
+  }
+
+  // ---- Ultra: confetti ----
+  function fireConfetti(){
+    const canvas=document.getElementById("confettiCanvas");
+    if(!canvas) return;
+    const dpr=window.devicePixelRatio||1;
+    const w=window.innerWidth,h=window.innerHeight;
+    canvas.width=w*dpr;canvas.height=h*dpr;
+    canvas.style.width=w+"px";canvas.style.height=h+"px";
+    const ctx=canvas.getContext("2d");
+    ctx.scale(dpr,dpr);
+    const colors=["#101114","#6b7078","#55bd7e","#f5c451","#e08a6b"];
+    const particles=Array.from({length:70},()=>({
+      x:Math.random()*w, y:-20-Math.random()*h*0.3,
+      vx:(Math.random()-0.5)*2.4, vy:2+Math.random()*3,
+      size:4+Math.random()*5, rot:Math.random()*Math.PI,
+      vr:(Math.random()-0.5)*0.3, color:colors[Math.floor(Math.random()*colors.length)]
+    }));
+    let frame=0;
+    function tick(){
+      frame++;
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p=>{
+        p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;p.vy+=0.02;
+        ctx.save();
+        ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+        ctx.fillStyle=p.color;
+        ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+        ctx.restore();
+      });
+      if(frame<130) requestAnimationFrame(tick);
+      else ctx.clearRect(0,0,w,h);
+    }
+    tick();
+  }
+
+  // ---- Ultra: share progress ----
+  async function shareProgress(){
+    const start=parseDate(get(START_KEY));
+    const day=dayCount(start);
+    const s=streakStats();
+    const text=`HAYGER — Day ${day}\nCurrent streak: ${s.current} · Best streak: ${s.best}\nOne day at a time.`;
+    try{
+      if(navigator.share){await navigator.share({title:"HAYGER",text});return}
+      throw new Error("no-share");
+    }catch{
+      try{await navigator.clipboard.writeText(text);showToast("✓ Progress copied.")}
+      catch{showToast("Couldn't share progress.")}
+    }
+  }
+
+  // ---- Ultra: generic confirm modal ----
+  function askConfirm(title,text){
+    return new Promise(resolve=>{
+      const cm=document.getElementById("confirmModal");
+      document.getElementById("confirmModalTitle").textContent=title;
+      document.getElementById("confirmModalText").textContent=text;
+      const ok=document.getElementById("confirmModalOk");
+      const cancel=document.getElementById("confirmModalCancel");
+      function close(result){
+        cm.classList.remove("open");cm.setAttribute("aria-hidden","true");
+        ok.removeEventListener("click",onOk);cancel.removeEventListener("click",onCancel);
+        resolve(result);
+      }
+      function onOk(){close(true)}
+      function onCancel(){close(false)}
+      ok.addEventListener("click",onOk);cancel.addEventListener("click",onCancel);
+      cm.classList.add("open");cm.setAttribute("aria-hidden","false");
+    });
   }
 
   function today(){
@@ -413,13 +644,37 @@ button,input{font:inherit}button{cursor:pointer}
 
   let phaseView="home";
   let calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);
+  let noteSearchQuery="";
+  let unlocked=sessionStorage.getItem("hayger_unlocked")==="1";
+  let pinSetupOpen=false;
 
   function phaseTabs(){
     return `<div class="ultimate-nav">
       <button class="ultimate-tab ${phaseView==="home"?"active":""}" data-view="home">HOME</button>
       <button class="ultimate-tab ${phaseView==="calendar"?"active":""}" data-view="calendar">HISTORY</button>
       <button class="ultimate-tab ${phaseView==="stats"?"active":""}" data-view="stats">STATS</button>
+      <button class="ultimate-tab ${phaseView==="awards"?"active":""}" data-view="awards">AWARDS</button>
       <button class="ultimate-tab ${phaseView==="more"?"active":""}" data-view="more">MORE</button>
+    </div>`;
+  }
+
+  function renderAwards(){
+    const start=parseDate(get(START_KEY)), day=dayCount(start), best=streakStats().best;
+    const b=unlockedBadges(day,best);
+    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}"><div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div><div class="badge-label">${x.label}</div></div>`).join("")}</div>`;
+    return `<div class="phase-panel">
+      <div class="badge-section">
+        <div class="badge-section-title">Journey badges</div>
+        ${grid(b.journey)}
+      </div>
+      <div class="badge-section">
+        <div class="badge-section-title">Streak badges</div>
+        ${grid(b.streak)}
+      </div>
+      <div class="share-row">
+        <button id="shareProgressBtn" class="button secondary" type="button">SHARE PROGRESS</button>
+        <button id="exportAwards" class="button secondary" type="button">EXPORT BACKUP</button>
+      </div>
     </div>`;
   }
 
@@ -432,8 +687,10 @@ button,input{font:inherit}button{cursor:pointer}
     const data=checkins(), t=toInputDate(today());
     for(let d=1;d<=last.getDate();d++){
       const dt=new Date(y,m,d), key=toInputDate(dt);
-      const cls=(data[key]?" done":"")+(key===t?" today":"");
-      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button">${d}</button>`;
+      const entry=data[key];
+      const cls=(entry?" done":"")+(key===t?" today":"");
+      const mood=entry&&entry.mood?`<span class="cal-mood">${entry.mood}</span>`:"";
+      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button">${d}${mood}</button>`;
     }
     return `<div class="phase-panel">
       <div class="calendar-head">
@@ -453,7 +710,10 @@ button,input{font:inherit}button{cursor:pointer}
     const completion=Math.min(100,Math.round((s.total/day)*100));
     const g=goal(), gp=challengeProgress(day);
     const noteMap=notes();
-    const noteKeys=Object.keys(noteMap).sort().reverse().slice(0,8);
+    const q=noteSearchQuery.trim().toLowerCase();
+    const noteKeysFiltered=Object.keys(noteMap).sort().reverse()
+      .filter(k=>!q||noteMap[k].toLowerCase().includes(q))
+      .slice(0,20);
     return `<div class="phase-panel">
       <div class="stats-grid">
         <div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div>
@@ -464,6 +724,11 @@ button,input{font:inherit}button{cursor:pointer}
         <div class="stat"><b>${day}</b><span>DAY</span></div>
         <div class="stat"><b>${completion}%</b><span>COMPLETION</span></div>
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
+      </div>
+
+      <div class="chart-card" style="margin-top:10px">
+        <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
+        <canvas id="weeklyChart"></canvas>
       </div>
 
       <div class="goal-card" style="margin-top:10px">
@@ -479,9 +744,11 @@ button,input{font:inherit}button{cursor:pointer}
             <option value="50" ${g===50?"selected":""}>50 days</option>
             <option value="100" ${g===100?"selected":""}>100 days</option>
             <option value="365" ${g===365?"selected":""}>365 days</option>
+            <option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option>
           </select>
           <button id="saveGoal" class="small-button" type="button">SET GOAL</button>
         </div>
+        <input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}">
       </div>
 
       <div class="notes" style="margin-top:10px">
@@ -490,7 +757,8 @@ button,input{font:inherit}button{cursor:pointer}
         <div class="note-meta">Notes stay on this device.</div>
       </div>
 
-      ${noteKeys.length?`<div class="note-list">${noteKeys.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p></div>`).join("")}</div>`:""}
+      <input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">
+      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
     </div>`;
   }
 
@@ -527,6 +795,27 @@ button,input{font:inherit}button{cursor:pointer}
           <button id="cycleThemeMore" class="small-button" type="button">CHANGE</button>
         </div>
         <div class="setting-row">
+          <div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER. There's no recovery — forgetting it means resetting the app.</span></div>
+          <input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}>
+        </div>
+      </div>
+      ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px">
+        <div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
+        <div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
+        <div id="pinSetupError" class="pin-error"></div>
+        <div class="goal-controls" style="margin-top:6px">
+          <button id="pinSetupCancel" class="small-button" type="button">CANCEL</button>
+          <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
+        </div>
+      </div>`:""}
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
           <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
         </div>
@@ -537,6 +826,7 @@ button,input{font:inherit}button{cursor:pointer}
   function phasePanel(){
     if(phaseView==="calendar") return renderCalendar();
     if(phaseView==="stats") return renderStats();
+    if(phaseView==="awards") return renderAwards();
     if(phaseView==="more") return renderMore();
     return "";
   }
@@ -626,6 +916,8 @@ button,input{font:inherit}button{cursor:pointer}
       <div class="checkin">
         <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
         <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
+        ${checked?`<div class="mood-hint">How are you feeling today?</div>
+        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
       <div class="milestone">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`<strong>Next milestone: Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${goal()?`<div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${goal()} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
@@ -644,17 +936,46 @@ button,input{font:inherit}button{cursor:pointer}
     }
 
     if(phaseView==="stats"){
+      drawWeeklyChart(document.getElementById("weeklyChart"));
+
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
         const n=notes(), value=document.getElementById("dailyNote").value.trim(), key=toInputDate(today());
         if(value)n[key]=value;else delete n[key];
         writeJSON(NOTES_KEY,n);showToast("✓ Today's note saved.");render();
       };
+
+      const goalSelect=document.getElementById("goalSelect");
+      const goalCustom=document.getElementById("goalCustom");
+      goalSelect?.addEventListener("change",()=>{
+        goalCustom.style.display=goalSelect.value==="custom"?"":"none";
+        if(goalSelect.value==="custom") goalCustom.focus();
+      });
       const saveGoal=document.getElementById("saveGoal");
       if(saveGoal)saveGoal.onclick=()=>{
-        const v=Number(document.getElementById("goalSelect").value);
+        let v;
+        if(goalSelect.value==="custom"){
+          v=Math.round(Number(goalCustom.value));
+          if(!v||v<1){showToast("Enter a valid number of days.");return}
+        }else v=Number(goalSelect.value);
         localStorage.setItem(GOAL_KEY,String(v));showToast(`✓ ${v}-day goal set.`);render();
       };
+
+      const noteSearch=document.getElementById("noteSearch");
+      if(noteSearch){
+        noteSearch.addEventListener("input",()=>{
+          noteSearchQuery=noteSearch.value;
+          const cursor=noteSearch.selectionStart;
+          render();
+          const again=document.getElementById("noteSearch");
+          if(again){again.focus();again.setSelectionRange(cursor,cursor)}
+        });
+      }
+    }
+
+    if(phaseView==="awards"){
+      document.getElementById("shareProgressBtn")?.addEventListener("click",shareProgress);
+      document.getElementById("exportAwards")?.addEventListener("click",exportData);
     }
 
     if(phaseView==="more"){
@@ -678,12 +999,60 @@ button,input{font:inherit}button{cursor:pointer}
         const file=e.target.files?.[0];if(file)importData(file);
       });
       document.getElementById("cycleThemeMore")?.addEventListener("click",cycleTheme);
-      document.getElementById("resetAll")?.addEventListener("click",()=>{
-        if(confirm("Reset all HAYGER data? This cannot be undone.")){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY].forEach(remove);
+      document.getElementById("resetAll")?.addEventListener("click",async()=>{
+        const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
+        if(ok){
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+          sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
       });
+
+      const pinToggle=document.getElementById("pinToggle");
+      pinToggle?.addEventListener("change",async()=>{
+        if(pinToggle.checked){
+          pinSetupOpen=true;render();
+        }else{
+          const ok=await askConfirm("Turn off app lock?","HAYGER will open without a PIN from now on.");
+          if(ok){remove(PIN_KEY);showToast("✓ App lock turned off.")}
+          render();
+        }
+      });
+
+      if(pinSetupOpen){
+        const newBoxes=[...document.querySelectorAll(".pin-new")];
+        const confirmBoxes=[...document.querySelectorAll(".pin-confirm")];
+        function wirePinBoxes(boxes){
+          boxes.forEach((box,i)=>{
+            box.addEventListener("input",()=>{
+              box.value=box.value.replace(/\D/g,"").slice(0,1);
+              if(box.value&&boxes[i+1])boxes[i+1].focus();
+            });
+            box.addEventListener("keydown",e=>{
+              if(e.key==="Backspace"&&!box.value&&boxes[i-1])boxes[i-1].focus();
+            });
+          });
+        }
+        wirePinBoxes(newBoxes);wirePinBoxes(confirmBoxes);
+        newBoxes[0]?.focus();
+
+        document.getElementById("pinSetupCancel")?.addEventListener("click",()=>{
+          pinSetupOpen=false;render();
+        });
+        document.getElementById("pinSetupSave")?.addEventListener("click",async()=>{
+          const err=document.getElementById("pinSetupError");
+          const pin=newBoxes.map(b=>b.value).join("");
+          const confirmPin=confirmBoxes.map(b=>b.value).join("");
+          if(pin.length!==4){err.textContent="Enter all 4 digits.";return}
+          if(pin!==confirmPin){err.textContent="PINs don't match.";return}
+          await setPin(pin);
+          pinSetupOpen=false;
+          sessionStorage.setItem("hayger_unlocked","1");
+          unlocked=true;
+          showToast("✓ App lock turned on.");
+          render();
+        });
+      }
     }
 
     document.getElementById("checkinButton").addEventListener("click",()=>{
@@ -696,6 +1065,20 @@ button,input{font:inherit}button{cursor:pointer}
       writeJSON(CHECKINS_KEY,d);
       render();
       showToast("✓ Checked in for today.");
+      if(JOURNEY_BADGES.some(b=>b.day===day)){
+        fireConfetti();
+        setTimeout(()=>showToast(`🏆 Milestone unlocked: Day ${day}`),400);
+      }
+    });
+
+    document.querySelectorAll(".mood-chip").forEach(btn=>{
+      btn.addEventListener("click",()=>{
+        const d=checkins();
+        if(!d[key]) return;
+        d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
+        writeJSON(CHECKINS_KEY,d);
+        render();
+      });
     });
   }
 
@@ -713,7 +1096,71 @@ button,input{font:inherit}button{cursor:pointer}
     });
   }
 
-  function render(){applyTheme();challenge()}
+  let lockInput="";
+  let lockErrorMsg="";
+  function renderLock(){
+    applyTheme();
+    const dots=Array.from({length:4},(_,i)=>`<div class="pin-dot${i<lockInput.length?" filled":""}"></div>`).join("");
+    app.innerHTML=`<section class="card">
+      ${header()}
+      <div class="setup">
+        <div class="setup-icon">H</div>
+        <h1>Locked</h1>
+        <p>Enter your PIN to open HAYGER.</p>
+      </div>
+      <div class="pin-dots">${dots}</div>
+      <div id="lockError" class="pin-error">${escapeHTML(lockErrorMsg)}</div>
+      <div class="pin-keypad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="pin-key" data-key="${n}" type="button">${n}</button>`).join("")}
+        <span></span>
+        <button class="pin-key" data-key="0" type="button">0</button>
+        <button class="pin-key ghost" data-key="del" type="button">DEL</button>
+      </div>
+      <div class="lock-footer"><button id="lockResetLink" type="button">Forgot PIN? Reset HAYGER</button></div>
+    </section>`;
+    bindTheme();
+
+    document.querySelectorAll(".pin-key").forEach(btn=>{
+      btn.addEventListener("click",async()=>{
+        const k=btn.dataset.key;
+        if(k==="del"){lockInput=lockInput.slice(0,-1);lockErrorMsg="";renderLock();return}
+        if(lockInput.length>=4) return;
+        lockInput+=k;
+        lockErrorMsg="";
+        if(lockInput.length===4){
+          renderLock();
+          const ok=await verifyPin(lockInput);
+          if(ok){
+            unlocked=true;
+            sessionStorage.setItem("hayger_unlocked","1");
+            lockInput="";
+            lockErrorMsg="";
+            render();
+          }else{
+            lockErrorMsg="Incorrect PIN. Try again.";
+            lockInput="";
+            renderLock();
+          }
+          return;
+        }
+        renderLock();
+      });
+    });
+
+    document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
+      const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
+      if(ok){
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+        sessionStorage.removeItem("hayger_unlocked");
+        location.reload();
+      }
+    });
+  }
+
+  function render(){
+    if(pinEnabled()&&!unlocked){renderLock();return}
+    applyTheme();challenge();
+  }
 
   function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false")}
   function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
