@@ -292,9 +292,16 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
 .modal.danger h2{color:var(--danger)}
 </style>
-</head>
+<style id="hayger-profile-notes-css">
+.hayger-name-overlay{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:20px;background:#0008;backdrop-filter:blur(12px)}
+.hayger-name-overlay.show{display:flex}.hayger-name-card{width:min(410px,100%);padding:24px;border-radius:26px;background:var(--surface,#fff);color:var(--text,#111);box-shadow:0 28px 90px #0005}.hayger-name-card h2{margin:0 0 7px}.hayger-name-card p{margin:0 0 16px;color:var(--text-soft,#777);font-size:13px}.hayger-name-input{width:100%;height:50px;padding:0 14px;border-radius:14px;border:1px solid var(--border,#ddd);background:var(--surface-soft,#f2f2f2);color:inherit;outline:none}.hayger-name-save{width:100%;height:50px;margin-top:10px;border:0;border-radius:14px;background:var(--primary,#111);color:var(--primary-text,#fff);font-weight:800}.hayger-profile{font-size:11px;color:var(--text-soft,#777);margin-top:7px;font-weight:700}
+.note-actions{display:flex;gap:7px;margin-top:9px}.note-actions button{flex:1;min-height:38px;border:1px solid var(--border,#ddd);border-radius:11px;background:var(--surface-soft,#f2f2f2);color:inherit;font-weight:800}.note-actions .note-delete{color:#dc2626}
+</style></head>
 
-<body>
+<body><div id="haygerNameOverlay" class="hayger-name-overlay"><div class="hayger-name-card">
+<h2>Set your name</h2><p>This name stays on your device and can be changed anytime.</p>
+<input id="haygerNameInput" class="hayger-name-input" maxlength="40" placeholder="Your name" autocomplete="name">
+<button id="haygerNameSave" class="hayger-name-save" type="button">SAVE NAME</button></div></div>
 <div class="app-shell">
   <header class="app-header">
     <div class="app-header-inner">
@@ -1384,5 +1391,29 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
-</body>
+<script id="hayger-profile-notes-js">
+(()=>{const KEY="hayger_profile_name_v1",$=id=>document.getElementById(id);
+window.HAYGER_PROFILE={get:()=>localStorage.getItem(KEY)||"",set:n=>{n=(n||"").trim().slice(0,40);if(n)localStorage.setItem(KEY,n)}};
+function showName(force=false){const n=localStorage.getItem(KEY)||"";if(force||!n){$("haygerNameOverlay").classList.add("show");$("haygerNameInput").value=n;setTimeout(()=>$("haygerNameInput").focus(),80)}}
+$("haygerNameSave").onclick=()=>{const n=$("haygerNameInput").value.trim();if(!n)return alert("Please enter your name.");localStorage.setItem(KEY,n);$("haygerNameOverlay").classList.remove("show");location.reload()};
+document.addEventListener("DOMContentLoaded",()=>{if(!localStorage.getItem(KEY))setTimeout(()=>showName(),350)});
+})();
+</script><script id="hayger-note-actions-js">
+(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
+function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
+function write(x){localStorage.setItem(key(),JSON.stringify(x))}
+window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
+window.addEventListener("load",()=>{
+ document.querySelectorAll("[data-note-index]").forEach((el)=>{
+   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
+   if(el.querySelector(".note-actions"))return;
+   const box=document.createElement("div");box.className="note-actions";
+   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
+   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
+   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
+   el.appendChild(box);
+ });
+});
+})();
+</script></body>
 </html>
