@@ -4,548 +4,442 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f6f7f9">
-<meta name="description" content="HAYGER — Professional habit tracking. One day at a time.">
-<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="HAYGER">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png" type="image/png">
-<title>HAYGER — Ultra Advanced</title>
+<link rel="icon" href="./icon-192.png">
+<title>HAYGER ULTRA MAX</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  --bg:#f6f7f9;--surface:#fff;--soft:#f0f1f3;--soft2:#e9eaed;
-  --text:#101114;--muted:#6b7078;--line:#e4e6ea;--danger:#dc2626;
-  --primary:#101114;--primaryText:#fff;--accent:#55bd7e;
-  --shadow:0 24px 70px rgba(0,0,0,.07);
-  --xl:32px;--lg:21px;--md:15px;
+:root {
+    --bg: #f2f4f7; --card: #ffffff; --text: #1a1c1e; --muted: #6c727a;
+    --primary: #1a1c1e; --primary-text: #ffffff; --accent: #22c55e;
+    --danger: #ef4444; --line: #e2e8f0; --shadow: 0 20px 50px rgba(0,0,0,0.05);
+    --radius: 24px;
 }
-[data-theme=dark]{
-  --bg:#090a0c;--surface:#151619;--soft:#202125;--soft2:#282a2f;
-  --text:#f5f5f6;--muted:#999da6;--line:#2b2d32;--danger:#ff7777;
-  --primary:#f5f5f6;--primaryText:#101114;
-  --shadow:0 28px 80px rgba(0,0,0,.4);
+[data-theme=dark] {
+    --bg: #0b0c0d; --card: #151719; --text: #f1f3f5; --muted: #94a3b8;
+    --primary: #f1f3f5; --primary-text: #0b0c0d; --line: #26292d;
+    --shadow: 0 25px 60px rgba(0,0,0,0.4);
 }
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);transition: background .3s;}
-body{
-  min-height:100vh;min-height:100dvh;overflow-x:hidden;overscroll-behavior:none;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,sans-serif;
-  user-select:none;-webkit-user-select:none;touch-action:manipulation;
-}
-.app{padding:max(20px,env(safe-area-inset-top)) 16px 40px;display:flex;justify-content:center}
-.container{width:100%;max-width:480px}
-.card{
-  width:100%;padding:20px;background:var(--surface);border:1px solid var(--line);
-  border-radius:var(--xl);box-shadow:var(--shadow);animation:enter .5s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@keyframes enter{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:none}}
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.brand{font-size:18px;font-weight:950;letter-spacing:4px;line-height:1}
-.theme-button{
-  width:40px;height:40px;display:grid;place-items:center;border:1px solid var(--line);
-  border-radius:12px;background:var(--soft);color:var(--text);cursor:pointer;
-}
-.hero{position:relative;overflow:hidden;padding:35px 20px;border-radius:28px;background:var(--soft);text-align:center}
-.day-number{font-size:clamp(70px,22vw,100px);font-weight:950;letter-spacing:-6px;line-height:.8}
-.streak-pill{
-  display:inline-flex;align-items:center;margin-top:15px;padding:6px 12px;
-  background:rgba(85,189,126,0.1);color:var(--accent);border-radius:99px;font-size:11px;font-weight:800;
-}
-.actions{display:grid;gap:10px;margin-top:20px}
-.button{
-  width:100%;min-height:54px;border:0;border-radius:18px;font-size:14px;font-weight:800;
-  cursor:pointer;transition:transform .1s;display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.button:active{transform:scale(.97)}
-.primary{background:var(--primary);color:var(--primaryText)}
-.secondary{background:var(--soft);color:var(--text)}
 
-/* Stats & Heatmap */
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
-.stat-box{padding:15px 10px;background:var(--soft);border-radius:20px;text-align:center;border:1px solid var(--line)}
-.stat-box b{display:block;font-size:22px;letter-spacing:-1px}
-.stat-box span{font-size:9px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-
-.heatmap-container{padding:15px;background:var(--soft);border-radius:22px;margin:15px 0;overflow-x:auto}
-.heatmap-grid{display:grid;grid-template-columns:repeat(11, 1fr);gap:4px;min-width:320px}
-.heat-col{display:grid;grid-template-rows:repeat(7, 1fr);gap:4px}
-.heat-cell{aspect-ratio:1;border-radius:3px;background:var(--soft2)}
-.heat-cell.active{background:var(--accent)}
-
-/* Nav */
-.nav-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:25px}
-.nav-btn{
-  height:44px;border:1px solid var(--line);border-radius:14px;background:var(--soft);
-  color:var(--muted);font-size:10px;font-weight:800;cursor:pointer;
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body { 
+    margin: 0; font-family: 'Inter', -apple-system, sans-serif; 
+    background: var(--bg); color: var(--text); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none; -webkit-user-select: none; overflow-x: hidden;
 }
-.nav-btn.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
 
-/* Modals & Toasts */
-.modal-overlay{
-  position:fixed;inset:0;z-index:100;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
-.modal-overlay.open{display:flex}
-.modal-content{
-  width:100%;max-width:400px;background:var(--surface);padding:24px;border-radius:28px;
-  animation:modalIn .3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-@keyframes modalIn{from{opacity:0;transform:scale(0.9)}to{opacity:1;transform:scale(1)}}
-.toast{
-  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);
-  background:var(--primary);color:var(--primaryText);padding:12px 20px;border-radius:14px;
-  font-size:13px;font-weight:700;transition:0.4s;z-index:200;opacity:0;
-}
-.toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+.app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding: 20px 16px 100px; }
 
-/* Missing element fix */
-#updateBanner{
-  position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(150%);
-  background:var(--surface);border:1px solid var(--line);padding:15px;border-radius:20px;
-  box-shadow:var(--shadow);z-index:150;width:90%;max-width:400px;display:flex;align-items:center;gap:12px;transition:0.4s;
+/* Components */
+.card { 
+    background: var(--card); border-radius: var(--radius); padding: 24px; 
+    box-shadow: var(--shadow); border: 1px solid var(--line);
+    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-#updateBanner.show{transform:translateX(-50%) translateY(0)}
+@keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
 
-/* PIN Lock Styles */
-.pin-screen{text-align:center;padding:40px 0}
-.pin-dots{display:flex;justify-content:center;gap:15px;margin:30px 0}
-.pin-dot{width:14px;height:14px;border:2px solid var(--line);border-radius:50%}
-.pin-dot.filled{background:var(--text);border-color:var(--text)}
-.keypad{display:grid;grid-template-columns:repeat(3, 1fr);gap:15px;max-width:280px;margin:0 auto}
-.key{height:60px;border-radius:18px;background:var(--soft);display:grid;place-items:center;font-size:20px;font-weight:800;cursor:pointer}
+.header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+.logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; }
+
+.hero { text-align: center; padding: 40px 20px; background: var(--bg); border-radius: 32px; position: relative; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--line); }
+.day-label { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: 2px; }
+.day-val { font-size: 100px; font-weight: 950; letter-spacing: -6px; line-height: 0.9; margin: 10px 0; }
+.streak-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: white; border-radius: 99px; font-size: 12px; font-weight: 700; }
+
+/* Grid Layouts */
+.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.stat-item { background: var(--card); padding: 16px; border-radius: 20px; border: 1px solid var(--line); text-align: center; }
+.stat-item b { font-size: 20px; display: block; }
+.stat-item span { font-size: 10px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+
+/* Heatmap */
+.heatmap-box { overflow-x: auto; padding: 15px; background: var(--card); border-radius: 20px; border: 1px solid var(--line); margin-bottom: 20px; }
+.heatmap-grid { display: flex; gap: 4px; }
+.heat-col { display: flex; flex-direction: column; gap: 4px; }
+.heat-cell { width: 12px; height: 12px; border-radius: 2px; background: var(--line); transition: 0.3s; }
+.heat-cell.active { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+
+/* Buttons */
+.btn { 
+    width: 100%; border: 0; padding: 18px; border-radius: 18px; font-size: 15px; font-weight: 800; 
+    cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;
+}
+.btn:active { transform: scale(0.96); }
+.btn-primary { background: var(--primary); color: var(--primary-text); }
+.btn-secondary { background: var(--line); color: var(--text); }
+
+/* Bottom Nav */
+.nav { 
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px;
+    background: rgba(26, 28, 30, 0.8); backdrop-filter: blur(20px); border-radius: 24px;
+    display: flex; justify-content: space-around; padding: 8px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+.nav-item { 
+    flex: 1; text-align: center; padding: 12px; color: #888; cursor: pointer; transition: 0.3s; 
+    font-size: 10px; font-weight: 800; text-transform: uppercase;
+}
+.nav-item.active { color: #fff; }
+
+/* PIN Lock Screen */
+#lock-screen {
+    position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: none;
+    flex-direction: column; align-items: center; justify-content: center; padding: 40px;
+}
+.pin-dots { display: flex; gap: 15px; margin: 40px 0; }
+.pin-dot { width: 16px; height: 16px; border: 2px solid var(--line); border-radius: 50%; transition: 0.2s; }
+.pin-dot.filled { background: var(--text); border-color: var(--text); transform: scale(1.2); }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 300px; }
+.key { 
+    height: 70px; display: grid; place-items: center; font-size: 24px; font-weight: 800;
+    background: var(--card); border-radius: 20px; cursor: pointer; border: 1px solid var(--line);
+}
+.key:active { background: var(--line); }
+
+/* Achievement Badges */
+.badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
+.badge { 
+    aspect-ratio: 1; background: var(--line); border-radius: 16px; display: grid; place-items: center;
+    font-size: 20px; opacity: 0.3; grayscale: 100%; transition: 0.5s;
+}
+.badge.unlocked { opacity: 1; grayscale: 0; background: var(--card); border: 1px solid var(--accent); transform: scale(1.05); }
+
+/* Toast */
+#toast {
+    position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
+    background: var(--primary); color: var(--primary-text); padding: 12px 24px; border-radius: 12px;
+    font-weight: 700; font-size: 13px; transition: 0.5s; z-index: 2000;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
-<main class="app">
-  <div id="main-ui" class="container"></div>
-</main>
+<div id="toast">Message</div>
 
-<div id="toast" class="toast"></div>
-
-<!-- Fix: Update Banner -->
-<div id="updateBanner">
-  <div style="flex:1">
-    <b style="display:block;font-size:13px">New version available</b>
-    <span style="font-size:11px;color:var(--muted)">Refresh to get the latest features.</span>
-  </div>
-  <button id="updateNow" class="button primary" style="min-height:36px;padding:0 15px;font-size:11px">Update</button>
-</div>
-
-<div id="modal-overlay" class="modal-overlay">
-  <div class="modal-content">
-    <h2 id="modal-title" style="margin:0 0 10px">Title</h2>
-    <p id="modal-body" style="color:var(--muted);font-size:14px;line-height:1.5"></p>
-    <div class="actions">
-      <button id="modal-confirm" class="button primary">Confirm</button>
-      <button onclick="closeModal()" class="button secondary">Cancel</button>
+<!-- PIN Lock Overlay -->
+<div id="lock-screen">
+    <div class="logo">HAYGER</div>
+    <p style="color:var(--muted); font-weight:700">ENTER SECURE PIN</p>
+    <div class="pin-dots">
+        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
     </div>
-  </div>
+    <div class="keypad" id="keypad">
+        <!-- JS generated keys -->
+    </div>
+    <button onclick="resetApp()" style="margin-top:40px; background:none; border:0; color:var(--danger); font-weight:700; text-decoration:underline">FORGOT PIN? RESET</button>
 </div>
+
+<div class="app-container" id="app">
+    <!-- UI Content dynamic via JS -->
+</div>
+
+<nav class="nav">
+    <div class="nav-item active" onclick="navigate('home')">Home</div>
+    <div class="nav-item" onclick="navigate('stats')">Analytics</div>
+    <div class="nav-item" onclick="navigate('awards')">Badges</div>
+    <div class="nav-item" onclick="navigate('settings')">More</div>
+</nav>
 
 <canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;z-index:999"></canvas>
 
 <script>
-(() => {
-  "use strict";
-
-  // --- Constants & State ---
-  const DB = {
-    START: "hg_start",
-    LOGS: "hg_logs",
-    NOTES: "hg_notes",
-    PIN: "hg_pin",
-    THEME: "hg_theme"
-  };
-
-  let state = {
+// --- CORE CONFIGURATION ---
+const KEYS = { START: 'hg_v7_start', LOGS: 'hg_v7_logs', PIN: 'hg_v7_pin', THEME: 'hg_v7_theme' };
+let state = {
     view: 'home',
-    isUnlocked: sessionStorage.getItem('hg_unlocked') === 'true',
-    pinInput: ''
-  };
+    pinInput: '',
+    isUnlocked: false
+};
 
-  // --- Core Utils ---
-  const get = k => localStorage.getItem(k);
-  const set = (k, v) => localStorage.setItem(k, v);
-  const getJSON = (k, fallback = {}) => JSON.parse(get(k) || JSON.stringify(fallback));
-  const setJSON = (k, v) => set(k, JSON.stringify(v));
-  
-  const todayStr = () => new Date().toISOString().split('T')[0];
-  
-  const dateDiff = (d1, d2) => {
-    const a = new Date(d1);
-    const b = new Date(d2);
-    return Math.floor((a - b) / (1000 * 60 * 60 * 24));
-  };
+const getLogs = () => JSON.parse(localStorage.getItem(KEYS.LOGS) || '{}');
+const saveLogs = (logs) => localStorage.setItem(KEYS.LOGS, JSON.stringify(logs));
+const today = () => new Date().toISOString().split('T')[0];
 
-  function getStats() {
-    const start = get(DB.START);
-    const logs = getJSON(DB.LOGS);
-    if (!start) return { day: 0, streak: 0, best: 0, rate: 0 };
+// --- APP LOGIC ---
+function calculateStats() {
+    const start = localStorage.getItem(KEYS.START);
+    const logs = getLogs();
+    if(!start) return { day:0, streak:0, total:0, rate:0 };
 
-    const totalDays = dateDiff(todayStr(), start) + 1;
-    const logKeys = Object.keys(logs).sort().reverse();
+    const diff = Math.floor((new Date() - new Date(start)) / (86400000)) + 1;
     
-    // Streak Logic (Advanced Fix)
-    let currentStreak = 0;
+    // Proper Streak Calculation
+    let streak = 0;
     let checkDate = new Date();
+    if(!logs[today()]) checkDate.setDate(checkDate.getDate() - 1);
     
-    // If not checked in today, check if yesterday was part of a streak
-    if (!logs[todayStr()]) {
-      checkDate.setDate(checkDate.getDate() - 1);
+    while(logs[checkDate.toISOString().split('T')[0]]) {
+        streak++;
+        checkDate.setDate(checkDate.getDate() - 1);
     }
 
-    while (logs[checkDate.toISOString().split('T')[0]]) {
-      currentStreak++;
-      checkDate.setDate(checkDate.getDate() - 1);
-    }
+    const totalLogs = Object.keys(logs).length;
+    return { day: diff, streak, total: totalLogs, rate: Math.round((totalLogs/diff)*100) || 0 };
+}
 
-    // Best Streak
-    let best = 0;
-    let temp = 0;
-    const allDays = Object.keys(logs).sort();
-    for (let i = 0; i < allDays.length; i++) {
-      if (i > 0 && dateDiff(allDays[i], allDays[i-1]) === 1) {
-        temp++;
-      } else {
-        temp = 1;
-      }
-      best = Math.max(best, temp);
-    }
-
-    return {
-      day: totalDays,
-      streak: currentStreak,
-      best: best,
-      total: allDays.length,
-      rate: totalDays > 0 ? Math.round((allDays.length / totalDays) * 100) : 0
-    };
-  }
-
-  // --- UI Components ---
-  const Header = () => `
-    <div class="header">
-      <div class="brand">HAYGER</div>
-      <button class="theme-button" onclick="toggleTheme()" aria-label="Toggle Dark Mode">
-        ${get(DB.THEME) === 'dark' ? '☀️' : '🌙'}
-      </button>
-    </div>
-  `;
-
-  const Nav = () => `
-    <div class="nav-bar">
-      <button class="nav-btn ${state.view === 'home' ? 'active' : ''}" onclick="setView('home')">HOME</button>
-      <button class="nav-btn ${state.view === 'history' ? 'active' : ''}" onclick="setView('history')">HISTORY</button>
-      <button class="nav-btn ${state.view === 'journal' ? 'active' : ''}" onclick="setView('journal')">JOURNAL</button>
-      <button class="nav-btn ${state.view === 'settings' ? 'active' : ''}" onclick="setView('settings')">MORE</button>
-    </div>
-  `;
-
-  const Heatmap = () => {
-    const logs = getJSON(DB.LOGS);
-    let html = '<div class="heatmap-container"><div class="heatmap-grid">';
-    const today = new Date();
-    
-    for (let i = 10; i >= 0; i--) {
-      html += '<div class="heat-col">';
-      for (let j = 6; j >= 0; j--) {
-        const d = new Date();
-        d.setDate(today.getDate() - (i * 7 + j));
-        const key = d.toISOString().split('T')[0];
-        const isActive = logs[key] ? 'active' : '';
-        html += `<div class="heat-cell ${isActive}" title="${key}"></div>`;
-      }
-      html += '</div>';
-    }
-    return html + '</div></div>';
-  };
-
-  // --- Views ---
-  function renderSetup() {
-    return `
-      <div class="card">
-        ${Header()}
-        <div style="text-align:center;padding:20px 0">
-          <h1 style="font-size:28px;letter-spacing:-1px">Welcome to Hayger</h1>
-          <p style="color:var(--muted)">When did you start your journey?</p>
-          <input type="date" id="start-date" class="button secondary" style="margin:20px 0;width:100%" value="${todayStr()}">
-          <button class="button primary" onclick="startApp()">BEGIN JOURNEY</button>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderHome() {
-    const stats = getStats();
-    const hasChecked = !!getJSON(DB.LOGS)[todayStr()];
-    
-    return `
-      <div class="card">
-        ${Header()}
-        <div class="hero">
-          <div style="font-size:11px;font-weight:900;letter-spacing:2px;color:var(--muted)">DAY</div>
-          <div class="day-number">${stats.day}</div>
-          <div class="streak-pill">🔥 ${stats.streak} DAY STREAK</div>
-        </div>
-        
-        ${Heatmap()}
-
-        <div class="actions">
-          <button class="button primary" id="checkin-btn" ${hasChecked ? 'disabled' : ''} onclick="doCheckin()">
-            ${hasChecked ? '✓ CHECKED IN TODAY' : 'CHECK IN TODAY'}
-          </button>
-        </div>
-        ${Nav()}
-      </div>
-    `;
-  }
-
-  function renderJournal() {
-    const notes = getJSON(DB.NOTES);
-    const keys = Object.keys(notes).sort().reverse();
-    
-    return `
-      <div class="card">
-        ${Header()}
-        <h3 style="margin:0 0 15px">Daily Journal</h3>
-        <textarea id="note-input" class="button secondary" style="width:100%;min-height:100px;padding:15px;text-align:left" placeholder="How was today?"></textarea>
-        <button class="button primary" style="margin-top:10px" onclick="saveNote()">SAVE NOTE</button>
-        
-        <div style="margin-top:20px">
-          ${keys.map(k => `
-            <div style="padding:15px;border-bottom:1px solid var(--line)">
-              <small style="color:var(--muted);font-weight:800">${k}</small>
-              <div style="font-size:14px;margin-top:5px">${notes[k]}</div>
-            </div>
-          `).join('')}
-        </div>
-        ${Nav()}
-      </div>
-    `;
-  }
-
-  function renderHistory() {
-    const stats = getStats();
-    return `
-      <div class="card">
-        ${Header()}
-        <div class="stats-grid">
-          <div class="stat-box"><b>${stats.total}</b><span>Logs</span></div>
-          <div class="stat-box"><b>${stats.best}</b><span>Best</span></div>
-          <div class="stat-box"><b>${stats.rate}%</b><span>Rate</span></div>
-        </div>
-        <p style="text-align:center;color:var(--muted);font-size:12px">Keep going! Consistency is the only hack.</p>
-        ${Nav()}
-      </div>
-    `;
-  }
-
-  function renderLock() {
-    const dots = Array.from({length:4}, (_, i) => `<div class="pin-dot ${i < state.pinInput.length ? 'filled' : ''}"></div>`).join('');
-    return `
-      <div class="card">
-        <div class="pin-screen">
-          <div class="brand" style="margin-bottom:10px">HAYGER</div>
-          <h2 style="letter-spacing:-1px">Enter PIN</h2>
-          <div class="pin-dots">${dots}</div>
-          <div class="keypad">
-            ${[1,2,3,4,5,6,7,8,9].map(n => `<div class="key" onclick="pressPin(${n})">${n}</div>`).join('')}
-            <div class="key" onclick="pressPin('C')">C</div>
-            <div class="key" onclick="pressPin(0)">0</div>
-            <div class="key" onclick="pressPin('DEL')">←</div>
-          </div>
-          <button onclick="resetAppConfirm()" style="margin-top:30px;background:none;border:0;color:var(--muted);font-size:11px;text-decoration:underline">Forgot PIN? Reset App</button>
-        </div>
-      </div>
-    `;
-  }
-
-  function renderSettings() {
-    return `
-      <div class="card">
-        ${Header()}
-        <div class="actions">
-          <button class="button secondary" onclick="togglePin()">
-            ${get(DB.PIN) ? 'CHANGE / DISABLE PIN' : 'ENABLE PIN LOCK'}
-          </button>
-          <button class="button secondary" onclick="exportData()">EXPORT BACKUP</button>
-          <button class="button secondary" style="color:var(--danger)" onclick="resetAppConfirm()">RESET ALL DATA</button>
-        </div>
-        ${Nav()}
-      </div>
-    `;
-  }
-
-  // --- App Logic ---
-  window.toggleTheme = () => {
-    const current = get(DB.THEME) || 'light';
-    const next = current === 'light' ? 'dark' : 'light';
-    set(DB.THEME, next);
-    applyTheme();
-    render();
-  };
-
-  const applyTheme = () => {
-    const t = get(DB.THEME) || 'light';
-    document.documentElement.dataset.theme = t;
-    document.querySelector('meta[name="theme-color"]').content = t === 'dark' ? '#090a0c' : '#f6f7f9';
-  };
-
-  window.setView = (v) => {
+function navigate(v) {
     state.view = v;
+    document.querySelectorAll('.nav-item').forEach((el, i) => {
+        el.classList.toggle('active', ['home','stats','awards','settings'][i] === v);
+    });
     render();
-  };
+}
 
-  window.startApp = () => {
-    const date = document.getElementById('start-date').value;
-    if (!date) return toast("Select a date");
-    set(DB.START, date);
-    render();
-  };
-
-  window.doCheckin = () => {
-    const logs = getJSON(DB.LOGS);
-    logs[todayStr()] = true;
-    setJSON(DB.LOGS, logs);
-    toast("Check-in successful! 🔥");
+function toggleCheckin() {
+    const logs = getLogs();
+    if (logs[today()]) return showToast("Already checked in!");
+    
+    logs[today()] = { time: new Date().getTime() };
+    saveLogs(logs);
     fireConfetti();
+    showToast("Day Complete! 🔥");
     render();
-  };
+}
 
-  window.saveNote = () => {
-    const val = document.getElementById('note-input').value.trim();
-    if (!val) return;
-    const notes = getJSON(DB.NOTES);
-    notes[todayStr()] = val;
-    setJSON(DB.NOTES, notes);
-    toast("Note saved");
-    document.getElementById('note-input').value = '';
-    render();
-  };
+// --- RENDERING ---
+function render() {
+    const app = document.getElementById('app');
+    const start = localStorage.getItem(KEYS.START);
 
-  window.pressPin = (val) => {
-    if (val === 'C') state.pinInput = '';
-    else if (val === 'DEL') state.pinInput = state.pinInput.slice(0, -1);
-    else if (state.pinInput.length < 4) state.pinInput += val;
-
-    if (state.pinInput.length === 4) {
-      if (state.pinInput === get(DB.PIN)) {
-        state.isUnlocked = true;
-        sessionStorage.setItem('hg_unlocked', 'true');
-        toast("Unlocked");
-      } else {
-        toast("Incorrect PIN");
-        state.pinInput = '';
-      }
+    if(!start) {
+        app.innerHTML = renderSetup();
+        return;
     }
-    render();
-  };
 
-  window.togglePin = () => {
-    const current = get(DB.PIN);
-    if (current) {
-      const ok = confirm("Disable PIN lock?");
-      if (ok) {
-        localStorage.removeItem(DB.PIN);
-        toast("PIN disabled");
-      }
-    } else {
-      const pin = prompt("Enter a new 4-digit PIN:");
-      if (pin && pin.length === 4) {
-        set(DB.PIN, pin);
-        toast("PIN enabled");
-      } else {
-        toast("Invalid PIN (must be 4 digits)");
-      }
+    switch(state.view) {
+        case 'home': app.innerHTML = renderHome(); break;
+        case 'stats': app.innerHTML = renderStats(); break;
+        case 'awards': app.innerHTML = renderAwards(); break;
+        case 'settings': app.innerHTML = renderSettings(); break;
     }
-    render();
-  };
+}
 
-  window.resetAppConfirm = () => {
-    const ok = confirm("Are you sure? This will delete ALL history and cannot be undone.");
-    if (ok) {
-      localStorage.clear();
-      location.reload();
+function renderSetup() {
+    return `
+    <div class="card" style="text-align:center">
+        <div class="logo" style="margin-bottom:20px">HAYGER</div>
+        <h1 style="letter-spacing:-1px">Start Your Journey</h1>
+        <p style="color:var(--muted)">Consistency is the only secret.</p>
+        <input type="date" id="init-date" class="btn btn-secondary" style="margin:20px 0" value="${today()}">
+        <button class="btn btn-primary" onclick="initApp()">LET'S GO</button>
+    </div>`;
+}
+
+function renderHome() {
+    const s = calculateStats();
+    const hasChecked = !!getLogs()[today()];
+    
+    return `
+    <div class="header">
+        <div class="logo">HAYGER</div>
+        <div onclick="toggleTheme()" style="cursor:pointer">${localStorage.getItem(KEYS.THEME) === 'dark' ? '☀️' : '🌙'}</div>
+    </div>
+    <div class="hero">
+        <div class="day-label">CURRENT PROGRESS</div>
+        <div class="day-val">${s.day}</div>
+        <div class="streak-badge">🔥 ${s.streak} DAY STREAK</div>
+    </div>
+    <div class="heatmap-box">
+        <div style="font-size:10px; font-weight:800; margin-bottom:10px; color:var(--muted)">ACTIVITY HEATMAP</div>
+        <div class="heatmap-grid">${renderHeatmap()}</div>
+    </div>
+    <button class="btn ${hasChecked ? 'btn-secondary' : 'btn-primary'}" onclick="toggleCheckin()">
+        ${hasChecked ? '✓ COMPLETED TODAY' : 'MARK TODAY AS DONE'}
+    </button>
+    `;
+}
+
+function renderHeatmap() {
+    const logs = getLogs();
+    let html = '';
+    const date = new Date();
+    date.setDate(date.getDate() - 70); // Show last 10 weeks
+
+    for(let i=0; i<11; i++) {
+        html += '<div class="heat-col">';
+        for(let j=0; j<7; j++) {
+            const dStr = date.toISOString().split('T')[0];
+            const active = logs[dStr] ? 'active' : '';
+            html += `<div class="heat-cell ${active}"></div>`;
+            date.setDate(date.getDate() + 1);
+        }
+        html += '</div>';
     }
-  };
+    return html;
+}
 
-  function toast(msg) {
+function renderStats() {
+    const s = calculateStats();
+    return `
+    <div class="logo" style="margin-bottom:20px">ANALYTICS</div>
+    <div class="stats-grid">
+        <div class="stat-item"><b>${s.total}</b><span>Total Days</span></div>
+        <div class="stat-item"><b>${s.rate}%</b><span>Consistency</span></div>
+        <div class="stat-item"><b>${s.streak}</b><span>Current Streak</span></div>
+        <div class="stat-item"><b>${s.day}</b><span>Journey Day</span></div>
+    </div>
+    <div class="card">
+        <p style="margin:0; font-weight:700; font-size:14px">Performance Tip</p>
+        <p style="font-size:12px; color:var(--muted)">You are doing better than ${s.rate}% of people who quit in the first week. Stay disciplined.</p>
+    </div>
+    `;
+}
+
+function renderAwards() {
+    const s = calculateStats();
+    const badges = [
+        { d: 3, i: '🌱' }, { d: 7, i: '🔥' }, { d: 14, i: '⚡' }, { d: 30, i: '🏆' },
+        { d: 50, i: '💎' }, { d: 75, i: '🚀' }, { d: 100, i: '👑' }, { d: 365, i: '🌟' }
+    ];
+    return `
+    <div class="logo" style="margin-bottom:20px">ACHIEVEMENTS</div>
+    <div class="badge-grid">
+        ${badges.map(b => `<div class="badge ${s.day >= b.d ? 'unlocked' : ''}" title="Day ${b.d}">${s.day >= b.d ? b.i : '🔒'}</div>`).join('')}
+    </div>
+    <p style="text-align:center; color:var(--muted); font-size:11px; margin-top:20px">Badges unlock as you progress through your journey.</p>
+    `;
+}
+
+function renderSettings() {
+    return `
+    <div class="logo" style="margin-bottom:20px">SETTINGS</div>
+    <div class="card" style="display:grid; gap:10px">
+        <button class="btn btn-secondary" onclick="setupPin()">🔒 ${localStorage.getItem(KEYS.PIN) ? 'CHANGE PIN' : 'SET PIN LOCK'}</button>
+        <button class="btn btn-secondary" onclick="exportData()">📤 EXPORT BACKUP</button>
+        <button class="btn btn-secondary" onclick="importData()">📥 IMPORT BACKUP</button>
+        <button class="btn btn-secondary" style="color:var(--danger)" onclick="resetApp()">⚠️ RESET EVERYTHING</button>
+    </div>
+    <p style="text-align:center; font-size:10px; color:var(--muted); margin-top:20px">VERSION 7.0 ULTRA MAX</p>
+    `;
+}
+
+// --- PIN SYSTEM ---
+function initKeypad() {
+    const container = document.getElementById('keypad');
+    const keys = [1,2,3,4,5,6,7,8,9,'C',0,'⌫'];
+    container.innerHTML = keys.map(k => `<div class="key" onclick="handleKeyPress('${k}')">${k}</div>`).join('');
+}
+
+function handleKeyPress(k) {
+    if(k === 'C') state.pinInput = '';
+    else if(k === '⌫') state.pinInput = state.pinInput.slice(0, -1);
+    else if(state.pinInput.length < 4) state.pinInput += k;
+
+    const dots = document.querySelectorAll('.pin-dot');
+    dots.forEach((dot, i) => dot.classList.toggle('filled', i < state.pinInput.length));
+
+    if(state.pinInput.length === 4) {
+        if(state.pinInput === localStorage.getItem(KEYS.PIN)) {
+            unlockApp();
+        } else {
+            showToast("Wrong PIN");
+            state.pinInput = '';
+            dots.forEach(dot => dot.classList.remove('filled'));
+        }
+    }
+}
+
+function unlockApp() {
+    document.getElementById('lock-screen').style.display = 'none';
+    state.isUnlocked = true;
+    render();
+}
+
+function setupPin() {
+    const pin = prompt("Enter 4-digit PIN:");
+    if(pin && pin.length === 4) {
+        localStorage.setItem(KEYS.PIN, pin);
+        showToast("PIN Lock Enabled");
+    }
+}
+
+// --- UTILS ---
+function toggleTheme() {
+    const theme = localStorage.getItem(KEYS.THEME) === 'dark' ? 'light' : 'dark';
+    localStorage.setItem(KEYS.THEME, theme);
+    document.documentElement.dataset.theme = theme;
+    render();
+}
+
+function initApp() {
+    const date = document.getElementById('init-date').value;
+    localStorage.setItem(KEYS.START, date);
+    render();
+}
+
+function showToast(msg) {
     const t = document.getElementById('toast');
     t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 3000);
-  }
+}
 
-  function fireConfetti() {
+function fireConfetti() {
     const canvas = document.getElementById('confetti');
     const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    let particles = Array.from({length: 50}, () => ({
-      x: Math.random() * canvas.width,
-      y: canvas.height + 10,
-      v: 10 + Math.random() * 20,
-      a: (Math.random() - 0.5) * 4,
-      c: `hsl(${Math.random() * 360}, 70%, 50%)`,
-      r: 4 + Math.random() * 6
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    const particles = Array.from({length:80}, () => ({
+        x: Math.random()*canvas.width, y: canvas.height, 
+        v: 10+Math.random()*15, r: 5+Math.random()*5, 
+        c: `hsl(${Math.random()*360}, 70%, 50%)`, a: (Math.random()-0.5)*4
     }));
-
     function frame() {
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      particles.forEach(p => {
-        p.y -= p.v; p.x += p.a; p.v *= 0.95;
-        ctx.fillStyle = p.c;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fill();
-      });
-      if (particles[0].v > 0.1) requestAnimationFrame(frame);
-      else ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        particles.forEach(p => {
+            p.y -= p.v; p.x += p.a; p.v *= 0.96;
+            ctx.fillStyle = p.c; ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+        });
+        if(particles[0].v > 0.1) requestAnimationFrame(frame);
     }
     frame();
-  }
+}
 
-  function render() {
-    const root = document.getElementById('main-ui');
-    if (get(DB.PIN) && !state.isUnlocked) {
-      root.innerHTML = renderLock();
-      return;
+function resetApp() {
+    if(confirm("Delete all data? This cannot be undone.")) {
+        localStorage.clear();
+        location.reload();
     }
-    if (!get(DB.START)) {
-      root.innerHTML = renderSetup();
-      return;
+}
+
+function exportData() {
+    const data = JSON.stringify(localStorage);
+    const blob = new Blob([data], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = `hayger-backup-${today()}.json`;
+    a.click();
+}
+
+function importData() {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.onchange = e => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        reader.onload = () => {
+            const data = JSON.parse(reader.result);
+            Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
+            location.reload();
+        };
+        reader.readAsText(file);
+    };
+    input.click();
+}
+
+// --- INIT ---
+(function() {
+    const theme = localStorage.getItem(KEYS.THEME) || 'light';
+    document.documentElement.dataset.theme = theme;
+    
+    if(localStorage.getItem(KEYS.PIN)) {
+        document.getElementById('lock-screen').style.display = 'flex';
+        initKeypad();
+    } else {
+        render();
     }
-
-    switch(state.view) {
-      case 'home': root.innerHTML = renderHome(); break;
-      case 'history': root.innerHTML = renderHistory(); break;
-      case 'journal': root.innerHTML = renderJournal(); break;
-      case 'settings': root.innerHTML = renderSettings(); break;
-    }
-  }
-
-  // --- Initializers ---
-  applyTheme();
-  render();
-
-  // PWA Service Worker Update Logic
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').then(reg => {
-      reg.addEventListener('updatefound', () => {
-        const newWorker = reg.installing;
-        newWorker.addEventListener('statechange', () => {
-          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            document.getElementById('updateBanner').classList.add('show');
-          }
-        });
-      });
-    });
-  }
-  
-  document.getElementById('updateNow').onclick = () => location.reload();
-
 })();
 </script>
 </body>
