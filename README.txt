@@ -1,9 +1,11 @@
 HAYGER ULTRA
-Home, daily check-in with mood tagging, milestones, history calendar
-with mood dots, weekly activity chart, journey + streak achievement
-badges, custom goals, journal notes with search, share progress,
-optional PIN app lock, backup export/import, theme controls, optional
-reminder, offline PWA support.
+Home, daily check-in with mood tagging, redesigned History tab
+(circular day calendar, 10-week activity heatmap, tap any day for
+details, monthly streak summary), Stats with accurate check-in
+rate + goal progress, weekly activity chart, journey + streak
+achievement badges, custom goals, journal notes with search, share
+progress, optional PIN app lock, backup export/import, theme
+controls, optional reminder, offline PWA support.
 
 Keep these files together:
 index.html
