@@ -291,55 +291,21 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 #confettiCanvas{position:fixed;inset:0;z-index:80;pointer-events:none}
 
 .modal.danger h2{color:var(--danger)}
+
+.profile-hero{display:flex;align-items:center;gap:13px;padding:16px;border:1px solid var(--line);border-radius:19px;background:var(--soft);box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.profile-avatar{width:56px;height:56px;flex:0 0 56px;border-radius:18px;background:var(--primary);color:var(--primaryText);display:grid;place-items:center;font-family:var(--font-display);font-size:22px;font-weight:900}
+.profile-main{min-width:0}.profile-kicker{font-size:9px;letter-spacing:1.5px;font-weight:900;color:var(--muted);margin-bottom:3px}.profile-main h2{margin:0;font-size:21px;line-height:1.1}.profile-main span{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:650}
+.profile-settings-heading{margin:18px 4px 8px;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:900}
+.setting-title{font-size:9px;letter-spacing:1.2px;font-weight:900;color:var(--muted);margin-bottom:10px}
+.profile-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.profile-form label:first-child{grid-column:1/-1}.profile-form label span{display:block;font-size:9px;font-weight:850;color:var(--muted);margin:0 0 5px}
+.profile-form input,.profile-form select{width:100%;height:43px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:12px}
+.profile-save{width:100%;margin-top:10px}
 </style>
-<style id="hayger-profile-notes-css">
-.hayger-name-overlay{position:fixed;inset:0;z-index:99998;display:none;align-items:center;justify-content:center;padding:20px;background:#0008;backdrop-filter:blur(12px)}
-.hayger-name-overlay.show{display:flex}.hayger-name-card{width:min(410px,100%);padding:24px;border-radius:26px;background:var(--surface,#fff);color:var(--text,#111);box-shadow:0 28px 90px #0005}.hayger-name-card h2{margin:0 0 7px}.hayger-name-card p{margin:0 0 16px;color:var(--text-soft,#777);font-size:13px}.hayger-name-input{width:100%;height:50px;padding:0 14px;border-radius:14px;border:1px solid var(--border,#ddd);background:var(--surface-soft,#f2f2f2);color:inherit;outline:none}.hayger-name-save{width:100%;height:50px;margin-top:10px;border:0;border-radius:14px;background:var(--primary,#111);color:var(--primary-text,#fff);font-weight:800}.hayger-profile{font-size:11px;color:var(--text-soft,#777);margin-top:7px;font-weight:700}
-.note-actions{display:flex;gap:7px;margin-top:9px}.note-actions button{flex:1;min-height:38px;border:1px solid var(--border,#ddd);border-radius:11px;background:var(--surface-soft,#f2f2f2);color:inherit;font-weight:800}.note-actions .note-delete{color:#dc2626}
-</style>
-<style id="hayger-profile-v2-css">
-.hayger-profile-btn{position:fixed;right:14px;top:max(14px,env(safe-area-inset-top));z-index:9000;width:44px;height:44px;border:1px solid var(--border,#ddd);border-radius:15px;background:var(--surface,#fff);color:var(--text,#111);font-size:19px;font-weight:900;box-shadow:0 8px 25px #00000012}
-.hayger-profile-panel{position:fixed;inset:0;z-index:10000;display:none;background:#0008;backdrop-filter:blur(14px);padding:20px;align-items:flex-end;justify-content:center}
-.hayger-profile-panel.show{display:flex}
-.hayger-profile-sheet{width:min(520px,100%);max-height:88dvh;overflow:auto;background:var(--surface,#fff);color:var(--text,#111);border:1px solid var(--border,#ddd);border-radius:28px;padding:22px;box-shadow:0 30px 100px #0005}
-.hayger-profile-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
-.hayger-avatar{width:58px;height:58px;border-radius:20px;background:var(--primary,#111);color:var(--primary-text,#fff);display:grid;place-items:center;font-size:23px;font-weight:900}
-.hayger-profile-head h2{margin:0;font-size:23px}.hayger-profile-head p{margin:4px 0 0;color:var(--text-soft,#777);font-size:12px}
-.hayger-profile-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.hayger-profile-field label{display:block;font-size:10px;font-weight:800;color:var(--text-soft,#777);margin:0 0 5px;text-transform:uppercase;letter-spacing:.7px}
-.hayger-profile-field input,.hayger-profile-field select{width:100%;height:46px;padding:0 12px;border-radius:13px;border:1px solid var(--border,#ddd);background:var(--surface-soft,#f2f2f2);color:inherit;outline:none}
-.hayger-profile-actions{display:grid;gap:8px;margin-top:14px}.hayger-profile-actions button{height:46px;border:0;border-radius:13px;font-weight:850}.hp-save{background:var(--primary,#111);color:var(--primary-text,#fff)}.hp-close{background:var(--surface-soft,#f2f2f2);color:inherit}
-.hayger-settings{margin-top:18px;border-top:1px solid var(--border,#ddd);padding-top:15px}.hayger-settings-title{font-size:12px;font-weight:900;margin-bottom:8px}.hayger-settings button{width:100%;height:44px;margin:4px 0;border:1px solid var(--border,#ddd);border-radius:12px;background:var(--surface-soft,#f2f2f2);color:inherit;font-weight:750}
-.hayger-profile-note{margin-top:10px;color:var(--text-soft,#777);font-size:11px;line-height:1.45}
-.note-actions{display:flex!important;gap:7px!important;margin-top:9px!important}.note-actions button{flex:1!important;min-height:38px!important;border:1px solid var(--border,#ddd)!important;border-radius:11px!important;background:var(--surface-soft,#f2f2f2)!important;color:inherit!important;font-weight:800!important}.note-actions .note-delete{color:#dc2626!important}
-</style>
+
+
 </head>
 
 <body>
-<button id="haygerProfileBtn" class="hayger-profile-btn" type="button" aria-label="Open profile">●</button>
-<div id="haygerProfilePanel" class="hayger-profile-panel">
- <section class="hayger-profile-sheet">
-  <div class="hayger-profile-head">
-   <div id="haygerAvatar" class="hayger-avatar">H</div>
-   <div><h2 id="haygerProfileTitle">Your Profile</h2><p id="haygerProfileSub">Set up your HAYGER profile</p></div>
-  </div>
-  <div class="hayger-profile-grid">
-   <div class="hayger-profile-field" style="grid-column:1/-1"><label>Name</label><input id="hpName" maxlength="40" placeholder="Your name"></div>
-   <div class="hayger-profile-field"><label>Age</label><input id="hpAge" type="number" min="1" max="120" inputmode="numeric" placeholder="Age"></div>
-   <div class="hayger-profile-field"><label>Gender</label><select id="hpGender"><option value="">Prefer not to say</option><option>Male</option><option>Female</option><option>Other</option></select></div>
-  </div>
-  <div class="hayger-profile-actions"><button id="hpSave" class="hp-save">SAVE PROFILE</button><button id="hpClose" class="hp-close">CLOSE</button></div>
-  <div class="hayger-settings">
-   <div class="hayger-settings-title">SETTINGS</div>
-   <button id="hpTheme">Theme</button>
-   <button id="hpReset">Reset HAYGER data</button>
-  </div>
-  <div class="hayger-profile-note">Your profile information is stored locally on this device.</div>
- </section>
-</div>
-<div id="haygerNameOverlay" class="hayger-name-overlay"><div class="hayger-name-card">
-<h2>Set your name</h2><p>This name stays on your device and can be changed anytime.</p>
-<input id="haygerNameInput" class="hayger-name-input" maxlength="40" placeholder="Your name" autocomplete="name">
-<button id="haygerNameSave" class="hayger-name-save" type="button">SAVE NAME</button></div></div>
 <div class="app-shell">
   <header class="app-header">
     <div class="app-header-inner">
@@ -771,7 +737,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     {id:"calendar",label:"HISTORY",icon:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'},
     {id:"stats",label:"STATS",icon:'<svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-7"/></svg>'},
     {id:"awards",label:"AWARDS",icon:'<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.6L21 9.5l-4.7 4 1.3 6.5L12 16.9l-5.6 3.1L7.7 13.5 3 9.5l6.5-.9L12 3z"/></svg>'},
-    {id:"more",label:"MORE",icon:'<svg viewBox="0 0 24 24" stroke-width="2.2"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>'}
+    {id:"profile",label:"PROFILE",icon:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.7-4.1 3.1-6 7.5-6s6.8 1.9 7.5 6"/></svg>'}
   ];
   const tabbarEl=document.getElementById("tabbar");
   tabbarEl.innerHTML=TABS.map(t=>`<button class="tab-btn" data-view="${t.id}" type="button">${t.icon}<span>${t.label}</span></button>`).join("");
@@ -931,14 +897,43 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
 
       <input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">
-      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
+      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item" data-note-key="${escapeHTML(k)}"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
     </div>`;
   }
 
   function renderMore(){
     const r=reminder();
+    let profile={};
+    try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
+    const savedName=profile.name||localStorage.getItem("hayger_profile_name_v1")||"";
+    const initial=escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
     return `<div class="container">
-      <h2 class="section-title">More</h2>
+      <div class="profile-hero">
+        <div class="profile-avatar">${initial}</div>
+        <div class="profile-main">
+          <div class="profile-kicker">YOUR PROFILE</div>
+          <h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2>
+          <span>Personalize your HAYGER experience</span>
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-title">PROFILE DETAILS</div>
+        <div class="profile-form">
+          <label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label>
+          <label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label>
+          <label><span>GENDER</span><select id="profileGender">
+            <option value="">Prefer not to say</option>
+            <option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option>
+            <option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option>
+            <option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option>
+          </select></label>
+        </div>
+        <button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button>
+      </div>
+
+      <h3 class="profile-settings-heading">SETTINGS</h3>
+
       <div class="settings-card">
         <div class="setting-row">
           <div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div>
@@ -976,7 +971,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <button id="cycleThemeMore" class="small-button" type="button">CHANGE</button>
         </div>
         <div class="setting-row">
-          <div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER. There's no recovery — forgetting it means resetting the app.</span></div>
+          <div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div>
           <input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}>
         </div>
       </div>
@@ -1008,7 +1003,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     if(phaseView==="calendar") return renderCalendar();
     if(phaseView==="stats") return renderStats();
     if(phaseView==="awards") return renderAwards();
-    if(phaseView==="more") return renderMore();
+    if(phaseView==="profile") return renderMore();
     return "";
   }
 
@@ -1150,7 +1145,19 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       });
     }
 
-    if(phaseView==="more"){
+    if(phaseView==="profile"){
+      document.getElementById("saveProfile")?.addEventListener("click",()=>{
+        const name=(document.getElementById("profileName")?.value||"").trim();
+        const age=(document.getElementById("profileAge")?.value||"").trim();
+        const gender=document.getElementById("profileGender")?.value||"";
+        if(!name){showToast("Please enter your name.");return}
+        const data={name,age,gender,updatedAt:new Date().toISOString()};
+        localStorage.setItem("hayger_profile_v2",JSON.stringify(data));
+        localStorage.setItem("hayger_profile_name_v1",name);
+        showToast("✓ Profile saved.");
+        render();
+      });
+
       document.getElementById("changeDate")?.addEventListener("click",openModal);
     }
 
@@ -1201,6 +1208,22 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           if(again){again.focus();again.setSelectionRange(cursor,cursor)}
         });
       }
+      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>{
+        const key=btn.dataset.noteEdit, map=notes(), old=map[key]||"";
+        const next=prompt("Edit note",old);
+        if(next!==null){
+          const value=next.trim();
+          if(value){map[key]=value;writeJSON(NOTES_KEY,map);render();showToast("✓ Note updated.")}
+        }
+      }));
+      document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.addEventListener("click",()=>{
+        const key=btn.dataset.noteDelete, map=notes();
+        if(!map[key]) return;
+        askConfirm("Delete note?","This note will be permanently removed.").then(ok=>{
+          if(ok){delete map[key];writeJSON(NOTES_KEY,map);render();showToast("✓ Note deleted.")}
+        });
+      }));
+
     }
 
     if(phaseView==="awards"){
@@ -1208,7 +1231,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("exportAwards")?.addEventListener("click",exportData);
     }
 
-    if(phaseView==="more"){
+    if(phaseView==="profile"){
       const enabled=document.getElementById("reminderEnabled");
       const time=document.getElementById("reminderTime");
       const saveReminder=async()=>{
@@ -1429,14 +1452,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
-<script id="hayger-profile-notes-js">
-(()=>{const KEY="hayger_profile_name_v1",$=id=>document.getElementById(id);
-window.HAYGER_PROFILE={get:()=>localStorage.getItem(KEY)||"",set:n=>{n=(n||"").trim().slice(0,40);if(n)localStorage.setItem(KEY,n)}};
-function showName(force=false){const n=localStorage.getItem(KEY)||"";if(force||!n){$("haygerNameOverlay").classList.add("show");$("haygerNameInput").value=n;setTimeout(()=>$("haygerNameInput").focus(),80)}}
-$("haygerNameSave").onclick=()=>{const n=$("haygerNameInput").value.trim();if(!n)return alert("Please enter your name.");localStorage.setItem(KEY,n);$("haygerNameOverlay").classList.remove("show");location.reload()};
-document.addEventListener("DOMContentLoaded",()=>{if(!localStorage.getItem(KEY))setTimeout(()=>showName(),350)});
-})();
-</script><script id="hayger-note-actions-js">
+<script id="hayger-note-actions-js">
 (()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
 function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
 function write(x){localStorage.setItem(key(),JSON.stringify(x))}
@@ -1454,33 +1470,9 @@ window.addEventListener("load",()=>{
 });
 })();
 </script>
-<script id="hayger-profile-v2-js">
-(()=>{const K="hayger_profile_v2",OLD="hayger_profile_name_v1",$=id=>document.getElementById(id);
-function get(){try{return JSON.parse(localStorage.getItem(K)||"{}")}catch(e){return{}}}
-function save(x){localStorage.setItem(K,JSON.stringify(x))}
-function render(){let x=get(),n=x.name||localStorage.getItem(OLD)||"";$("hpName").value=n;$("hpAge").value=x.age||"";$("hpGender").value=x.gender||"";$("haygerAvatar").textContent=(n||"H").trim().charAt(0).toUpperCase();$("haygerProfileTitle").textContent=n||"Your Profile";$("haygerProfileSub").textContent=n?"HAYGER profile":"Set up your HAYGER profile"}
-function open(){render();$("haygerProfilePanel").classList.add("show")}
-$("haygerProfileBtn").onclick=open;$("hpClose").onclick=()=>$("haygerProfilePanel").classList.remove("show");
-$("hpSave").onclick=()=>{let n=$("hpName").value.trim(),a=$("hpAge").value.trim(),g=$("hpGender").value;if(!n)return alert("Please enter your name.");save({name:n,age:a,gender:g,updatedAt:new Date().toISOString()});localStorage.setItem(OLD,n);$("haygerProfilePanel").classList.remove("show");render();alert("Profile saved.");};
-$("hpTheme").onclick=()=>{if(typeof cycleTheme==="function")cycleTheme();else{let t=localStorage.getItem("hayger_theme")||"system";t=t==="system"?"light":t==="light"?"dark":"system";localStorage.setItem("hayger_theme",t);location.reload()}};
-$("hpReset").onclick=()=>{if(confirm("Reset HAYGER data on this device? This will remove your saved progress and notes.")){["hayger_start_date","hayger_profile_v2","hayger_profile_name_v1","hayger_notes","hayger_notes_v1","haygerNotes"].forEach(k=>localStorage.removeItem(k));location.reload()}};
-$("haygerProfilePanel").addEventListener("click",e=>{if(e.target===$("haygerProfilePanel"))$("haygerProfilePanel").classList.remove("show")});
-window.HAYGER_PROFILE_V2={get,open}; render();
-})();
-</script>
 
-<script id="hayger-notes-crud-v2">
-(()=>{const KEYS=["hayger_notes_v2","hayger_notes","hayger_notes_v1","haygerNotes","notes"];
-function findKey(){return KEYS.find(k=>localStorage.getItem(k)!==null)||"hayger_notes_v2"}
-function read(){try{let x=JSON.parse(localStorage.getItem(findKey())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
-function write(a){localStorage.setItem(findKey(),JSON.stringify(a))}
-function textOf(n){return typeof n==="string"?n:(n&&((n.text)||(n.content)||(n.note)||""))}
-function setText(n,t){return typeof n==="string"?t:{...n,text:t}}
-window.HAYGER_NOTES_CRUD={edit(i){let a=read();if(!a[i])return;let n=prompt("Edit note",textOf(a[i]));if(n!==null&&n.trim()){a[i]=setText(a[i],n.trim());write(a);location.reload()}},delete(i){let a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}},all:read};
-function addButtons(){document.querySelectorAll("[data-note-index]").forEach(el=>{let i=Number(el.getAttribute("data-note-index"));if(!Number.isInteger(i)||el.querySelector(".note-actions"))return;let b=document.createElement("div");b.className="note-actions";b.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';b.querySelector(".note-edit").onclick=()=>window.HAYGER_NOTES_CRUD.edit(i);b.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES_CRUD.delete(i);el.appendChild(b)})}
-new MutationObserver(addButtons).observe(document.body,{childList:true,subtree:true});window.addEventListener("load",addButtons);setTimeout(addButtons,600);
-})();
-</script>
+
+
 </body>
 </html>
 <!-- HAYGER profile/notes upgrade v2 -->
