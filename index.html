@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f6f7f9">
+<meta name="theme-color" content="#eef0ee">
 <meta name="description" content="HAYGER — one day at a time. Goals, streaks, history and daily progress.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,80 +11,87 @@
 <meta name="apple-mobile-web-app-title" content="HAYGER">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icon-192.png" type="image/png">
-<title>HAYGER — Ultimate</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<title>HAYGER — Ultra</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#f6f7f9;--surface:#fff;--soft:#f0f1f3;--soft2:#e9eaed;
-  --text:#101114;--muted:#6b7078;--line:#e4e6ea;--danger:#dc2626;
-  --primary:#101114;--primaryText:#fff;
-  --shadow:0 24px 70px rgba(0,0,0,.09);
+  --bg:#eef0ee;--surface:#ffffff;--soft:#e6e9e6;--soft2:#dde1dd;
+  --text:#14161a;--muted:#6c716f;--line:#dbdfdb;--danger:#c23b3b;
+  --primary:#14161a;--primaryText:#fff;
+  --accent:#b9791f;--accent-soft:rgba(185,121,31,.13);
+  --shadow:0 20px 60px rgba(20,22,26,.10);
   --xl:32px;--lg:21px;--md:15px;
+  --font-display:'Fraunces',Georgia,serif;
+  --font-body:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 [data-theme=dark]{
-  --bg:#090a0c;--surface:#151619;--soft:#202125;--soft2:#282a2f;
-  --text:#f5f5f6;--muted:#999da6;--line:#2b2d32;--danger:#ff7777;
-  --primary:#f5f5f6;--primaryText:#101114;
-  --shadow:0 28px 80px rgba(0,0,0,.42);
+  --bg:#0b0c10;--surface:#15171c;--soft:#1c1f26;--soft2:#262a31;
+  --text:#f4f4f2;--muted:#93979f;--line:#2a2e36;--danger:#ff8a8a;
+  --primary:#f4f4f2;--primaryText:#101114;
+  --accent:#e3a94a;--accent-soft:rgba(227,169,74,.16);
+  --shadow:0 26px 74px rgba(0,0,0,.46);
 }
-html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text)}
+html,body{margin:0;height:100%}
 body{
-  min-height:100vh;min-height:100dvh;overflow-x:hidden;overscroll-behavior:none;
-  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);
   user-select:none;-webkit-user-select:none;touch-action:manipulation;
   transition:background .25s,color .25s;
 }
-button,input{font:inherit}button{cursor:pointer}
-.app{
-  min-height:100vh;min-height:100dvh;padding:max(18px,env(safe-area-inset-top)) 17px max(18px,env(safe-area-inset-bottom));
-  display:flex;align-items:center;justify-content:center;
-}
-.container{width:100%;max-width:460px}
-.card{
-  width:100%;padding:18px;background:var(--surface);border:1px solid var(--line);
-  border-radius:var(--xl);box-shadow:var(--shadow);animation:enter .4s ease both;
-}
-@keyframes enter{from{opacity:0;transform:translateY(10px) scale(.99)}to{opacity:1;transform:none}}
-.header{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 18px}
-.brand{font-size:17px;font-weight:950;letter-spacing:3px;line-height:1}
-.brand-sub{margin-top:6px;color:var(--muted);font-size:10px;font-weight:700;letter-spacing:.7px}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app-shell{display:flex;flex-direction:column;height:100%}
+.app-header{flex:0 0 auto;padding:max(16px,env(safe-area-inset-top)) 20px 13px;border-bottom:1px solid var(--line)}
+.app-header-inner{display:flex;align-items:center;justify-content:space-between;max-width:460px;margin:0 auto;width:100%}
+.brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1}
+.brand-sub{margin-top:5px;color:var(--muted);font-size:9px;font-weight:750;letter-spacing:1.6px}
 .theme-button{
-  width:42px;height:42px;padding:0;display:grid;place-items:center;
-  border:1px solid var(--line);border-radius:14px;background:var(--soft);color:var(--text);
+  width:40px;height:40px;padding:0;display:grid;place-items:center;flex:0 0 auto;
+  border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);
   transition:transform .18s,background .2s;
 }
 .theme-button:active{transform:scale(.92)}
-.theme-button svg{width:18px;height:18px}
-.hero{
-  position:relative;overflow:hidden;padding:32px 18px 29px;border-radius:25px;
-  background:var(--soft);text-align:center;
+.theme-button svg{width:17px;height:17px}
+.app-scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 26px}
+body.has-tabbar .app-scroll{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+.container{width:100%;max-width:460px;margin:0 auto;animation:enter .35s ease both}
+@keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.app-tabbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;
+  justify-content:space-around;align-items:stretch;gap:2px;
+  padding:7px 8px calc(7px + env(safe-area-inset-bottom));
+  background:color-mix(in srgb, var(--surface) 88%, transparent);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-top:1px solid var(--line);
 }
-.hero:before{
-  content:"";position:absolute;width:190px;height:190px;top:-105px;left:50%;
-  transform:translateX(-50%);border-radius:50%;background:rgba(128,128,128,.075);
-}
-.hero:after{
-  content:"";position:absolute;width:290px;height:1px;left:50%;bottom:0;
-  transform:translateX(-50%);background:linear-gradient(90deg,transparent,var(--line),transparent)
-}
-.hero-label{position:relative;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:2px;text-transform:uppercase}
-.day{position:relative;margin-top:10px;display:flex;align-items:baseline;justify-content:center;line-height:.9}
-.day-word{font-size:15px;font-weight:850;letter-spacing:1px;color:var(--muted);margin-right:8px}
-.day-number{
-  font-size:clamp(64px,20vw,92px);font-weight:950;letter-spacing:-5px;
-  font-variant-numeric:tabular-nums;line-height:.88;
-}
-.today{position:relative;margin-top:18px;color:var(--muted);font-size:14px;font-weight:650}
-.streak{
-  position:relative;margin:15px auto 0;width:max-content;padding:7px 11px;
-  border:1px solid var(--line);border-radius:999px;background:rgba(127,127,127,.055);
-  color:var(--muted);font-size:10px;font-weight:800;
-}
-.streak-dot{display:inline-block;width:6px;height:6px;margin-right:6px;border-radius:50%;background:#55bd7e;box-shadow:0 0 0 4px rgba(85,189,126,.08)}
-.message{margin:18px 3px 0;color:var(--muted);font-size:13px;line-height:1.55;text-align:center}
+body.has-tabbar .app-tabbar{display:flex}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  min-width:0;padding:6px 2px;border:0;background:transparent;color:var(--muted);
+  font-size:9px;font-weight:800;letter-spacing:.2px;border-radius:13px;transition:.15s}
+.tab-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab-btn.active{color:var(--text)}
+.tab-btn.active svg{stroke:var(--accent)}
+.tab-btn:active{transform:scale(.93)}
+
+.ring-wrap{position:relative;width:198px;height:198px;margin:6px auto 0}
+.ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring-track{fill:none;stroke:var(--soft2);stroke-width:6}
+.ring-fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.22,.9,.3,1)}
+.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-label{font-size:10px;font-weight:850;letter-spacing:2.4px;color:var(--muted)}
+.ring-number{font-family:var(--font-display);font-size:clamp(54px,16vw,74px);font-weight:700;line-height:1;letter-spacing:-2px;margin-top:3px}
+
+.hero-panel{padding:10px 4px 4px;text-align:center}
+.hero-date{margin-top:18px;color:var(--muted);font-size:13.5px;font-weight:600}
+.hero-tag{margin:14px auto 0;width:max-content;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800;display:flex;align-items:center;gap:6px}
+.streak-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#55bd7e;box-shadow:0 0 0 4px rgba(85,189,126,.1)}
+.message{margin:20px 3px 0;padding:13px 14px;border-radius:16px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center}
 .message strong{color:var(--text);font-weight:800}
-.actions{display:grid;gap:10px;margin-top:18px}
+
 .button{
   width:100%;min-height:50px;border:0;border-radius:var(--md);
   font-size:13px;font-weight:850;transition:transform .15s,opacity .15s,background .2s
@@ -92,14 +99,14 @@ button,input{font:inherit}button{cursor:pointer}
 .button:active{transform:scale(.985)}
 .primary{background:var(--primary);color:var(--primaryText)}
 .secondary{background:var(--soft);color:var(--text)}
-.button:hover{opacity:.9}
 .setup{padding:24px 8px 8px;text-align:center}
 .setup-icon{
-  width:66px;height:66px;margin:0 auto 18px;display:grid;place-items:center;
-  border-radius:20px;background:var(--primary);color:var(--primaryText);
-  font-size:25px;font-weight:950;letter-spacing:-2px
+  width:60px;height:60px;margin:0 auto 18px;display:grid;place-items:center;
+  border-radius:19px;background:var(--primary);color:var(--primaryText);
+  font-family:var(--font-display);font-size:23px;font-weight:700;position:relative;
 }
-.setup h1{margin:0;font-size:28px;font-weight:900;letter-spacing:-.8px}
+.setup-icon:after{content:"";position:absolute;inset:-5px;border-radius:24px;border:1.5px solid var(--accent);opacity:.5}
+.setup h1{margin:0;font-family:var(--font-display);font-size:27px;font-weight:700;letter-spacing:-.4px}
 .setup p{margin:10px auto 25px;max-width:330px;color:var(--muted);font-size:14px;line-height:1.55}
 .field{text-align:left}
 .field-label{display:block;margin:0 0 7px 2px;color:var(--muted);font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
@@ -109,12 +116,12 @@ button,input{font:inherit}button{cursor:pointer}
   user-select:auto;-webkit-user-select:auto;color-scheme:light;
 }
 [data-theme=dark] .date-input{color-scheme:dark}
-.date-input:focus{border-color:var(--text);box-shadow:0 0 0 3px rgba(127,127,127,.12)}
+.date-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
 .error{min-height:19px;margin-top:7px;color:var(--danger);font-size:12px;font-weight:650;text-align:left}
 .footer{margin-top:18px;text-align:center;color:var(--muted);font-size:10px;font-weight:650;letter-spacing:.2px}
 .modal-backdrop{
-  position:fixed;inset:0;z-index:20;display:none;align-items:flex-end;justify-content:center;
-  padding:16px;background:rgba(0,0,0,.42);backdrop-filter:blur(6px)
+  position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;
+  padding:16px;background:rgba(10,10,12,.5);backdrop-filter:blur(6px)
 }
 .modal-backdrop.open{display:flex}
 .modal{
@@ -122,42 +129,39 @@ button,input{font:inherit}button{cursor:pointer}
   background:var(--surface);box-shadow:var(--shadow);animation:up .25s ease both
 }
 @keyframes up{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
-.modal h2{margin:0;font-size:19px;letter-spacing:-.4px}
+.modal h2{margin:0;font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.2px}
 .modal p{margin:8px 0 17px;color:var(--muted);font-size:13px;line-height:1.5}
 .modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .toast{
-  position:fixed;z-index:30;left:50%;bottom:max(18px,env(safe-area-inset-bottom));
+  position:fixed;z-index:70;left:50%;bottom:max(18px,env(safe-area-inset-bottom));
   transform:translate(-50%,15px);opacity:0;pointer-events:none;padding:10px 14px;
   border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--text);
   box-shadow:var(--shadow);font-size:11px;font-weight:800;transition:.25s
 }
+body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-.checkin{margin-top:16px;padding:14px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
+.section-title{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.3px;margin:0 0 14px}
+
+.checkin{margin-top:0;padding:15px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:center}
 .checkin-text{color:var(--muted);font-size:11px;font-weight:750}
-.checkin-button{margin-top:9px;width:100%;min-height:46px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;transition:.15s}
+.checkin-button{margin-top:9px;width:100%;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;transition:.15s}
 .checkin-button:active{transform:scale(.985)}
 .checkin-button.done{background:var(--primary);color:var(--primaryText)}
-.motivation{margin:14px 3px 0;padding:12px 13px;border-radius:15px;background:var(--soft);color:var(--muted);font-size:11px;line-height:1.45;text-align:center}
-.milestone{margin-top:10px;text-align:center;color:var(--muted);font-size:10px;font-weight:750}
-.milestone strong{color:var(--text)}
+.milestone{margin-top:14px;text-align:center;color:var(--muted);font-size:10.5px;font-weight:750}
+.milestone strong{color:var(--accent)}
 
-
-.phase-nav{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:15px 0 0}
-.phase-tab{min-height:39px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:900}
-.phase-tab.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
-.phase-panel{margin-top:12px}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
 .stat{padding:13px 7px;border:1px solid var(--line);border-radius:15px;background:var(--soft);text-align:center}
-.stat b{display:block;font-size:20px;letter-spacing:-.6px}
-.stat span{display:block;margin-top:4px;color:var(--muted);font-size:9px;font-weight:800}
+.stat b{display:block;font-family:var(--font-display);font-size:21px;font-weight:700;letter-spacing:-.4px}
+.stat span{display:block;margin-top:4px;color:var(--muted);font-size:8.5px;font-weight:800}
 .calendar-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;gap:6px}
-.calendar-title{font-size:13px;font-weight:900}
+.calendar-title{font-family:var(--font-display);font-size:15px;font-weight:700}
 .cal-nav{width:32px;height:32px;flex:0 0 auto;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);font-weight:900}
 .cal-today-btn{flex:0 0 auto;height:32px;padding:0 11px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);font-size:9px;font-weight:900;letter-spacing:.3px}
 .cal-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;padding:13px 15px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
-.cal-summary-item b{display:block;font-size:19px;letter-spacing:-.5px;line-height:1}
-.cal-summary-item span{display:block;margin-top:4px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.5px;text-transform:uppercase}
+.cal-summary-item b{display:block;font-family:var(--font-display);font-size:20px;font-weight:700;letter-spacing:-.3px;line-height:1}
+.cal-summary-item span{display:block;margin-top:5px;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.5px;text-transform:uppercase}
 .cal-summary-div{width:1px;align-self:stretch;background:var(--line)}
 .heatmap-card{padding:13px 12px 11px;margin-bottom:12px;border:1px solid var(--line);border-radius:16px;background:var(--soft);overflow-x:auto}
 .heatmap-title{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px}
@@ -165,13 +169,13 @@ button,input{font:inherit}button{cursor:pointer}
 .heatmap-title span{color:var(--muted);font-size:9px;font-weight:750}
 .heatmap-grid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,1fr);gap:3.5px;min-width:100%}
 .heat-cell{width:15px;height:15px;border-radius:4px;background:var(--soft2)}
-.heat-cell.done{background:var(--primary)}
+.heat-cell.done{background:var(--accent)}
 .heat-cell.future{visibility:hidden}
 .calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .cal-dow{text-align:center;color:var(--muted);font-size:8px;font-weight:900;padding-bottom:5px}
 .cal-day{position:relative;aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:11px;font-weight:750;transition:transform .12s}
 .cal-day:active{transform:scale(.92)}
-.cal-day.done{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
+.cal-day.done{background:var(--accent);color:#1c1204;border-color:var(--accent)}
 .cal-day.today{box-shadow:0 0 0 2px var(--text)}
 .cal-day.empty{visibility:hidden;pointer-events:none}
 .cal-mood-badge{position:absolute;bottom:-4px;right:-4px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:1.5px solid var(--bg);display:grid;place-items:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
@@ -182,19 +186,15 @@ button,input{font:inherit}button{cursor:pointer}
 .day-detail-mood{font-size:20px}
 .notes{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .notes textarea{width:100%;min-height:92px;resize:none;border:1px solid var(--line);border-radius:12px;padding:11px;background:var(--surface);color:var(--text);outline:none;font:inherit;font-size:12px}
-.notes textarea:focus{border-color:var(--text)}
+.notes textarea:focus{border-color:var(--accent)}
 .save-note{margin-top:8px;width:100%;min-height:43px;border:0;border-radius:12px;background:var(--primary);color:var(--primaryText);font-size:11px;font-weight:900}
 .note-meta{margin-top:7px;color:var(--muted);font-size:9px;text-align:center}
 
-
-.ultimate-nav{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin:15px 0 0}
-.ultimate-tab{min-height:38px;padding:0 2px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--muted);font-size:8px;font-weight:900}
-.ultimate-tab.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
 .goal-card,.settings-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .goal-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .goal-title{font-size:12px;font-weight:900}.goal-value{color:var(--muted);font-size:10px;font-weight:800}
 .progress-track{height:7px;margin-top:10px;border-radius:999px;background:var(--soft2);overflow:hidden}
-.progress-fill{height:100%;border-radius:999px;background:var(--primary);transition:width .35s ease}
+.progress-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .35s ease}
 .goal-controls{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:10px}
 .small-button{min-height:38px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);font-size:10px;font-weight:900}
 .setting-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--line)}
@@ -208,9 +208,8 @@ button,input{font:inherit}button{cursor:pointer}
 .note-item b{font-size:10px}.note-item p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.4;white-space:pre-wrap}
 .reminder-status{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.4}
 
-@media(max-width:360px){.app{padding-left:12px;padding-right:12px}.card{padding:14px;border-radius:28px}.hero{padding-top:29px}.day-number{font-size:64px}}
+@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
-
 
 /* PWA update banner */
 .update-banner{
@@ -222,6 +221,7 @@ button,input{font:inherit}button{cursor:pointer}
   background:var(--surface);color:var(--text);box-shadow:var(--shadow);
   transition:transform .28s ease,opacity .28s ease;
 }
+body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-bottom)))}
 .update-banner.show{transform:translate(-50%,0);opacity:1;pointer-events:auto}
 .update-copy{flex:1;min-width:0}
 .update-copy b{display:block;font-size:12px;font-weight:900}
@@ -240,7 +240,7 @@ button,input{font:inherit}button{cursor:pointer}
 .badge-section-title{margin:0 0 8px 2px;color:var(--muted);font-size:10px;font-weight:850;letter-spacing:1.2px;text-transform:uppercase}
 .badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .badge{padding:11px 4px 9px;border:1px solid var(--line);border-radius:15px;background:var(--soft);text-align:center;opacity:.4;transition:.2s}
-.badge.unlocked{opacity:1;background:var(--surface);box-shadow:0 6px 18px rgba(0,0,0,.07)}
+.badge.unlocked{opacity:1;background:var(--surface);border-color:var(--accent);box-shadow:0 6px 18px rgba(185,121,31,.12)}
 .badge-icon{font-size:19px;line-height:1}
 .badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
 .badge.unlocked .badge-label{color:var(--text)}
@@ -248,7 +248,7 @@ button,input{font:inherit}button{cursor:pointer}
 /* Ultra: mood */
 .mood-row{display:flex;gap:6px;margin-top:11px;justify-content:center}
 .mood-chip{width:39px;height:39px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--soft);font-size:17px;transition:.15s}
-.mood-chip.active{background:var(--primary);border-color:var(--primary);transform:scale(1.06)}
+.mood-chip.active{background:var(--accent-soft);border-color:var(--accent);transform:scale(1.06)}
 .mood-hint{margin-top:8px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
 
 /* Ultra: charts */
@@ -260,16 +260,16 @@ button,input{font:inherit}button{cursor:pointer}
 
 /* Ultra: notes search */
 .note-search{width:100%;height:40px;padding:0 12px;margin-top:10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);outline:none;font-size:11px}
-.note-search:focus{border-color:var(--text)}
+.note-search:focus{border-color:var(--accent)}
 .note-empty{margin-top:10px;color:var(--muted);font-size:10px;text-align:center}
 
 /* Ultra: share */
-.share-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
+.share-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
 
 /* Ultra: PIN lock */
 .pin-dots{display:flex;gap:12px;justify-content:center;margin:22px 0}
 .pin-dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;transition:.15s}
-.pin-dot.filled{background:var(--text);border-color:var(--text)}
+.pin-dot.filled{background:var(--accent);border-color:var(--accent)}
 .pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:270px;margin:0 auto}
 .pin-key{min-height:56px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--text);font-size:19px;font-weight:800}
 .pin-key:active{transform:scale(.94)}
@@ -278,20 +278,31 @@ button,input{font:inherit}button{cursor:pointer}
 .pin-setup-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .pin-setup-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .pin-box{width:38px;height:44px;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;outline:none}
-.pin-box:focus{border-color:var(--text)}
+.pin-box:focus{border-color:var(--accent)}
 .lock-footer{margin-top:16px;text-align:center}
 .lock-footer button{background:none;border:0;color:var(--muted);font-size:10px;font-weight:800;text-decoration:underline;padding:6px}
 
 /* Ultra: confetti overlay */
-#confettiCanvas{position:fixed;inset:0;z-index:60;pointer-events:none}
+#confettiCanvas{position:fixed;inset:0;z-index:80;pointer-events:none}
 
-/* Ultra: generic confirm modal reuse */
 .modal.danger h2{color:var(--danger)}
 </style>
 </head>
 
 <body>
-<main class="app"><div id="app" class="container"></div></main>
+<div class="app-shell">
+  <header class="app-header">
+    <div class="app-header-inner">
+      <div>
+        <div class="brand">HAYGER</div>
+        <div class="brand-sub">ONE DAY AT A TIME</div>
+      </div>
+      <button id="themeButton" class="theme-button" type="button" aria-label="Change theme"></button>
+    </div>
+  </header>
+  <main id="app" class="app-scroll"></main>
+  <nav id="tabbar" class="app-tabbar" aria-label="Sections"></nav>
+</div>
 <div id="toast" class="toast" role="status"></div>
 <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
@@ -361,7 +372,7 @@ button,input{font:inherit}button{cursor:pointer}
   const icons={
     sun:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"/></svg>',
     moon:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 14.7A8.5 8.5 0 0 1 9.3 3.5 8.5 8.5 0 1 0 20.5 14.7Z"/></svg>',
-    system:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg>'
+    system:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>'
   };
 
   function get(k,f=null){try{return localStorage.getItem(k)??f}catch{return f}}
@@ -470,7 +481,7 @@ button,input{font:inherit}button{cursor:pointer}
     ctx.clearRect(0,0,w,h);
     const styles=getComputedStyle(document.documentElement);
     const line=styles.getPropertyValue("--line").trim();
-    const primary=styles.getPropertyValue("--primary").trim();
+    const primary=styles.getPropertyValue("--accent").trim();
     const barW=Math.max(8,(w/counts.length)-8);
     counts.forEach((c,i)=>{
       const x=i*(w/counts.length)+((w/counts.length)-barW)/2;
@@ -624,7 +635,9 @@ button,input{font:inherit}button{cursor:pointer}
     const t=theme();
     const actual=t==="system"?systemTheme():t;
     document.documentElement.dataset.theme=actual;
-    document.querySelector('meta[name="theme-color"]').content=actual==="dark"?"#090a0c":"#f6f7f9";
+    document.querySelector('meta[name="theme-color"]').content=actual==="dark"?"#0b0c10":"#eef0ee";
+    const tb=document.getElementById("themeButton");
+    if(tb) tb.innerHTML=themeIcon();
   }
 
   function themeIcon(){
@@ -640,21 +653,12 @@ button,input{font:inherit}button{cursor:pointer}
     render();
   }
 
-  function header(){
-    return `<header class="header">
-      <div><div class="brand">HAYGER</div><div class="brand-sub">ONE DAY AT A TIME</div></div>
-      <button id="themeButton" class="theme-button" type="button" aria-label="Change theme">${themeIcon()}</button>
-    </header>`;
-  }
-
-  function bindTheme(){
-    document.getElementById("themeButton")?.addEventListener("click",cycleTheme);
-  }
+  document.getElementById("themeButton").addEventListener("click",cycleTheme);
 
   function setup(){
+    document.body.classList.remove("has-tabbar");
     const max=toInputDate(today());
-    app.innerHTML=`<section class="card">
-      ${header()}
+    app.innerHTML=`<div class="container">
       <div class="setup">
         <div class="setup-icon">H</div>
         <h1>Start your challenge</h1>
@@ -669,9 +673,7 @@ button,input{font:inherit}button{cursor:pointer}
         </div>
       </div>
       <div class="footer">Your progress stays on this device.</div>
-    </section>`;
-
-    bindTheme();
+    </div>`;
 
     document.getElementById("startButton").addEventListener("click",()=>{
       const input=document.getElementById("startDate");
@@ -699,22 +701,35 @@ button,input{font:inherit}button{cursor:pointer}
   let unlocked=sessionStorage.getItem("hayger_unlocked")==="1";
   let pinSetupOpen=false;
 
-  function phaseTabs(){
-    return `<div class="ultimate-nav">
-      <button class="ultimate-tab ${phaseView==="home"?"active":""}" data-view="home">HOME</button>
-      <button class="ultimate-tab ${phaseView==="calendar"?"active":""}" data-view="calendar">HISTORY</button>
-      <button class="ultimate-tab ${phaseView==="stats"?"active":""}" data-view="stats">STATS</button>
-      <button class="ultimate-tab ${phaseView==="awards"?"active":""}" data-view="awards">AWARDS</button>
-      <button class="ultimate-tab ${phaseView==="more"?"active":""}" data-view="more">MORE</button>
-    </div>`;
+  const TABS=[
+    {id:"home",label:"HOME",icon:'<svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg>'},
+    {id:"calendar",label:"HISTORY",icon:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'},
+    {id:"stats",label:"STATS",icon:'<svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-7"/></svg>'},
+    {id:"awards",label:"AWARDS",icon:'<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.6L21 9.5l-4.7 4 1.3 6.5L12 16.9l-5.6 3.1L7.7 13.5 3 9.5l6.5-.9L12 3z"/></svg>'},
+    {id:"more",label:"MORE",icon:'<svg viewBox="0 0 24 24" stroke-width="2.2"><circle cx="5" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg>'}
+  ];
+  const tabbarEl=document.getElementById("tabbar");
+  tabbarEl.innerHTML=TABS.map(t=>`<button class="tab-btn" data-view="${t.id}" type="button">${t.icon}<span>${t.label}</span></button>`).join("");
+  tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      phaseView=btn.dataset.view;
+      app.scrollTop=0;
+      render();
+    });
+  });
+  function updateTabbar(){
+    tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.view===phaseView);
+    });
   }
 
   function renderAwards(){
     const start=parseDate(get(START_KEY)), day=dayCount(start), best=streakStats().best;
     const b=unlockedBadges(day,best);
     const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}"><div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div><div class="badge-label">${x.label}</div></div>`).join("")}</div>`;
-    return `<div class="phase-panel">
-      <div class="badge-section">
+    return `<div class="container">
+      <h2 class="section-title">Awards</h2>
+      <div class="badge-section" style="margin-top:0">
         <div class="badge-section-title">Journey badges</div>
         ${grid(b.journey)}
       </div>
@@ -769,7 +784,8 @@ button,input{font:inherit}button{cursor:pointer}
 
     const s=streakStats();
 
-    return `<div class="phase-panel">
+    return `<div class="container">
+      <h2 class="section-title">History</h2>
       <div class="cal-summary">
         <div class="cal-summary-item"><b>${s.current}</b><span>Current streak</span></div>
         <div class="cal-summary-div"></div>
@@ -805,7 +821,8 @@ button,input{font:inherit}button{cursor:pointer}
     const noteKeysFiltered=Object.keys(noteMap).sort().reverse()
       .filter(k=>!q||noteMap[k].toLowerCase().includes(q))
       .slice(0,20);
-    return `<div class="phase-panel">
+    return `<div class="container">
+      <h2 class="section-title">Stats</h2>
       <div class="stats-grid">
         <div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div>
         <div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div>
@@ -855,8 +872,16 @@ button,input{font:inherit}button{cursor:pointer}
 
   function renderMore(){
     const r=reminder();
-    return `<div class="phase-panel">
+    return `<div class="container">
+      <h2 class="section-title">More</h2>
       <div class="settings-card">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div>
+          <button id="changeDate" class="small-button" type="button">CHANGE</button>
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
           <div class="setting-copy"><b>Daily reminder</b><span>Optional reminder while HAYGER is open.</span></div>
           <input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}>
@@ -985,41 +1010,84 @@ button,input{font:inherit}button{cursor:pointer}
     reader.readAsText(file);
   }
 
-  function challenge(){
-    const value=get(START_KEY);
-    const start=parseDate(value);
-    if(!start || start>today()){if(value)remove(START_KEY);setup();return}
-
-    const current=today(), day=dayCount(start);
-    const data=checkins(), key=checkinKey(current), checked=!!data[key];
+  function renderHome(start,current,day,data,key,checked){
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
-
-    app.innerHTML=`<section class="card">
-      ${header()}
-      <div class="hero">
-        <div class="hero-label">CURRENT PROGRESS</div>
-        <div class="day"><span class="day-word">DAY</span><span class="day-number">${day}</span></div>
-        <div class="today">${formatDate(current)}</div>
-        <div class="streak"><span class="streak-dot"></span>One day at a time</div>
+    const g=goal();
+    const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
+    const r=88, c=2*Math.PI*r;
+    const offset=c*(1-pct/100);
+    return `<div class="container">
+      <div class="hero-panel">
+        <div class="ring-wrap">
+          <svg class="ring-svg" viewBox="0 0 200 200">
+            <circle class="ring-track" cx="100" cy="100" r="${r}"></circle>
+            <circle class="ring-fill" cx="100" cy="100" r="${r}" style="stroke-dasharray:${c};stroke-dashoffset:${offset}"></circle>
+          </svg>
+          <div class="ring-center">
+            <div class="ring-label">DAY</div>
+            <div class="ring-number">${day}</div>
+          </div>
+        </div>
+        <div class="hero-date">${formatDate(current)}</div>
+        <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
       </div>
-      <p class="message">Started on <strong>${formatDate(start)}</strong></p>
-      <div class="motivation">“${motivational(day)}”</div>
+      <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
       <div class="checkin">
         <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
         <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
         ${checked?`<div class="mood-hint">How are you feeling today?</div>
         <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
-      <div class="milestone">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`<strong>Next milestone: Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
-      ${goal()?`<div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${goal()} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
-      ${phaseTabs()}${phasePanel()}<div class="actions"><button id="changeDate" class="button secondary" type="button">CHANGE START DATE</button></div>
-      <div class="footer">Keep going. One day at a time.</div>
-    </section>`;
+      <div class="milestone">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
+      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+    </div>`;
+  }
 
-    bindTheme();
-    document.getElementById("changeDate").addEventListener("click",openModal);
+  function challenge(){
+    const value=get(START_KEY);
+    const start=parseDate(value);
+    if(!start || start>today()){if(value)remove(START_KEY);setup();return}
 
-    // Tab navigation is handled by the delegated listener above.
+    document.body.classList.add("has-tabbar");
+    updateTabbar();
+
+    const current=today(), day=dayCount(start);
+    const data=checkins(), key=checkinKey(current), checked=!!data[key];
+
+    if(phaseView==="home") app.innerHTML=renderHome(start,current,day,data,key,checked);
+    else app.innerHTML=phasePanel();
+
+    if(phaseView==="home"){
+      document.getElementById("checkinButton").addEventListener("click",()=>{
+        const d=checkins();
+        if(d[key]){
+          showToast("✓ Already checked in today.");
+          return;
+        }
+        d[key]={day,at:new Date().toISOString()};
+        writeJSON(CHECKINS_KEY,d);
+        render();
+        showToast("✓ Checked in for today.");
+        if(JOURNEY_BADGES.some(b=>b.day===day)){
+          fireConfetti();
+          setTimeout(()=>showToast(`🏆 Milestone unlocked: Day ${day}`),400);
+        }
+      });
+
+      document.querySelectorAll(".mood-chip").forEach(btn=>{
+        btn.addEventListener("click",()=>{
+          const d=checkins();
+          if(!d[key]) return;
+          d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
+          writeJSON(CHECKINS_KEY,d);
+          render();
+        });
+      });
+    }
+
+    if(phaseView==="more"){
+      document.getElementById("changeDate")?.addEventListener("click",openModal);
+    }
 
     if(phaseView==="calendar"){
       document.getElementById("prevMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render()};
@@ -1151,55 +1219,17 @@ button,input{font:inherit}button{cursor:pointer}
         });
       }
     }
-
-    document.getElementById("checkinButton").addEventListener("click",()=>{
-      const d=checkins();
-      if(d[key]){
-        showToast("✓ Already checked in today.");
-        return;
-      }
-      d[key]={day,at:new Date().toISOString()};
-      writeJSON(CHECKINS_KEY,d);
-      render();
-      showToast("✓ Checked in for today.");
-      if(JOURNEY_BADGES.some(b=>b.day===day)){
-        fireConfetti();
-        setTimeout(()=>showToast(`🏆 Milestone unlocked: Day ${day}`),400);
-      }
-    });
-
-    document.querySelectorAll(".mood-chip").forEach(btn=>{
-      btn.addEventListener("click",()=>{
-        const d=checkins();
-        if(!d[key]) return;
-        d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
-        writeJSON(CHECKINS_KEY,d);
-        render();
-      });
-    });
   }
 
-  // Navigation uses event delegation so tab taps keep working after every render.
-  if(!document.body.dataset.haygerNavListener){
-    document.body.dataset.haygerNavListener="1";
-    document.addEventListener("click",(event)=>{
-      const btn=event.target.closest(".ultimate-tab, .phase-tab");
-      if(!btn) return;
-      const view=btn.dataset.view;
-      if(!view) return;
-      event.preventDefault();
-      phaseView=view;
-      render();
-    });
-  }
+  // Navigation for the tab bar is bound once, above, on the persistent tabbar element.
 
   let lockInput="";
   let lockErrorMsg="";
   function renderLock(){
     applyTheme();
     const dots=Array.from({length:4},(_,i)=>`<div class="pin-dot${i<lockInput.length?" filled":""}"></div>`).join("");
-    app.innerHTML=`<section class="card">
-      ${header()}
+    document.body.classList.remove("has-tabbar");
+    app.innerHTML=`<div class="container">
       <div class="setup">
         <div class="setup-icon">H</div>
         <h1>Locked</h1>
@@ -1214,8 +1244,7 @@ button,input{font:inherit}button{cursor:pointer}
         <button class="pin-key ghost" data-key="del" type="button">DEL</button>
       </div>
       <div class="lock-footer"><button id="lockResetLink" type="button">Forgot PIN? Reset HAYGER</button></div>
-    </section>`;
-    bindTheme();
+    </div>`;
 
     document.querySelectorAll(".pin-key").forEach(btn=>{
       btn.addEventListener("click",async()=>{
