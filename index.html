@@ -328,6 +328,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .note-actions button::before{display:inline-block;margin-right:5px;font-size:11px}
 .note-actions .note-edit::before{content:"✎"}
 .note-actions .note-delete::before{content:"⌫"}
+/* Final polish: note editor + actions */
+.note-editor-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.note-editor-head b{font-size:10px;font-weight:900;letter-spacing:.35px}
+.note-cancel{height:28px;padding:0 9px;border:1px solid var(--line);border-radius:9px;background:var(--surface);color:var(--muted);font-size:8px;font-weight:900}
+.note-actions button{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:5px!important}
+.note-actions .note-edit::before{content:"✎";margin:0!important}
+.note-actions .note-delete::before{content:"×";margin:0!important;font-size:15px!important;line-height:1}
+.note-actions .note-edit{background:var(--accent-soft)!important}
+.note-actions .note-delete{background:color-mix(in srgb,var(--danger) 7%,var(--surface))!important}
 /* Awards: richer progress header and badge states */
 .awards-summary{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
 .award-stat{padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
@@ -344,6 +353,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 @keyframes badgeShine{0%,65%,100%{transform:translateX(-100%)}78%{transform:translateX(100%)}}
 .badge.unlocked .badge-icon{filter:saturate(1.1);transform:translateY(-1px)}
 .badge-icon{transition:transform .2s}
+.award-mini-row{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:9px}
+.award-mini-row>div{padding:11px 12px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}
+.award-mini-row span{display:block;color:var(--muted);font-size:8px;font-weight:850;letter-spacing:.7px}
+.award-mini-row b{display:block;margin-top:4px;font-size:11px;font-weight:900}
 .award-next{margin-top:10px;padding:12px 13px;border:1px dashed var(--line);border-radius:15px;background:var(--soft)}
 .award-next b{font-size:10px}.award-next span{display:block;margin-top:4px;color:var(--muted);font-size:9px;line-height:1.4}
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
@@ -776,6 +789,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   let phaseView="home";
   let calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);
   let noteSearchQuery="";
+  let editingNoteKey=null;
   let unlocked=sessionStorage.getItem("hayger_unlocked")==="1";
   let pinSetupOpen=false;
 
@@ -817,7 +831,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       <h2 class="section-title">Awards</h2>
       <div class="awards-summary">
         <div class="award-stat"><b>${unlocked}</b><span>BADGES UNLOCKED</span></div>
-        <div class="award-stat"><b>${pct}%</b><span>JOURNEY COMPLETE</span></div>
+        <div class="award-stat"><b>${pct}%</b><span>ACHIEVEMENT COMPLETE</span></div>
+      </div>
+      <div class="award-mini-row">
+        <div><span>CURRENT STREAK</span><b>${streakStats().current} day${streakStats().current===1?"":"s"}</b></div>
+        <div><span>BEST STREAK</span><b>${best} day${best===1?"":"s"}</b></div>
       </div>
       <div class="award-progress">
         <div class="award-progress-top"><b>Your achievement journey</b><span>${unlocked} / ${total}</span></div>
@@ -954,8 +972,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
 
       <div class="notes" style="margin-top:10px">
-        <textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[toInputDate(today())]||"")}</textarea>
-        <button class="save-note" id="saveNote" type="button">SAVE TODAY'S NOTE</button>
+        <div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div>
+        <textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea>
+        <button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button>
         <div class="note-meta">Notes stay on this device.</div>
       </div>
 
@@ -1240,10 +1259,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
-        const n=notes(), value=document.getElementById("dailyNote").value.trim(), key=toInputDate(today());
-        if(value)n[key]=value;else delete n[key];
-        writeJSON(NOTES_KEY,n);showToast("✓ Today's note saved.");render();
+        const n=notes(), value=document.getElementById("dailyNote").value.trim(), key=editingNoteKey||toInputDate(today());
+        if(!value){showToast("Write something before saving.");return;}
+        n[key]=value;
+        writeJSON(NOTES_KEY,n);
+        showToast(editingNoteKey?"✓ Note updated.":"✓ Today's note saved.");
+        editingNoteKey=null;
+        render();
       };
+      document.getElementById("cancelNoteEdit")?.addEventListener("click",()=>{editingNoteKey=null;render()});
 
       const goalSelect=document.getElementById("goalSelect");
       const goalCustom=document.getElementById("goalCustom");
@@ -1272,12 +1296,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         });
       }
       document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>{
-        const key=btn.dataset.noteEdit, map=notes(), old=map[key]||"";
-        const next=prompt("Edit note",old);
-        if(next!==null){
-          const value=next.trim();
-          if(value){map[key]=value;writeJSON(NOTES_KEY,map);render();showToast("✓ Note updated.")}
-        }
+        editingNoteKey=btn.dataset.noteEdit;
+        render();
+        setTimeout(()=>document.getElementById("dailyNote")?.focus(),60);
       }));
       document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.addEventListener("click",()=>{
         const key=btn.dataset.noteDelete, map=notes();
