@@ -5,442 +5,364 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f6f7f9">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="manifest" href="./manifest.json">
-<link rel="icon" href="./icon-192.png">
-<title>HAYGER ULTRA MAX</title>
+<link rel="icon" href="./icon-192.png" type="image/png">
+<title>HAYGER — Ultimate Max</title>
 
 <style>
 :root {
-    --bg: #f2f4f7; --card: #ffffff; --text: #1a1c1e; --muted: #6c727a;
-    --primary: #1a1c1e; --primary-text: #ffffff; --accent: #22c55e;
-    --danger: #ef4444; --line: #e2e8f0; --shadow: 0 20px 50px rgba(0,0,0,0.05);
-    --radius: 24px;
+  --bg: #f2f4f7; --surface: #ffffff; --soft: #f0f2f5; --soft2: #e4e7eb;
+  --text: #111827; --muted: #6b7280; --line: #e5e7eb; --danger: #ef4444;
+  --primary: #111827; --primaryText: #ffffff; --accent: #10b981;
+  --shadow: 0 20px 40px -10px rgba(0,0,0,0.05);
+  --radius-xl: 32px; --radius-lg: 24px; --radius-md: 16px;
 }
 [data-theme=dark] {
-    --bg: #0b0c0d; --card: #151719; --text: #f1f3f5; --muted: #94a3b8;
-    --primary: #f1f3f5; --primary-text: #0b0c0d; --line: #26292d;
-    --shadow: 0 25px 60px rgba(0,0,0,0.4);
+  --bg: #030405; --surface: #0d0e10; --soft: #16181b; --soft2: #1f2226;
+  --text: #f9fafb; --muted: #9ca3af; --line: #26292e; --danger: #ff5f5f;
+  --primary: #f9fafb; --primaryText: #030405;
+  --shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
 }
 
 * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-body { 
-    margin: 0; font-family: 'Inter', -apple-system, sans-serif; 
-    background: var(--bg); color: var(--text); transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    user-select: none; -webkit-user-select: none; overflow-x: hidden;
+body {
+  margin: 0; min-height: 100vh; background: var(--bg); color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  transition: background 0.4s, color 0.4s; user-select: none;
 }
 
-.app-container { max-width: 480px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; padding: 20px 16px 100px; }
+.app { max-width: 480px; margin: 0 auto; padding: 20px 16px 120px; }
 
 /* Components */
-.card { 
-    background: var(--card); border-radius: var(--radius); padding: 24px; 
-    box-shadow: var(--shadow); border: 1px solid var(--line);
-    animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+.card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius-xl); padding: 24px; box-shadow: var(--shadow);
+  animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-@keyframes slideUp { from { opacity:0; transform: translateY(30px); } to { opacity:1; transform: translateY(0); } }
+@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:none; } }
 
 .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-.logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; }
+.logo { font-size: 20px; font-weight: 900; letter-spacing: 3px; }
 
-.hero { text-align: center; padding: 40px 20px; background: var(--bg); border-radius: 32px; position: relative; overflow: hidden; margin-bottom: 20px; border: 1px solid var(--line); }
-.day-label { font-size: 12px; font-weight: 800; color: var(--muted); letter-spacing: 2px; }
-.day-val { font-size: 100px; font-weight: 950; letter-spacing: -6px; line-height: 0.9; margin: 10px 0; }
-.streak-badge { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; background: var(--accent); color: white; border-radius: 99px; font-size: 12px; font-weight: 700; }
+.hero {
+  background: var(--soft); border-radius: var(--radius-lg); padding: 40px 20px;
+  text-align: center; position: relative; overflow: hidden; border: 1px solid var(--line);
+}
+.hero-day { font-size: 90px; font-weight: 950; letter-spacing: -5px; line-height: 0.9; margin: 10px 0; }
+.streak-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+  background: var(--accent); color: white; border-radius: 99px; font-size: 11px; font-weight: 800;
+}
 
-/* Grid Layouts */
-.stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.stat-item { background: var(--card); padding: 16px; border-radius: 20px; border: 1px solid var(--line); text-align: center; }
-.stat-item b { font-size: 20px; display: block; }
-.stat-item span { font-size: 10px; color: var(--muted); font-weight: 700; text-transform: uppercase; }
+/* Nav */
+.tab-nav {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  width: calc(100% - 32px); max-width: 400px; background: var(--primary);
+  border-radius: 20px; display: flex; padding: 6px; z-index: 1000; box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+.tab-item {
+  flex: 1; padding: 12px; border-radius: 14px; border: 0; background: transparent;
+  color: var(--muted); font-size: 10px; font-weight: 800; cursor: pointer; transition: 0.2s;
+}
+.tab-item.active { background: var(--surface); color: var(--text); }
 
 /* Heatmap */
-.heatmap-box { overflow-x: auto; padding: 15px; background: var(--card); border-radius: 20px; border: 1px solid var(--line); margin-bottom: 20px; }
-.heatmap-grid { display: flex; gap: 4px; }
+.heatmap { display: flex; gap: 4px; overflow-x: auto; padding: 10px 0; }
 .heat-col { display: flex; flex-direction: column; gap: 4px; }
-.heat-cell { width: 12px; height: 12px; border-radius: 2px; background: var(--line); transition: 0.3s; }
-.heat-cell.active { background: var(--accent); box-shadow: 0 0 8px var(--accent); }
+.heat-cell { width: 11px; height: 11px; border-radius: 2px; background: var(--soft2); }
+.heat-cell.done { background: var(--accent); }
 
-/* Buttons */
-.btn { 
-    width: 100%; border: 0; padding: 18px; border-radius: 18px; font-size: 15px; font-weight: 800; 
-    cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px;
+/* Buttons & Inputs */
+.btn {
+  width: 100%; padding: 18px; border: 0; border-radius: 16px; font-weight: 800;
+  cursor: pointer; transition: 0.2s; font-size: 14px;
 }
+.btn-primary { background: var(--primary); color: var(--primaryText); }
+.btn-secondary { background: var(--soft); color: var(--text); border: 1px solid var(--line); }
 .btn:active { transform: scale(0.96); }
-.btn-primary { background: var(--primary); color: var(--primary-text); }
-.btn-secondary { background: var(--line); color: var(--text); }
 
-/* Bottom Nav */
-.nav { 
-    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 400px;
-    background: rgba(26, 28, 30, 0.8); backdrop-filter: blur(20px); border-radius: 24px;
-    display: flex; justify-content: space-around; padding: 8px; z-index: 100; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+/* Update Banner */
+#updateBanner {
+  position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-150%);
+  width: 90%; max-width: 400px; background: var(--surface); border: 1px solid var(--accent);
+  padding: 16px; border-radius: 16px; z-index: 2000; box-shadow: var(--shadow);
+  display: flex; align-items: center; justify-content: space-between; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.nav-item { 
-    flex: 1; text-align: center; padding: 12px; color: #888; cursor: pointer; transition: 0.3s; 
-    font-size: 10px; font-weight: 800; text-transform: uppercase;
-}
-.nav-item.active { color: #fff; }
+#updateBanner.show { transform: translateX(-50%) translateY(0); }
 
-/* PIN Lock Screen */
-#lock-screen {
-    position: fixed; inset: 0; background: var(--bg); z-index: 1000; display: none;
-    flex-direction: column; align-items: center; justify-content: center; padding: 40px;
+/* PIN Screen */
+#pinLock {
+  position: fixed; inset: 0; background: var(--bg); z-index: 9999;
+  display: none; flex-direction: column; align-items: center; justify-content: center;
 }
-.pin-dots { display: flex; gap: 15px; margin: 40px 0; }
-.pin-dot { width: 16px; height: 16px; border: 2px solid var(--line); border-radius: 50%; transition: 0.2s; }
-.pin-dot.filled { background: var(--text); border-color: var(--text); transform: scale(1.2); }
-.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; width: 100%; max-width: 300px; }
-.key { 
-    height: 70px; display: grid; place-items: center; font-size: 24px; font-weight: 800;
-    background: var(--card); border-radius: 20px; cursor: pointer; border: 1px solid var(--line);
+.pin-dots { display: flex; gap: 16px; margin-bottom: 40px; }
+.pin-dot { width: 14px; height: 14px; border: 2px solid var(--line); border-radius: 50%; }
+.pin-dot.fill { background: var(--text); border-color: var(--text); transform: scale(1.2); }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+.key {
+  width: 70px; height: 70px; border-radius: 50%; background: var(--surface);
+  display: grid; place-items: center; font-size: 24px; font-weight: 700; cursor: pointer;
 }
-.key:active { background: var(--line); }
 
-/* Achievement Badges */
-.badge-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
-.badge { 
-    aspect-ratio: 1; background: var(--line); border-radius: 16px; display: grid; place-items: center;
-    font-size: 20px; opacity: 0.3; grayscale: 100%; transition: 0.5s;
-}
-.badge.unlocked { opacity: 1; grayscale: 0; background: var(--card); border: 1px solid var(--accent); transform: scale(1.05); }
-
-/* Toast */
-#toast {
-    position: fixed; top: 30px; left: 50%; transform: translateX(-50%) translateY(-100px);
-    background: var(--primary); color: var(--primary-text); padding: 12px 24px; border-radius: 12px;
-    font-weight: 700; font-size: 13px; transition: 0.5s; z-index: 2000;
-}
-#toast.show { transform: translateX(-50%) translateY(0); }
 </style>
 </head>
 <body>
 
-<div id="toast">Message</div>
-
-<!-- PIN Lock Overlay -->
-<div id="lock-screen">
-    <div class="logo">HAYGER</div>
-    <p style="color:var(--muted); font-weight:700">ENTER SECURE PIN</p>
-    <div class="pin-dots">
-        <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
-    </div>
-    <div class="keypad" id="keypad">
-        <!-- JS generated keys -->
-    </div>
-    <button onclick="resetApp()" style="margin-top:40px; background:none; border:0; color:var(--danger); font-weight:700; text-decoration:underline">FORGOT PIN? RESET</button>
+<div id="updateBanner">
+  <div style="font-size: 13px; font-weight: 700;">Update Available! 🚀</div>
+  <button onclick="window.location.reload()" class="btn-primary" style="width: auto; padding: 8px 16px; border-radius: 10px; font-size: 11px;">Refresh</button>
 </div>
 
-<div class="app-container" id="app">
-    <!-- UI Content dynamic via JS -->
+<div id="pinLock">
+  <div class="logo" style="margin-bottom: 40px;">HAYGER</div>
+  <div class="pin-dots" id="pinDots">
+    <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+  </div>
+  <div class="keypad" id="keypad"></div>
+  <button onclick="resetApp()" style="margin-top:40px; background:none; border:0; color:var(--muted); font-size:12px; text-decoration:underline">Forgot PIN? Reset</button>
 </div>
 
-<nav class="nav">
-    <div class="nav-item active" onclick="navigate('home')">Home</div>
-    <div class="nav-item" onclick="navigate('stats')">Analytics</div>
-    <div class="nav-item" onclick="navigate('awards')">Badges</div>
-    <div class="nav-item" onclick="navigate('settings')">More</div>
+<div class="app" id="app"></div>
+
+<nav class="tab-nav" id="mainNav" style="display: none;">
+  <button class="tab-item active" onclick="switchTab('home')">HOME</button>
+  <button class="tab-item" onclick="switchTab('stats')">STATS</button>
+  <button class="tab-item" onclick="switchTab('awards')">AWARDS</button>
+  <button class="tab-item" onclick="switchTab('settings')">MORE</button>
 </nav>
 
-<canvas id="confetti" style="position:fixed;inset:0;pointer-events:none;z-index:999"></canvas>
+<canvas id="confetti" style="position:fixed; inset:0; pointer-events:none; z-index:1001;"></canvas>
 
 <script>
-// --- CORE CONFIGURATION ---
-const KEYS = { START: 'hg_v7_start', LOGS: 'hg_v7_logs', PIN: 'hg_v7_pin', THEME: 'hg_v7_theme' };
-let state = {
-    view: 'home',
-    pinInput: '',
-    isUnlocked: false
+// --- CORE LOGIC ---
+const STORAGE = {
+  START: 'hg_start', LOGS: 'hg_logs', PIN: 'hg_pin', THEME: 'hg_theme', NOTES: 'hg_notes'
 };
 
-const getLogs = () => JSON.parse(localStorage.getItem(KEYS.LOGS) || '{}');
-const saveLogs = (logs) => localStorage.setItem(KEYS.LOGS, JSON.stringify(logs));
-const today = () => new Date().toISOString().split('T')[0];
+let state = {
+  tab: 'home',
+  isLocked: !!localStorage.getItem(STORAGE.PIN),
+  pinBuffer: ''
+};
 
-// --- APP LOGIC ---
-function calculateStats() {
-    const start = localStorage.getItem(KEYS.START);
-    const logs = getLogs();
-    if(!start) return { day:0, streak:0, total:0, rate:0 };
+const getLogs = () => JSON.parse(localStorage.getItem(STORAGE.LOGS) || '{}');
+const saveLog = (date) => {
+  const logs = getLogs();
+  logs[date] = { checked: true };
+  localStorage.setItem(STORAGE.LOGS, JSON.stringify(logs));
+};
 
-    const diff = Math.floor((new Date() - new Date(start)) / (86400000)) + 1;
-    
-    // Proper Streak Calculation
-    let streak = 0;
-    let checkDate = new Date();
-    if(!logs[today()]) checkDate.setDate(checkDate.getDate() - 1);
-    
-    while(logs[checkDate.toISOString().split('T')[0]]) {
-        streak++;
-        checkDate.setDate(checkDate.getDate() - 1);
-    }
+const todayStr = () => new Date().toISOString().split('T')[0];
 
-    const totalLogs = Object.keys(logs).length;
-    return { day: diff, streak, total: totalLogs, rate: Math.round((totalLogs/diff)*100) || 0 };
+function calculateStreak() {
+  const logs = getLogs();
+  const keys = Object.keys(logs).sort().reverse();
+  if (keys.length === 0) return 0;
+
+  let streak = 0;
+  let current = new Date();
+  
+  // Logic: Agar aaj check nahi kiya, toh kal se streak ginna shuru karo
+  if (!logs[todayStr()]) {
+    current.setDate(current.getDate() - 1);
+  }
+
+  while (logs[current.toISOString().split('T')[0]]) {
+    streak++;
+    current.setDate(current.getDate() - 1);
+  }
+  return streak;
 }
 
-function navigate(v) {
-    state.view = v;
-    document.querySelectorAll('.nav-item').forEach((el, i) => {
-        el.classList.toggle('active', ['home','stats','awards','settings'][i] === v);
-    });
-    render();
-}
-
-function toggleCheckin() {
-    const logs = getLogs();
-    if (logs[today()]) return showToast("Already checked in!");
-    
-    logs[today()] = { time: new Date().getTime() };
-    saveLogs(logs);
-    fireConfetti();
-    showToast("Day Complete! 🔥");
-    render();
-}
-
-// --- RENDERING ---
+// --- UI RENDERING ---
 function render() {
-    const app = document.getElementById('app');
-    const start = localStorage.getItem(KEYS.START);
+  const root = document.getElementById('app');
+  const startDate = localStorage.getItem(STORAGE.START);
 
-    if(!start) {
-        app.innerHTML = renderSetup();
-        return;
-    }
+  if (!startDate) {
+    renderSetup(root);
+    return;
+  }
 
-    switch(state.view) {
-        case 'home': app.innerHTML = renderHome(); break;
-        case 'stats': app.innerHTML = renderStats(); break;
-        case 'awards': app.innerHTML = renderAwards(); break;
-        case 'settings': app.innerHTML = renderSettings(); break;
-    }
+  document.getElementById('mainNav').style.display = 'flex';
+  
+  switch(state.tab) {
+    case 'home': renderHome(root); break;
+    case 'stats': renderStats(root); break;
+    case 'awards': renderAwards(root); break;
+    case 'settings': renderSettings(root); break;
+  }
 }
 
-function renderSetup() {
-    return `
-    <div class="card" style="text-align:center">
-        <div class="logo" style="margin-bottom:20px">HAYGER</div>
-        <h1 style="letter-spacing:-1px">Start Your Journey</h1>
-        <p style="color:var(--muted)">Consistency is the only secret.</p>
-        <input type="date" id="init-date" class="btn btn-secondary" style="margin:20px 0" value="${today()}">
-        <button class="btn btn-primary" onclick="initApp()">LET'S GO</button>
-    </div>`;
+function renderSetup(el) {
+  el.innerHTML = `
+    <div class="card" style="text-align: center;">
+      <div class="logo" style="margin-bottom: 20px;">HAYGER</div>
+      <h1 style="letter-spacing: -1px;">Welcome back.</h1>
+      <p style="color: var(--muted); font-size: 14px;">Choose your journey start date:</p>
+      <input type="date" id="startDateInput" class="btn btn-secondary" style="margin-bottom: 20px;" value="${todayStr()}">
+      <button onclick="startJourney()" class="btn btn-primary">START JOURNEY</button>
+    </div>
+  `;
 }
 
-function renderHome() {
-    const s = calculateStats();
-    const hasChecked = !!getLogs()[today()];
-    
-    return `
+function renderHome(el) {
+  const start = new Date(localStorage.getItem(STORAGE.START));
+  const diff = Math.floor((new Date() - start) / 86400000) + 1;
+  const hasChecked = !!getLogs()[todayStr()];
+
+  el.innerHTML = `
     <div class="header">
-        <div class="logo">HAYGER</div>
-        <div onclick="toggleTheme()" style="cursor:pointer">${localStorage.getItem(KEYS.THEME) === 'dark' ? '☀️' : '🌙'}</div>
+      <div class="logo">HAYGER</div>
+      <button onclick="toggleTheme()" class="btn-secondary" style="width:40px; height:40px; border-radius:12px; padding:0;">🌓</button>
     </div>
     <div class="hero">
-        <div class="day-label">CURRENT PROGRESS</div>
-        <div class="day-val">${s.day}</div>
-        <div class="streak-badge">🔥 ${s.streak} DAY STREAK</div>
+      <div style="font-size: 11px; font-weight: 800; color: var(--muted); letter-spacing: 2px;">JOURNEY DAY</div>
+      <div class="hero-day">${diff}</div>
+      <div class="streak-chip">🔥 ${calculateStreak()} DAY STREAK</div>
     </div>
-    <div class="heatmap-box">
-        <div style="font-size:10px; font-weight:800; margin-bottom:10px; color:var(--muted)">ACTIVITY HEATMAP</div>
-        <div class="heatmap-grid">${renderHeatmap()}</div>
+    <div class="card" style="margin-top: 20px;">
+      <div style="font-size: 12px; font-weight: 800; margin-bottom: 15px;">ACTIVITY HEATMAP</div>
+      <div class="heatmap">${renderHeatmap()}</div>
+      <button onclick="checkIn()" class="btn ${hasChecked ? 'btn-secondary' : 'btn-primary'}" style="margin-top: 20px;" ${hasChecked ? 'disabled' : ''}>
+        ${hasChecked ? '✓ COMPLETED TODAY' : 'MARK DONE FOR TODAY'}
+      </button>
     </div>
-    <button class="btn ${hasChecked ? 'btn-secondary' : 'btn-primary'}" onclick="toggleCheckin()">
-        ${hasChecked ? '✓ COMPLETED TODAY' : 'MARK TODAY AS DONE'}
-    </button>
-    `;
+  `;
 }
 
 function renderHeatmap() {
-    const logs = getLogs();
-    let html = '';
-    const date = new Date();
-    date.setDate(date.getDate() - 70); // Show last 10 weeks
+  const logs = getLogs();
+  let html = '';
+  const d = new Date();
+  d.setDate(d.getDate() - 70); // Show 10 weeks
 
-    for(let i=0; i<11; i++) {
-        html += '<div class="heat-col">';
-        for(let j=0; j<7; j++) {
-            const dStr = date.toISOString().split('T')[0];
-            const active = logs[dStr] ? 'active' : '';
-            html += `<div class="heat-cell ${active}"></div>`;
-            date.setDate(date.getDate() + 1);
-        }
-        html += '</div>';
+  for(let i=0; i<11; i++) {
+    html += '<div class="heat-col">';
+    for(let j=0; j<7; j++) {
+      const s = d.toISOString().split('T')[0];
+      html += `<div class="heat-cell ${logs[s] ? 'done' : ''}"></div>`;
+      d.setDate(d.getDate() + 1);
     }
-    return html;
+    html += '</div>';
+  }
+  return html;
 }
 
-function renderStats() {
-    const s = calculateStats();
-    return `
-    <div class="logo" style="margin-bottom:20px">ANALYTICS</div>
-    <div class="stats-grid">
-        <div class="stat-item"><b>${s.total}</b><span>Total Days</span></div>
-        <div class="stat-item"><b>${s.rate}%</b><span>Consistency</span></div>
-        <div class="stat-item"><b>${s.streak}</b><span>Current Streak</span></div>
-        <div class="stat-item"><b>${s.day}</b><span>Journey Day</span></div>
-    </div>
-    <div class="card">
-        <p style="margin:0; font-weight:700; font-size:14px">Performance Tip</p>
-        <p style="font-size:12px; color:var(--muted)">You are doing better than ${s.rate}% of people who quit in the first week. Stay disciplined.</p>
-    </div>
-    `;
+// --- TAB SYSTEM ---
+function switchTab(t) {
+  state.tab = t;
+  document.querySelectorAll('.tab-item').forEach(btn => {
+    btn.classList.toggle('active', btn.innerText.toLowerCase() === t);
+  });
+  render();
 }
 
-function renderAwards() {
-    const s = calculateStats();
-    const badges = [
-        { d: 3, i: '🌱' }, { d: 7, i: '🔥' }, { d: 14, i: '⚡' }, { d: 30, i: '🏆' },
-        { d: 50, i: '💎' }, { d: 75, i: '🚀' }, { d: 100, i: '👑' }, { d: 365, i: '🌟' }
-    ];
-    return `
-    <div class="logo" style="margin-bottom:20px">ACHIEVEMENTS</div>
-    <div class="badge-grid">
-        ${badges.map(b => `<div class="badge ${s.day >= b.d ? 'unlocked' : ''}" title="Day ${b.d}">${s.day >= b.d ? b.i : '🔒'}</div>`).join('')}
-    </div>
-    <p style="text-align:center; color:var(--muted); font-size:11px; margin-top:20px">Badges unlock as you progress through your journey.</p>
-    `;
+// --- ACTIONS ---
+function startJourney() {
+  const val = document.getElementById('startDateInput').value;
+  localStorage.setItem(STORAGE.START, val);
+  render();
 }
 
-function renderSettings() {
-    return `
-    <div class="logo" style="margin-bottom:20px">SETTINGS</div>
-    <div class="card" style="display:grid; gap:10px">
-        <button class="btn btn-secondary" onclick="setupPin()">🔒 ${localStorage.getItem(KEYS.PIN) ? 'CHANGE PIN' : 'SET PIN LOCK'}</button>
-        <button class="btn btn-secondary" onclick="exportData()">📤 EXPORT BACKUP</button>
-        <button class="btn btn-secondary" onclick="importData()">📥 IMPORT BACKUP</button>
-        <button class="btn btn-secondary" style="color:var(--danger)" onclick="resetApp()">⚠️ RESET EVERYTHING</button>
-    </div>
-    <p style="text-align:center; font-size:10px; color:var(--muted); margin-top:20px">VERSION 7.0 ULTRA MAX</p>
-    `;
+function checkIn() {
+  saveLog(todayStr());
+  fireConfetti();
+  render();
 }
 
-// --- PIN SYSTEM ---
-function initKeypad() {
-    const container = document.getElementById('keypad');
-    const keys = [1,2,3,4,5,6,7,8,9,'C',0,'⌫'];
-    container.innerHTML = keys.map(k => `<div class="key" onclick="handleKeyPress('${k}')">${k}</div>`).join('');
-}
-
-function handleKeyPress(k) {
-    if(k === 'C') state.pinInput = '';
-    else if(k === '⌫') state.pinInput = state.pinInput.slice(0, -1);
-    else if(state.pinInput.length < 4) state.pinInput += k;
-
-    const dots = document.querySelectorAll('.pin-dot');
-    dots.forEach((dot, i) => dot.classList.toggle('filled', i < state.pinInput.length));
-
-    if(state.pinInput.length === 4) {
-        if(state.pinInput === localStorage.getItem(KEYS.PIN)) {
-            unlockApp();
-        } else {
-            showToast("Wrong PIN");
-            state.pinInput = '';
-            dots.forEach(dot => dot.classList.remove('filled'));
-        }
-    }
-}
-
-function unlockApp() {
-    document.getElementById('lock-screen').style.display = 'none';
-    state.isUnlocked = true;
-    render();
-}
-
-function setupPin() {
-    const pin = prompt("Enter 4-digit PIN:");
-    if(pin && pin.length === 4) {
-        localStorage.setItem(KEYS.PIN, pin);
-        showToast("PIN Lock Enabled");
-    }
-}
-
-// --- UTILS ---
 function toggleTheme() {
-    const theme = localStorage.getItem(KEYS.THEME) === 'dark' ? 'light' : 'dark';
-    localStorage.setItem(KEYS.THEME, theme);
-    document.documentElement.dataset.theme = theme;
+  const current = localStorage.getItem(STORAGE.THEME) || 'light';
+  const next = current === 'light' ? 'dark' : 'light';
+  localStorage.setItem(STORAGE.THEME, next);
+  document.documentElement.dataset.theme = next;
+}
+
+// --- PIN LOCK SYSTEM ---
+function initKeypad() {
+  const pad = document.getElementById('keypad');
+  [1,2,3,4,5,6,7,8,9,'C',0,'X'].forEach(key => {
+    const div = document.createElement('div');
+    div.className = 'key';
+    div.innerText = key;
+    div.onclick = () => handlePin(key);
+    pad.appendChild(div);
+  });
+}
+
+function handlePin(key) {
+  if (key === 'C') state.pinBuffer = '';
+  else if (key === 'X') state.pinBuffer = state.pinBuffer.slice(0,-1);
+  else if (state.pinBuffer.length < 4) state.pinBuffer += key;
+
+  const dots = document.getElementById('pinDots').children;
+  for(let i=0; i<4; i++) dots[i].classList.toggle('fill', i < state.pinBuffer.length);
+
+  if (state.pinBuffer === localStorage.getItem(STORAGE.PIN)) {
+    document.getElementById('pinLock').style.display = 'none';
     render();
+  } else if (state.pinBuffer.length === 4) {
+    state.pinBuffer = '';
+    setTimeout(() => { for(let i=0; i<4; i++) dots[i].classList.remove('fill'); }, 200);
+  }
 }
 
-function initApp() {
-    const date = document.getElementById('init-date').value;
-    localStorage.setItem(KEYS.START, date);
-    render();
-}
-
-function showToast(msg) {
-    const t = document.getElementById('toast');
-    t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 3000);
-}
-
+// --- EFFECTS ---
 function fireConfetti() {
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-    const particles = Array.from({length:80}, () => ({
-        x: Math.random()*canvas.width, y: canvas.height, 
-        v: 10+Math.random()*15, r: 5+Math.random()*5, 
-        c: `hsl(${Math.random()*360}, 70%, 50%)`, a: (Math.random()-0.5)*4
-    }));
-    function frame() {
-        ctx.clearRect(0,0,canvas.width,canvas.height);
-        particles.forEach(p => {
-            p.y -= p.v; p.x += p.a; p.v *= 0.96;
-            ctx.fillStyle = p.c; ctx.beginPath();
-            ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
-        });
-        if(particles[0].v > 0.1) requestAnimationFrame(frame);
-    }
-    frame();
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+  let particles = Array.from({length: 60}, () => ({
+    x: Math.random() * canvas.width, y: canvas.height,
+    v: 10 + Math.random() * 15, r: 4 + Math.random() * 6,
+    c: `hsl(${Math.random() * 360}, 70%, 50%)`, a: (Math.random() - 0.5) * 4
+  }));
+
+  function frame() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles.forEach(p => {
+      p.y -= p.v; p.x += p.a; p.v *= 0.96;
+      ctx.fillStyle = p.c; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+    });
+    if(particles[0].v > 0.1) requestAnimationFrame(frame);
+  }
+  frame();
 }
 
 function resetApp() {
-    if(confirm("Delete all data? This cannot be undone.")) {
+    if(confirm("Delete everything?")) {
         localStorage.clear();
         location.reload();
     }
 }
 
-function exportData() {
-    const data = JSON.stringify(localStorage);
-    const blob = new Blob([data], {type: 'application/json'});
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url; a.download = `hayger-backup-${today()}.json`;
-    a.click();
-}
-
-function importData() {
-    const input = document.createElement('input');
-    input.type = 'file';
-    input.onchange = e => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        reader.onload = () => {
-            const data = JSON.parse(reader.result);
-            Object.keys(data).forEach(k => localStorage.setItem(k, data[k]));
-            location.reload();
-        };
-        reader.readAsText(file);
-    };
-    input.click();
-}
-
 // --- INIT ---
-(function() {
-    const theme = localStorage.getItem(KEYS.THEME) || 'light';
-    document.documentElement.dataset.theme = theme;
-    
-    if(localStorage.getItem(KEYS.PIN)) {
-        document.getElementById('lock-screen').style.display = 'flex';
-        initKeypad();
-    } else {
-        render();
-    }
-})();
+window.onload = () => {
+  const theme = localStorage.getItem(STORAGE.THEME) || 'light';
+  document.documentElement.dataset.theme = theme;
+  
+  if (localStorage.getItem(STORAGE.PIN)) {
+    document.getElementById('pinLock').style.display = 'flex';
+    initKeypad();
+  } else {
+    render();
+  }
+
+  // PWA Update Listener
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').then(reg => {
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            document.getElementById('updateBanner').classList.add('show');
+          }
+        });
+      });
+    });
+  }
+};
 </script>
 </body>
 </html>

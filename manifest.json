@@ -1,10 +1,11 @@
 {
-  "name": "HAYGER Ultra Max",
+  "name": "HAYGER Ultimate Max",
   "short_name": "HAYGER",
+  "description": "Premium habit and streak tracker.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f2f4f7",
-  "theme_color": "#1a1c1e",
+  "theme_color": "#111827",
   "icons": [
     {
       "src": "icon-192.png",
