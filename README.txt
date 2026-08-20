@@ -1,14 +1,11 @@
-HAYGER ULTRA V3 — PREMIUM FINAL BUILD
+HAYGER ULTRA FINAL POLISH V2
 
-Replace the existing GitHub Pages files with all files in this folder.
-Includes:
-- Premium home dashboard with momentum/consistency insights
-- 7-day activity strip and quick navigation
-- Mood insights in Stats
-- Consistency coaching text
-- Profile-aware welcome message
-- PWA install prompt when supported
-- Existing history, stats, notes, awards, profile, reminders, PIN and backup features preserved
-- Updated service-worker cache version
+Highlights:
+- Fixed Home spacing between the quote/status message and check-in card.
+- Added subtle breathing/pulse animation to the green status dot.
+- Refined Notes Edit/Delete action UI to match HAYGER styling.
+- Polished Awards cards, badge interactions and progress presentation.
+- Removed duplicate profile gender option.
+- Bumped service-worker cache version for a reliable PWA refresh.
 
-Data is stored locally in the browser. Do not clear site data if you want to keep existing progress.
+Replace the repository files with all files from this folder/ZIP.
