@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#eef0ee">
-<meta name="description" content="HAYGER — one day at a time. Daily check-ins, reflections, streaks, insights and progress.">
+<meta name="description" content="HAYGER — one day at a time. Goals, streaks, history and daily progress.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<title>HAYGER — One Day At A Time</title>
+<title>HAYGER — Ultra</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -256,17 +256,30 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
 .badge.unlocked .badge-label{color:var(--text)}
 
-/* Ultra: mood */
-.mood-row{display:flex;gap:6px;margin-top:11px;justify-content:center}
-.mood-chip{width:39px;height:39px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:12px;background:var(--soft);font-size:17px;transition:.15s}
-.mood-chip.active{background:var(--accent-soft);border-color:var(--accent);transform:scale(1.06)}
-.mood-hint{margin-top:8px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
+/* Ultra: compact check-in + one-time mood picker */
+.checkin-actions{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(104px,.85fr);gap:8px;margin-top:9px;position:relative}
+.checkin-actions .checkin-button{margin-top:0;min-height:44px}
+.mood-trigger{min-height:44px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:10px;font-weight:900;transition:.15s;position:relative}
+.mood-trigger:active:not(:disabled){transform:scale(.985)}
+.mood-trigger.ready{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.mood-trigger.locked{opacity:.72}
+.mood-trigger:disabled{cursor:default}
+.mood-bubble{position:absolute;z-index:8;right:0;top:calc(100% + 9px);display:flex;gap:6px;padding:8px;border:1px solid var(--line);border-radius:15px;background:var(--surface);box-shadow:var(--shadow);animation:up .18s ease both}
+.mood-bubble:before{content:"";position:absolute;right:35px;top:-5px;width:9px;height:9px;background:var(--surface);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
+.mood-chip{width:37px;height:37px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:11px;background:var(--soft);font-size:17px;transition:.15s}
+.mood-chip:active{transform:scale(.92)}
+.mood-selection{margin-top:8px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
+.mood-selection strong{color:var(--text)}
 
 /* Ultra: charts */
-.chart-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
+.chart-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft);cursor:pointer;transition:transform .15s,border-color .2s,box-shadow .2s}
+.chart-card:active{transform:scale(.992)}
+.chart-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chart-card:hover{border-color:color-mix(in srgb,var(--accent) 28%,var(--line));box-shadow:0 8px 24px rgba(0,0,0,.06)}
 .chart-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
 .chart-title b{font-size:11px;font-weight:900}
 .chart-title span{color:var(--muted);font-size:9px;font-weight:750}
+.chart-tap-hint{margin-top:6px;color:var(--muted);font-size:8px;font-weight:800;text-align:center;letter-spacing:.2px}
 .chart-card canvas{display:block;width:100%;height:74px}
 
 /* Ultra: notes search */
@@ -286,6 +299,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .pin-key:active{transform:scale(.94)}
 .pin-key.ghost{background:transparent;border-color:transparent;color:var(--muted);font-size:11px;font-weight:800}
 .pin-error{min-height:16px;margin-top:14px;color:var(--danger);font-size:11px;font-weight:700;text-align:center}
+.pin-keypad.locked{opacity:.5;pointer-events:none;filter:saturate(.7)}
+.pin-cooldown{margin:8px auto 0;width:max-content;min-width:150px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:900;text-align:center}
+.pin-cooldown strong{color:var(--text)}
 .pin-setup-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .pin-setup-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .pin-box{width:38px;height:44px;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;outline:none}
@@ -374,69 +390,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .share-row{margin-top:18px}
 
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
-
-/* HAYGER V3 production polish */
-:root{
-  --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;
-  --radius-sm:10px;--radius-md:14px;--radius-lg:18px;--radius-xl:24px;
-  --focus:0 0 0 3px var(--accent-soft);
-}
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-button:disabled{opacity:.55;cursor:not-allowed}
-.insight-card,.record-card{margin-top:12px;padding:15px;border:1px solid var(--line);border-radius:17px;background:var(--surface)}
-.insight-kicker{font-size:9px;font-weight:900;letter-spacing:1px;color:var(--accent);text-transform:uppercase}
-.insight-title{margin-top:5px;font-family:var(--font-display);font-size:16px;font-weight:700}
-.insight-copy{margin-top:5px;color:var(--muted);font-size:10.5px;line-height:1.5}
-.record-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:10px}
-.record-item{padding:10px;border-radius:12px;background:var(--soft)}
-.record-item b{display:block;font-family:var(--font-display);font-size:20px}.record-item span{display:block;margin-top:3px;color:var(--muted);font-size:8px;font-weight:800;text-transform:uppercase}
-.comeback-card{border-color:var(--accent)}
-.data-health{margin-top:12px;padding:12px 14px;border:1px dashed var(--line);border-radius:14px;background:var(--surface);font-size:9px;color:var(--muted);line-height:1.45}
-.data-health b{color:var(--text)}
-.pin-attempts{margin:8px 0;color:var(--danger);font-size:10px;font-weight:800;text-align:center}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
-
-/* HAYGER V4 — premium product layer */
-:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-button,input,textarea,select{accent-color:var(--accent)}
-.section-kicker{margin:0 0 7px;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase}
-.reflection-card,.insight-stack,.records-v4,.smart-reminder-card,.install-card,.data-health-card{padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.035)}
-.reflection-card{margin-top:14px}
-.reflection-title{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.2px}
-.reflection-copy{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
-.reflection-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
-.reflection-field{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}
-.reflection-field label{display:block;margin-bottom:8px;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:1px;text-transform:uppercase}
-.reflection-field textarea,.reflection-field input{width:100%;border:0;background:transparent;color:var(--text);outline:0;resize:none}
-.reflection-field textarea{min-height:70px;line-height:1.45;font-size:12px}
-.energy-row{display:flex;gap:6px}
-.energy-btn{width:30px;height:30px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted);font-weight:900}
-.energy-btn.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
-.reflection-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
-.reflection-saved{color:var(--muted);font-size:10px;font-weight:700}
-.insight-stack{margin-top:10px}
-.insight-row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
-.insight-row:last-child{border-bottom:0;padding-bottom:0}
-.insight-row:first-child{padding-top:0}
-.insight-row b{font-size:12px}.insight-row span{color:var(--muted);font-size:11px;text-align:right;line-height:1.4}
-.records-v4{margin-top:10px}
-.records-v4-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
-.record-v4-item{padding:12px 8px;border-radius:15px;background:var(--soft);text-align:center}
-.record-v4-item b{display:block;font-family:var(--font-display);font-size:25px;line-height:1}.record-v4-item span{display:block;margin-top:6px;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.7px;text-transform:uppercase}
-.week-score{display:flex;align-items:end;gap:5px;height:62px;margin-top:14px}
-.week-bar{flex:1;min-width:0;background:var(--soft2);border-radius:7px 7px 3px 3px;position:relative}.week-bar.done{background:var(--accent)}.week-bar span{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-size:8px;color:var(--muted);font-weight:800}
-.achievement-special{margin-top:10px;padding:14px;border:1px dashed var(--accent);border-radius:16px;background:var(--accent-soft)}
-.achievement-special b{display:block;font-size:12px}.achievement-special span{display:block;margin-top:4px;color:var(--muted);font-size:10px;line-height:1.45}
-.smart-reminder-card{margin-top:10px}
-.install-card{margin-top:10px}
-.install-card.hidden{display:none}
-.data-health-card{margin-top:10px}
-.health-pill{display:inline-flex;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.6px}
-.health-list{margin:10px 0 0;padding:0;list-style:none}.health-list li{padding:7px 0;border-bottom:1px solid var(--line);font-size:11px}.health-list li:last-child{border-bottom:0}
-.share-card-preview{margin-top:12px;padding:20px;border-radius:20px;background:linear-gradient(145deg,var(--primary),var(--soft));color:var(--primaryText);text-align:center}
-.share-card-preview .share-day{font-family:var(--font-display);font-size:54px;line-height:1}.share-card-preview .share-brand{font-size:10px;font-weight:900;letter-spacing:2px}.share-card-preview .share-line{margin-top:8px;font-size:11px;opacity:.75}
-.note-modal textarea{min-height:180px;width:100%;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--soft);color:var(--text);resize:vertical;line-height:1.5}
-@media(max-width:380px){.reflection-grid{grid-template-columns:1fr}.records-v4-grid{grid-template-columns:1fr 1fr}}
 </style>
 
 
@@ -491,18 +444,6 @@ button,input,textarea,select{accent-color:var(--accent)}
   </section>
 </div>
 
-<div id="noteModal" class="modal-backdrop" aria-hidden="true">
-  <section class="modal note-modal" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle">
-    <h2 id="noteModalTitle">Edit note</h2>
-    <p id="noteModalDate"></p>
-    <textarea id="noteModalText" maxlength="500" placeholder="Write something worth remembering..."></textarea>
-    <div class="modal-actions">
-      <button id="noteModalCancel" class="button secondary" type="button">Cancel</button>
-      <button id="noteModalSave" class="button primary" type="button">Save note</button>
-    </div>
-  </section>
-</div>
-
 <div id="updateBanner" class="update-banner" role="status" aria-live="polite">
   <div class="update-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -529,9 +470,7 @@ button,input,textarea,select{accent-color:var(--accent)}
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
-  const REFLECTION_KEY="hayger_reflections";
-  const DEVICE_KEY="hayger_device_id";
-  const LAST_BACKUP_KEY="hayger_last_backup";
+  const PIN_ATTEMPTS_KEY="hayger_pin_attempts";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -558,93 +497,15 @@ button,input,textarea,select{accent-color:var(--accent)}
     system:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor" stroke="none"/></svg>'
   };
 
-  // ---- V3: IndexedDB durability layer + schema metadata ----
-  const DATA_DB="hayger_data_v4", DATA_STORE="kv", DATA_SCHEMA=4;
-  let dataDb=null;
-  async function idbGet(k){const db=await dataDbReady;if(!db)return null;return new Promise((res,rej)=>{try{const tx=db.transaction(DATA_STORE,"readonly");const req=tx.objectStore(DATA_STORE).get(k);req.onsuccess=()=>res(req.result??null);req.onerror=()=>rej(req.error)}catch(e){rej(e)}})}
-  async function migrateLegacyIDB(){
-    if(!window.indexedDB)return;
-    try{
-      const legacy=await new Promise((resolve,reject)=>{const req=indexedDB.open("hayger_data_v3");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
-      const tx=legacy.transaction("kv","readonly"), store=tx.objectStore("kv");
-      const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
-      const values={};
-      await Promise.all(keys.map(k=>new Promise(r=>{const q=store.get(k);q.onsuccess=()=>{values[k]=q.result;r()};q.onerror=()=>r()})));
-      legacy.close();
-      for(const [k,v] of Object.entries(values)){if(v!=null&&localStorage.getItem(k)==null)localStorage.setItem(k,v)}
-    }catch{}
-  }
-  const dataDbReady=new Promise(resolve=>{
-    if(!window.indexedDB){resolve(null);return}
-    try{
-      const req=indexedDB.open(DATA_DB,DATA_SCHEMA);
-      req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DATA_STORE))db.createObjectStore(DATA_STORE)};
-      req.onsuccess=async()=>{
-        dataDb=req.result;
-        // Restore from the previous V3 database only when the new store is empty.
-        await migrateLegacyIDB();
-        const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,REFLECTION_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
-        const existing=await new Promise(r=>{const tx=dataDb.transaction(DATA_STORE,"readonly"),st=tx.objectStore(DATA_STORE),q=st.get(START_KEY);q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)});
-        if(existing!=null&&localStorage.getItem(START_KEY)==null){for(const k of keys){const v=await new Promise(r=>{const q=dataDb.transaction(DATA_STORE,"readonly").objectStore(DATA_STORE).get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)});if(v!=null)localStorage.setItem(k,v)}}
-        resolve(dataDb);
-        setTimeout(()=>syncLocalDataToIDB().catch(()=>{}),0);
-      };
-      req.onerror=()=>resolve(null);
-    }catch{resolve(null)}
-  });
-  async function idbPut(k,v){const db=await dataDbReady;if(!db)return;return new Promise((res,rej)=>{try{const tx=db.transaction(DATA_STORE,"readwrite");tx.objectStore(DATA_STORE).put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)}catch(e){rej(e)}})}
-  async function idbDelete(k){const db=await dataDbReady;if(!db)return;return new Promise((res,rej)=>{try{const tx=db.transaction(DATA_STORE,"readwrite");tx.objectStore(DATA_STORE).delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)}catch(e){rej(e)}})}
-  async function syncLocalDataToIDB(){
-    const db=await dataDbReady;if(!db)return;
-    const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,REFLECTION_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
-    for(const k of keys){const v=localStorage.getItem(k);if(v!=null)await idbPut(k,v)}
-    await idbPut("__schema",String(DATA_SCHEMA));
-  }
-  function mirrorKey(k,v){idbPut(k,v).catch(()=>{})}
-  function mirrorDelete(k){idbDelete(k).catch(()=>{})}
-
   function get(k,f=null){try{return localStorage.getItem(k)??f}catch{return f}}
-  function set(k,v){try{localStorage.setItem(k,v);mirrorKey(k,String(v));return true}catch{return false}}
-  function remove(k){try{localStorage.removeItem(k);mirrorDelete(k)}catch{}}
+  function set(k,v){try{localStorage.setItem(k,v);return true}catch{return false}}
+  function remove(k){try{localStorage.removeItem(k)}catch{}}
   function readJSON(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch{return f}}
-  function writeJSON(k,v){try{const raw=JSON.stringify(v);localStorage.setItem(k,raw);mirrorKey(k,raw);return true}catch{return false}}
+  function writeJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}}
   function checkins(){return readJSON(CHECKINS_KEY,{})}
   function notes(){return readJSON(NOTES_KEY,{})}
   function goal(){return Number(get(GOAL_KEY)||0)}
   function reminder(){return readJSON(REMINDER_KEY,{enabled:false,time:"20:00"})}
-
-  function reflections(){return readJSON(REFLECTION_KEY,{})}
-  function deviceId(){
-    let id=get(DEVICE_KEY);
-    if(!id){id=(crypto.randomUUID?crypto.randomUUID():"hayger-"+Date.now()+"-"+Math.random().toString(36).slice(2));set(DEVICE_KEY,id)}
-    return id;
-  }
-  function reflectionFor(key){return reflections()[key]||null}
-  function saveReflection(key,value){const all=reflections();all[key]={...value,updatedAt:new Date().toISOString()};return writeJSON(REFLECTION_KEY,all)}
-  function moodScore(m){return {"😊":5,"🙂":4,"😐":3,"😔":2,"😣":1}[m]||0}
-  function energyAverage(){const vals=Object.values(reflections()).map(x=>Number(x.energy)).filter(Boolean);return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*10)/10:0}
-  function weeklyInsight(){
-    const data=checkins(), start=weeksAgoMonday(0), rows=[];
-    for(let i=0;i<7;i++){const d=new Date(start);d.setDate(d.getDate()+i);if(d<=today()) rows.push({key:toInputDate(d),done:!!data[toInputDate(d)]})}
-    const done=rows.filter(x=>x.done).length;
-    const current=streakStats().current;
-    return {done,elapsed:rows.length||1,rate:Math.round(done/(rows.length||1)*100),current,start};
-  }
-  function advancedAchievements(){
-    const x=computeInsights(), s=streakStats(), days=completedDays(), refs=reflections();
-    const weeks={}; days.forEach(k=>{const d=parseDate(k),m=new Date(d);m.setDate(d.getDate()-((d.getDay()+6)%7));const wk=toInputDate(m);weeks[wk]=(weeks[wk]||0)+1});
-    const perfectWeeks=Object.values(weeks).filter(v=>v>=7).length;
-    const reflectionCount=Object.keys(refs).length;
-    const comebackUnlocked=x.comebacks>=1;
-    return [
-      {icon:"↩️",label:"COMEBACK",desc:"Return after missing a day.",unlocked:comebackUnlocked},
-      {icon:"🗓️",label:"PERFECT WEEK",desc:"Complete all 7 days in one week.",unlocked:perfectWeeks>=1},
-      {icon:"📝",label:"REFLECTOR",desc:"Save 7 daily reflections.",unlocked:reflectionCount>=7},
-      {icon:"⚡",label:"CONSISTENT 14",desc:"Build a 14-day streak.",unlocked:s.best>=14},
-      {icon:"🌟",label:"100 CHECK-INS",desc:"Reach 100 completed days.",unlocked:x.total>=100},
-      {icon:"🧭",label:"FIND YOUR RHYTHM",desc:"Check in on 5 different weekdays.",unlocked:x.strongest>=2 && new Set(days.map(k=>parseDate(k).getDay())).size>=5}
-    ];
-  }
   function checkinKey(d){return toInputDate(d)}
   function escapeHTML(v){
     return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -698,27 +559,35 @@ button,input,textarea,select{accent-color:var(--accent)}
     const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
   }
-  function bytesToHex(bytes){return Array.from(bytes).map(b=>b.toString(16).padStart(2,"0")).join("")}
-  function hexToBytes(hex){const a=new Uint8Array(hex.length/2);for(let i=0;i<a.length;i++)a[i]=parseInt(hex.slice(i*2,i*2+2),16);return a}
-  async function pbkdf2Pin(pin,saltHex,iterations=180000){
-    const key=await crypto.subtle.importKey("raw",new TextEncoder().encode(pin),"PBKDF2",false,["deriveBits"]);
-    const bits=await crypto.subtle.deriveBits({name:"PBKDF2",salt:hexToBytes(saltHex),iterations,hash:"SHA-256"},key,256);
-    return bytesToHex(new Uint8Array(bits));
-  }
   function pinRecord(){return readJSON(PIN_KEY,null)}
+  function pinAttempts(){return readJSON(PIN_ATTEMPTS_KEY,{fails:0,lockedUntil:0})||{fails:0,lockedUntil:0}}
+  function savePinAttempts(v){writeJSON(PIN_ATTEMPTS_KEY,v)}
+  function clearPinAttempts(){remove(PIN_ATTEMPTS_KEY)}
+  function pinCooldownMs(fails){
+    if(fails<3) return 0;
+    const seconds=fails===3?3:fails===4?8:fails===5?20:fails===6?45:90;
+    return seconds*1000;
+  }
+  function pinCooldownRemaining(){
+    const a=pinAttempts();
+    return Math.max(0,Number(a.lockedUntil||0)-Date.now());
+  }
+  function registerPinFailure(){
+    const a=pinAttempts();
+    a.fails=Math.min(20,Number(a.fails||0)+1);
+    const cooldown=pinCooldownMs(a.fails);
+    a.lockedUntil=cooldown?Date.now()+cooldown:0;
+    savePinAttempts(a);
+    return {fails:a.fails,cooldown};
+  }
   async function setPin(pin){
-    const salt=crypto.getRandomValues(new Uint8Array(16));
-    const saltHex=bytesToHex(salt),iterations=180000;
-    writeJSON(PIN_KEY,{version:2,algorithm:"PBKDF2-SHA256",iterations,salt:saltHex,hash:await pbkdf2Pin(pin,saltHex,iterations)});
+    writeJSON(PIN_KEY,{hash:await sha256Hex(pin),version:2});
+    clearPinAttempts();
   }
   async function verifyPin(pin){
     const rec=pinRecord();
     if(!rec) return true;
-    if(rec.version===2&&rec.salt&&rec.hash){return (await pbkdf2Pin(pin,rec.salt,rec.iterations||180000))===rec.hash}
-    // Backward-compatible migration from V2's SHA-256 PIN record.
-    const ok=(await sha256Hex(pin))===rec.hash;
-    if(ok) await setPin(pin);
-    return ok;
+    return (await sha256Hex(pin))===rec.hash;
   }
   function pinEnabled(){return !!pinRecord()}
 
@@ -827,20 +696,6 @@ button,input,textarea,select{accent-color:var(--accent)}
     }
   }
 
-
-  async function shareProgressCard(){
-    const start=parseDate(get(START_KEY)),day=dayCount(start),s=streakStats(),x=computeInsights();
-    const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext("2d");
-    ctx.fillStyle="#15171c";ctx.fillRect(0,0,1080,1350);ctx.fillStyle="#e3a94a";ctx.fillRect(70,100,110,8);
-    ctx.fillStyle="#f4f4f2";ctx.font="700 44px Georgia";ctx.fillText("HAYGER",70,180);ctx.font="900 24px Inter, sans-serif";ctx.fillStyle="#93979f";ctx.fillText("ONE DAY AT A TIME",70,220);
-    ctx.fillStyle="#f4f4f2";ctx.font="700 220px Georgia";ctx.fillText(String(day),70,500);ctx.font="900 28px Inter, sans-serif";ctx.fillStyle="#93979f";ctx.fillText("CURRENT DAY",75,555);
-    ctx.fillStyle="#f4f4f2";ctx.font="700 44px Inter, sans-serif";ctx.fillText(`${s.current} day streak`,75,700);ctx.fillText(`${s.best} best streak`,75,770);ctx.fillText(`${x.total} total check-ins`,75,840);
-    ctx.fillStyle="#93979f";ctx.font="400 28px Inter, sans-serif";ctx.fillText("Consistency is built one day at a time.",75,1110);ctx.fillText(new Date().toLocaleDateString(),75,1170);
-    const blob=await new Promise(res=>canvas.toBlob(res,"image/png"));
-    try{if(navigator.share&&blob){const file=new File([blob],"hayger-progress.png",{type:"image/png"});if(!navigator.canShare||navigator.canShare({files:[file]})){await navigator.share({title:"HAYGER Progress",text:"One day at a time.",files:[file]});return}}}catch{}
-    try{const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="hayger-progress.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast("✓ Progress card saved.")}catch{showToast("Couldn't create progress card.")}
-  }
-
   // ---- Ultra: day detail modal (History tab) ----
   function openDayDetail(dateKey){
     const dt=parseDate(dateKey);
@@ -859,6 +714,22 @@ button,input,textarea,select{accent-color:var(--accent)}
   function closeDayDetail(){
     const dm=document.getElementById("dayModal");
     dm.classList.remove("open");dm.setAttribute("aria-hidden","true");
+  }
+
+  function openWeeklyActivityDetail(){
+    const dm=document.getElementById("dayModal");
+    const counts=weeklyCounts(8);
+    const rows=[];
+    for(let i=0;i<8;i++){
+      const monday=weeksAgoMonday(7-i);
+      const sunday=new Date(monday);sunday.setDate(sunday.getDate()+6);
+      const label=`${monday.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${sunday.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
+      const count=counts[i];
+      rows.push(`<div class="day-detail-row"><div class="day-detail-label">Week ${i+1}</div><div class="day-detail-value">${label}<br><span style="color:var(--muted);font-size:10px">${count} / 7 check-ins</span></div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:${count?"var(--accent)":"var(--muted)"}">${count}</div></div>`);
+    }
+    document.getElementById("dayModalTitle").textContent="Weekly Activity";
+    document.getElementById("dayModalBody").innerHTML=rows.join("");
+    dm.classList.add("open");dm.setAttribute("aria-hidden","false");
   }
   document.getElementById("dayModalClose").addEventListener("click",closeDayDetail);
   document.getElementById("dayModal").addEventListener("click",e=>{if(e.target.id==="dayModal")closeDayDetail()});
@@ -1047,14 +918,8 @@ button,input,textarea,select{accent-color:var(--accent)}
         <div class="badge-section-title">Streak badges</div>
         ${grid(b.streak)}
       </div>
-      <div class="badge-section">
-        <div class="badge-section-title">Special achievements</div>
-        ${advancedAchievements().map(x=>`<div class="achievement-special" style="opacity:${x.unlocked?1:.55}"><b>${x.icon} ${x.label} ${x.unlocked?"· UNLOCKED":"· LOCKED"}</b><span>${x.desc}</span></div>`).join("")}
-      </div>
-      <div class="share-card-preview"><div class="share-brand">HAYGER</div><div class="share-day">DAY ${day}</div><div class="share-line">${streakStats().current} day current streak · ${streakStats().best} best streak</div></div>
       <div class="share-row">
         <button id="shareProgressBtn" class="button secondary" type="button">SHARE PROGRESS</button>
-        <button id="shareCardBtn" class="button secondary" type="button">SHARE CARD</button>
         <button id="exportAwards" class="button secondary" type="button">EXPORT BACKUP</button>
       </div>
     </div>`;
@@ -1127,41 +992,6 @@ button,input,textarea,select{accent-color:var(--accent)}
     </div>`;
   }
 
-  function computeInsights(){
-    const data=checkins(), days=Object.keys(data).filter(k=>data[k]).sort();
-    const s=streakStats();
-    const moods=days.map(k=>data[k]?.mood).filter(Boolean);
-    const moodCounts={};moods.forEach(m=>moodCounts[m]=(moodCounts[m]||0)+1);
-    const topMood=Object.entries(moodCounts).sort((a,b)=>b[1]-a[1])[0]?.[0]||"—";
-    let longestGap=0,gapStart="",prev=null,comebacks=0;
-    for(const k of days){const d=parseDate(k);if(prev){const gap=Math.round((d-prev)/86400000)-1;if(gap>longestGap){longestGap=gap;gapStart=toInputDate(prev)}}prev=d}
-    for(let i=1;i<days.length;i++){const a=parseDate(days[i-1]),b=parseDate(days[i]);if(Math.round((b-a)/86400000)>1)comebacks++}
-    const weekday=[0,0,0,0,0,0,0];days.forEach(k=>weekday[parseDate(k).getDay()]++);
-    const strongest=Math.max(...weekday),strongDay=strongest?['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][weekday.indexOf(strongest)]:null;
-    return {total:days.length,current:s.current,best:s.best,topMood,longestGap,comebacks,strongDay,strongest};
-  }
-  function renderInsightCard(){
-    const x=computeInsights();
-    if(!x.total)return `<div class="insight-card"><div class="insight-kicker">YOUR INSIGHT</div><div class="insight-title">Start with one honest check-in.</div><div class="insight-copy">HAYGER will turn your history into useful patterns as you build it.</div></div>`;
-    let title="You're building consistency.";
-    if(x.best>=7)title=`Your best streak is ${x.best} days.`;
-    else if(x.comebacks)title=`You've come back ${x.comebacks} time${x.comebacks===1?'':'s'}.`;
-    const copy=x.strongDay?`You check in most often on ${x.strongDay}. Your most common mood is ${x.topMood}.`: `You've logged ${x.total} completed day${x.total===1?'':'s'} so far.`;
-    return `<div class="insight-card"><div class="insight-kicker">YOUR INSIGHT</div><div class="insight-title">${escapeHTML(title)}</div><div class="insight-copy">${escapeHTML(copy)}</div></div>
-      <div class="record-card"><div class="insight-kicker">PERSONAL RECORDS</div><div class="record-grid"><div class="record-item"><b>${x.best}</b><span>Best streak</span></div><div class="record-item"><b>${x.total}</b><span>Total days</span></div><div class="record-item"><b>${x.comebacks}</b><span>Comebacks</span></div><div class="record-item"><b>${x.longestGap}</b><span>Longest gap</span></div></div></div>`;
-  }
-
-
-  function renderAdvancedStats(){
-    const w=weeklyInsight(), x=computeInsights(), energy=energyAverage(), month=(()=>{
-      const now=today(), y=now.getFullYear(),m=now.getMonth(),last=new Date(y,m+1,0).getDate(),data=checkins();let done=0,elapsed=0;
-      for(let d=1;d<=last;d++){const dt=new Date(y,m,d);if(dt<=now){elapsed++;if(data[toInputDate(dt)])done++}}
-      return {done,elapsed,rate:elapsed?Math.round(done/elapsed*100):0};
-    })();
-    const bars=Array.from({length:7},(_,i)=>{const d=new Date(w.start||weeksAgoMonday(0));d.setDate(d.getDate()+i);const done=checkins()[toInputDate(d)];return `<div class="week-bar ${done?"done":""}" style="height:${done?"100%":"28%"}"><span>${["M","T","W","T","F","S","S"][i]}</span></div>`}).join("");
-    return `<div class="insight-stack"><div class="section-kicker">THIS WEEK</div><div class="insight-row"><b>${w.done}/${w.elapsed} days complete</b><span>${w.rate}% consistency</span></div><div class="week-score">${bars}</div></div>
-      <div class="records-v4"><div class="section-kicker">DEEPER SIGNALS</div><div class="records-v4-grid"><div class="record-v4-item"><b>${month.rate}%</b><span>This month</span></div><div class="record-v4-item"><b>${energy||"—"}</b><span>Avg energy</span></div><div class="record-v4-item"><b>${x.strongDay?x.strongDay.slice(0,3):"—"}</b><span>Best weekday</span></div></div><div class="insight-row" style="margin-top:10px"><b>${x.longestGap?`Your longest gap was ${x.longestGap} day${x.longestGap===1?"":"s"}.`:`No gap pattern yet.`}</b><span>${x.comebacks?`${x.comebacks} comeback${x.comebacks===1?"":"s"}`:"Keep your first streak alive"}</span></div></div>`;
-  }
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
     const checkinRate=Math.min(100,Math.round((s.total/day)*100));
@@ -1184,10 +1014,10 @@ button,input,textarea,select{accent-color:var(--accent)}
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
       </div>
 
-      <div class="chart-card" style="margin-top:10px">
+      <div class="chart-card" id="weeklyActivityCard" style="margin-top:10px" role="button" tabindex="0" aria-label="View weekly activity details">
         <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
         <canvas id="weeklyChart"></canvas>
-        <div id="insightMount"></div>
+        <div class="chart-tap-hint">TAP TO VIEW WEEK-BY-WEEK DETAILS</div>
       </div>
 
       <div class="goal-card" style="margin-top:10px">
@@ -1311,8 +1141,6 @@ button,input,textarea,select{accent-color:var(--accent)}
           <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
         </div>
       </div>`:""}
-      <div id="installCard" class="install-card hidden"><div class="section-kicker">INSTALL</div><div class="setting-copy"><b>Make HAYGER feel like an app</b><span>Add it to your home screen for a faster, distraction-free check-in.</span></div><button id="installApp" class="small-button" type="button" style="margin-top:10px">INSTALL HAYGER</button></div>
-      <div class="data-health-card"><div class="section-kicker">DATA HEALTH</div><span class="health-pill">LOCAL-FIRST · V4</span><ul class="health-list"><li>✓ Check-ins, notes and reflections are backed by IndexedDB + local cache.</li><li>✓ Backup includes a device ID and revision for future sync.</li><li>✓ No account or server is required for core use.</li></ul></div>
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
@@ -1332,49 +1160,40 @@ button,input,textarea,select{accent-color:var(--accent)}
 
 
   let reminderTimer=null;
-  let deferredInstallPrompt=null;
-  async function scheduleReminder(){
-    const r=reminder();const status=document.getElementById("reminderStatus");
-    if(!r.enabled){if(status)status.textContent="Reminders are off.";return}
-    if(!("Notification" in window)){if(status)status.textContent="This browser does not support notifications.";return}
-    const perm=Notification.permission;
-    if(perm!=="granted"){if(status)status.textContent="Enable notifications to receive your daily reminder.";return}
-    const [hh,mm]=String(r.time||"20:00").split(":").map(Number);const now=new Date();
-    const next=new Date(now);next.setHours(hh||0,mm||0,0,0);if(next<=now)next.setDate(next.getDate()+1);
-    const registration=await navigator.serviceWorker?.ready.catch(()=>null);
-    let scheduled=false;
-    if(registration?.showNotification && "TimestampTrigger" in window){
+  function scheduleReminder(){
+    clearTimeout(reminderTimer);
+    const r=reminder();
+    const status=document.getElementById("reminderStatus");
+    if(!r.enabled){
+      if(status)status.textContent="Reminder is off.";
+      return;
+    }
+    const [hh,mm]=(r.time||"20:00").split(":").map(Number);
+    const now=new Date(), next=new Date();
+    next.setHours(hh||0,mm||0,0,0);
+    if(next<=now) next.setDate(next.getDate()+1);
+    const delay=Math.max(1000,next-now);
+    reminderTimer=setTimeout(async()=>{
       try{
-        for(let i=0;i<14;i++){
-          const when=new Date(next);when.setDate(when.getDate()+i);
-          await registration.showNotification("HAYGER",{body:"Your day is waiting. Keep going.",icon:"./icon-192.png",tag:`hayger-daily-${when.toISOString().slice(0,10)}`,showTrigger:new TimestampTrigger(when.getTime()),data:{url:"./"}});
+        if("Notification" in window && Notification.permission==="granted"){
+          new Notification("HAYGER",{body:"Your day is waiting. Keep going.",icon:"./icon-192.png"});
         }
-        scheduled=true;
       }catch{}
-    }
-    if(!scheduled){
-      clearTimeout(reminderTimer);
-      const delay=Math.max(1000,next-now);
-      reminderTimer=setTimeout(async()=>{
-        if(!checkins()[toInputDate(today())]){try{new Notification("HAYGER",{body:streakStats().current?`Protect your ${streakStats().current}-day streak — check in today.`:"Your first check-in is waiting.",icon:"./icon-192.png",tag:"hayger-daily"})}catch{}}
-        scheduleReminder();
-      },delay);
-    }
-    if(status)status.textContent=scheduled?`Daily reminder scheduled for ${r.time}.`: `Reminder set for ${r.time}. HAYGER only alerts when today is still unchecked; background reliability depends on browser support.`;
+      scheduleReminder();
+    },delay);
+    if(status) status.textContent=`Reminder set for ${r.time}. Notifications depend on browser/device support.`;
   }
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:4,schema:4,format:"HAYGER_BACKUP",exportedAt:new Date().toISOString(),
-      deviceId:deviceId(),revision:Date.now(),
-      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),reflections:reflections(),
-      goal:goal(),reminder:reminder(),theme:theme(),profile:readJSON("hayger_profile_v2",{})
+      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
+      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
+      goal:goal(),reminder:reminder(),theme:theme()
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
     a.href=url;a.download=`hayger-backup-${toInputDate(today())}.json`;
     document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-    set(LAST_BACKUP_KEY,new Date().toISOString());
     showToast("✓ Backup exported.");
   }
 
@@ -1387,17 +1206,14 @@ button,input,textarea,select{accent-color:var(--accent)}
         if(d.startDate){
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
-          set(START_KEY,d.startDate);
+          localStorage.setItem(START_KEY,d.startDate);
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
-        writeJSON(REFLECTION_KEY,d.reflections&&typeof d.reflections==="object"?d.reflections:{});
-        if(d.profile&&typeof d.profile==="object") writeJSON("hayger_profile_v2",d.profile);
-        if(Number(d.goal)>0) set(GOAL_KEY,String(Number(d.goal)));
+        if(Number(d.goal)>0) localStorage.setItem(GOAL_KEY,String(Number(d.goal)));
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
-        if(["system","light","dark"].includes(d.theme)) set(THEME_KEY,d.theme);
-        set(LAST_BACKUP_KEY,new Date().toISOString());
+        if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1405,31 +1221,6 @@ button,input,textarea,select{accent-color:var(--accent)}
     reader.readAsText(file);
   }
 
-
-  function renderReflectionCard(key){
-    const r=reflectionFor(key)||{};
-    const energy=Number(r.energy)||0;
-    return `<div class="reflection-card" id="reflectionCard">
-      <div class="section-kicker">DAILY REFLECTION</div>
-      <div class="reflection-title">How did today feel?</div>
-      <div class="reflection-copy">Two tiny prompts. Enough to notice the pattern without turning HAYGER into homework.</div>
-      <div class="reflection-grid">
-        <div class="reflection-field">
-          <label>Energy</label>
-          <div class="energy-row">${[1,2,3,4,5].map(n=>`<button type="button" class="energy-btn ${energy===n?"active":""}" data-energy="${n}" aria-label="Energy ${n} of 5">${n}</button>`).join("")}</div>
-        </div>
-        <div class="reflection-field">
-          <label>What went well?</label>
-          <textarea id="reflectionWin" maxlength="220" placeholder="One small win...">${escapeHTML(r.win||"")}</textarea>
-        </div>
-        <div class="reflection-field" style="grid-column:1/-1">
-          <label>Tomorrow's intention</label>
-          <textarea id="reflectionIntent" maxlength="220" placeholder="What do you want to carry forward?">${escapeHTML(r.intention||"")}</textarea>
-        </div>
-      </div>
-      <div class="reflection-actions"><span class="reflection-saved">${r.updatedAt?"Saved for today":"Private on this device"}</span><button id="saveReflection" class="small-button" type="button">${r.updatedAt?"UPDATE REFLECTION":"SAVE REFLECTION"}</button></div>
-    </div>`;
-  }
   function renderHome(start,current,day,data,key,checked){
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
     const g=goal();
@@ -1454,32 +1245,18 @@ button,input,textarea,select{accent-color:var(--accent)}
       <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
       <div class="checkin">
         <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
-        <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
-        ${checked?`<div class="mood-hint">How are you feeling today?</div>
-        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
+        <div class="checkin-actions">
+          <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
+          ${checked?`<button id="moodTrigger" class="mood-trigger ${data[key]?.mood?"locked":"ready"}" type="button" ${data[key]?.mood?"disabled":""}>${data[key]?.mood?`FEELING ${data[key].mood}`:"FEELING"}</button>`:`<button class="mood-trigger locked" type="button" disabled>FEELING</button>`}
+          ${checked&&!data[key]?.mood?`<div id="moodBubble" class="mood-bubble" hidden>${MOODS.map(m=>`<button class="mood-chip" data-mood="${m}" type="button" aria-label="Set mood ${m}">${m}</button>`).join("")}</div>`:""}
+        </div>
+        ${checked&&data[key]?.mood?`<div class="mood-selection">Feeling saved as <strong>${data[key].mood}</strong> · can’t be changed later</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
-      ${checked?renderReflectionCard(key):`<div class="reflection-card"><div class="section-kicker">DAILY REFLECTION</div><div class="reflection-title">Check in first, then reflect.</div><div class="reflection-copy">Your reflection becomes part of your personal pattern — private on this device.</div></div>`}
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
     </div>`;
   }
 
-
-  function openNoteEditor(key){
-    const m=document.getElementById("noteModal"), t=document.getElementById("noteModalText");
-    const map=notes();
-    m.dataset.key=key;document.getElementById("noteModalTitle").textContent=key===toInputDate(today())?"Today's note":"Edit note";
-    document.getElementById("noteModalDate").textContent=formatDate(parseDate(key));t.value=map[key]||"";
-    m.classList.add("open");m.setAttribute("aria-hidden","false");setTimeout(()=>t.focus(),50);
-  }
-  function closeNoteEditor(){const m=document.getElementById("noteModal");m.classList.remove("open");m.setAttribute("aria-hidden","true")}
-  document.getElementById("noteModalCancel")?.addEventListener("click",closeNoteEditor);
-  document.getElementById("noteModal")?.addEventListener("click",e=>{if(e.target.id==="noteModal")closeNoteEditor()});
-  document.getElementById("noteModalSave")?.addEventListener("click",()=>{
-    const m=document.getElementById("noteModal"),key=m.dataset.key,text=document.getElementById("noteModalText").value.trim();
-    if(!key||!text){showToast("Write something before saving.");return}
-    const map=notes();map[key]=text;writeJSON(NOTES_KEY,map);closeNoteEditor();render();showToast("✓ Note saved.");
-  });
   function challenge(){
     const value=get(START_KEY);
     const start=parseDate(value);
@@ -1511,23 +1288,22 @@ button,input,textarea,select{accent-color:var(--accent)}
         }
       });
 
+      const moodTrigger=document.getElementById("moodTrigger");
+      const moodBubble=document.getElementById("moodBubble");
+      moodTrigger?.addEventListener("click",()=>{
+        if(checkins()[key]?.mood) return;
+        if(moodBubble){
+          moodBubble.hidden=!moodBubble.hidden;
+        }
+      });
       document.querySelectorAll(".mood-chip").forEach(btn=>{
         btn.addEventListener("click",()=>{
           const d=checkins();
-          if(!d[key]) return;
-          d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
+          if(!d[key] || d[key].mood) return;
+          d[key].mood=btn.dataset.mood;
           writeJSON(CHECKINS_KEY,d);
           render();
         });
-      });
-      document.querySelectorAll("[data-energy]").forEach(btn=>btn.addEventListener("click",()=>{
-        const all=reflections(), r=all[key]||{};r.energy=Number(btn.dataset.energy);all[key]=r;writeJSON(REFLECTION_KEY,all);render();
-      }));
-      document.getElementById("saveReflection")?.addEventListener("click",()=>{
-        const all=reflections(), prev=all[key]||{};
-        const value={energy:Number(prev.energy)||0,win:(document.getElementById("reflectionWin")?.value||"").trim(),intention:(document.getElementById("reflectionIntent")?.value||"").trim()};
-        if(!value.energy&&!value.win&&!value.intention){showToast("Add one small reflection first.");return}
-        saveReflection(key,value);showToast("✓ Reflection saved.");render();
       });
     }
 
@@ -1560,7 +1336,9 @@ button,input,textarea,select{accent-color:var(--accent)}
 
     if(phaseView==="stats"){
       drawWeeklyChart(document.getElementById("weeklyChart"));
-    const insightMount=document.getElementById("insightMount");if(insightMount)insightMount.innerHTML=renderInsightCard();
+      const weeklyCard=document.getElementById("weeklyActivityCard");
+      weeklyCard?.addEventListener("click",openWeeklyActivityDetail);
+      weeklyCard?.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openWeeklyActivityDetail();}});
 
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
@@ -1600,7 +1378,11 @@ button,input,textarea,select{accent-color:var(--accent)}
           if(again){again.focus();again.setSelectionRange(cursor,cursor)}
         });
       }
-      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>openNoteEditor(btn.dataset.noteEdit)));
+      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>{
+        editingNoteKey=btn.dataset.noteEdit;
+        render();
+        setTimeout(()=>document.getElementById("dailyNote")?.focus(),60);
+      }));
       document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.addEventListener("click",()=>{
         const key=btn.dataset.noteDelete, map=notes();
         if(!map[key]) return;
@@ -1613,7 +1395,6 @@ button,input,textarea,select{accent-color:var(--accent)}
 
     if(phaseView==="awards"){
       document.getElementById("shareProgressBtn")?.addEventListener("click",shareProgress);
-      document.getElementById("shareCardBtn")?.addEventListener("click",shareProgressCard);
       document.getElementById("exportAwards")?.addEventListener("click",exportData);
     }
 
@@ -1632,13 +1413,6 @@ button,input,textarea,select{accent-color:var(--accent)}
       time?.addEventListener("change",saveReminder);
       scheduleReminder();
 
-
-      const installCard=document.getElementById("installCard");
-      if(deferredInstallPrompt&&installCard) installCard.classList.remove("hidden");
-      document.getElementById("installApp")?.addEventListener("click",async()=>{
-        if(!deferredInstallPrompt){showToast("Use your browser's Add to Home Screen option.");return}
-        deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;installCard?.classList.add("hidden");
-      });
       document.getElementById("exportData")?.addEventListener("click",exportData);
       document.getElementById("importData")?.addEventListener("click",()=>document.getElementById("importFile")?.click());
       document.getElementById("importFile")?.addEventListener("change",e=>{
@@ -1648,7 +1422,7 @@ button,input,textarea,select{accent-color:var(--accent)}
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,REFLECTION_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PIN_ATTEMPTS_KEY].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1706,19 +1480,23 @@ button,input,textarea,select{accent-color:var(--accent)}
 
   let lockInput="";
   let lockErrorMsg="";
+  let lockTimer=null;
   function renderLock(){
     applyTheme();
+    clearInterval(lockTimer);
+    const remaining=pinCooldownRemaining();
+    const seconds=Math.ceil(remaining/1000);
     const dots=Array.from({length:4},(_,i)=>`<div class="pin-dot${i<lockInput.length?" filled":""}"></div>`).join("");
     document.body.classList.remove("has-tabbar");
     app.innerHTML=`<div class="container">
       <div class="setup">
         <div class="setup-icon">H</div>
         <h1>Locked</h1>
-        <p>Enter your PIN to open HAYGER.</p>
+        <p>${remaining?"Too many incorrect attempts. HAYGER is temporarily locked.":"Enter your PIN to open HAYGER."}</p>
       </div>
       <div class="pin-dots">${dots}</div>
-      <div id="lockError" class="pin-error">${escapeHTML(lockErrorMsg)}</div>
-      <div class="pin-keypad">
+      ${remaining?`<div class="pin-cooldown">Try again in <strong id="pinCountdown">${seconds}s</strong></div>`:`<div id="lockError" class="pin-error">${escapeHTML(lockErrorMsg)}</div>`}
+      <div class="pin-keypad${remaining?" locked":""}">
         ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="pin-key" data-key="${n}" type="button">${n}</button>`).join("")}
         <span></span>
         <button class="pin-key" data-key="0" type="button">0</button>
@@ -1727,25 +1505,36 @@ button,input,textarea,select{accent-color:var(--accent)}
       <div class="lock-footer"><button id="lockResetLink" type="button">Forgot PIN? Reset HAYGER</button></div>
     </div>`;
 
+    if(remaining){
+      lockTimer=setInterval(()=>{
+        const left=pinCooldownRemaining();
+        const el=document.getElementById("pinCountdown");
+        if(!left){clearInterval(lockTimer);renderLock();return}
+        if(el)el.textContent=`${Math.ceil(left/1000)}s`;
+      },250);
+    }
+
     document.querySelectorAll(".pin-key").forEach(btn=>{
       btn.addEventListener("click",async()=>{
+        if(pinCooldownRemaining()) return;
         const k=btn.dataset.key;
         if(k==="del"){lockInput=lockInput.slice(0,-1);lockErrorMsg="";renderLock();return}
         if(lockInput.length>=4) return;
         lockInput+=k;
         lockErrorMsg="";
         if(lockInput.length===4){
-          renderLock();
           const ok=await verifyPin(lockInput);
           if(ok){
             unlocked=true;
             sessionStorage.setItem("hayger_unlocked","1");
             lockInput="";
             lockErrorMsg="";
+            clearPinAttempts();
             render();
           }else{
-            lockErrorMsg="Incorrect PIN. Try again.";
+            const result=registerPinFailure();
             lockInput="";
+            lockErrorMsg=result.cooldown?`Incorrect PIN. Too many failed attempts.`:"Incorrect PIN. Try again.";
             renderLock();
           }
           return;
@@ -1757,7 +1546,7 @@ button,input,textarea,select{accent-color:var(--accent)}
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,REFLECTION_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PIN_ATTEMPTS_KEY].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }
@@ -1842,19 +1631,27 @@ button,input,textarea,select{accent-color:var(--accent)}
     });
   }
 
-
-  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;});
-  window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;showToast("✓ HAYGER installed.");});
-
-  // V3: announce data durability and improve keyboard/modal ergonomics.
-  window.HAYGER_V4={schema:DATA_SCHEMA,storage:"IndexedDB + local cache",features:["daily-reflection","smart-reminders","advanced-achievements","progress-card","install-flow","sync-ready-backups"],getInsights:computeInsights};
-  document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")syncLocalDataToIDB().catch(()=>{})});
-  window.addEventListener("online",()=>syncLocalDataToIDB().catch(()=>{}));
-
-  dataDbReady.then(()=>render()).catch(()=>render());
+  render();
 })();
 </script>
-
+<script id="hayger-note-actions-js">
+(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
+function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
+function write(x){localStorage.setItem(key(),JSON.stringify(x))}
+window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
+window.addEventListener("load",()=>{
+ document.querySelectorAll("[data-note-index]").forEach((el)=>{
+   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
+   if(el.querySelector(".note-actions"))return;
+   const box=document.createElement("div");box.className="note-actions";
+   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
+   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
+   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
+   el.appendChild(box);
+ });
+});
+})();
+</script>
 
 
 

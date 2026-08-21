@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-production-v4-2026-08-21";
+const CACHE_NAME = "hayger-ultra-v8-interactions-pin-cooldown-v1";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
@@ -47,14 +47,6 @@ self.addEventListener("fetch",event=>{
         .catch(()=>caches.match(event.request))
     );
   }
-});
-
-self.addEventListener("notificationclick",event=>{
-  event.notification.close();
-  event.waitUntil(clients.matchAll({type:"window",includeUncontrolled:true}).then(list=>{
-    for(const client of list){ if("focus" in client) return client.focus(); }
-    if(clients.openWindow) return clients.openWindow("./");
-  }));
 });
 
 self.addEventListener("message",event=>{
