@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-ultra-v7-name-notes-profile-notes-v2-profile-bottom-v3-profile-bottom-v4-final-polish-v1";
+const CACHE_NAME = "hayger-production-v3-2026-08-21";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
@@ -47,6 +47,14 @@ self.addEventListener("fetch",event=>{
         .catch(()=>caches.match(event.request))
     );
   }
+});
+
+self.addEventListener("notificationclick",event=>{
+  event.notification.close();
+  event.waitUntil(clients.matchAll({type:"window",includeUncontrolled:true}).then(list=>{
+    for(const client of list){ if("focus" in client) return client.focus(); }
+    if(clients.openWindow) return clients.openWindow("./");
+  }));
 });
 
 self.addEventListener("message",event=>{
