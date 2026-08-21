@@ -417,6 +417,36 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .share-row{margin-top:18px}
 
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
+
+/* Premium brand lockup */
+.brand-lockup{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+.brand-card{position:relative;padding:10px 15px 11px;border:1px solid color-mix(in srgb,var(--line) 78%,var(--text));border-radius:15px;background:linear-gradient(145deg,color-mix(in srgb,var(--surface) 96%,transparent),color-mix(in srgb,var(--soft) 68%,transparent));box-shadow:inset 0 1px 0 rgba(255,255,255,.055),0 8px 22px rgba(0,0,0,.12);overflow:hidden}
+.brand-card:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,color-mix(in srgb,var(--text) 22%,transparent),transparent 45%,color-mix(in srgb,var(--accent) 28%,transparent));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.brand-card:after{content:"";position:absolute;left:14px;right:14px;top:0;height:1px;background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--text) 20%,transparent),transparent);pointer-events:none}
+.brand-card .brand{position:relative;z-index:1;font-size:22px;letter-spacing:1.7px;line-height:1}
+.brand-sub{margin:0 0 0 7px;color:var(--muted);font-size:8.5px;font-weight:750;letter-spacing:1.15px;text-transform:none;line-height:1.1}
+
+/* Top-class About screen */
+.about-modal{padding:18px 17px 15px;max-height:min(88dvh,720px);overflow:auto}
+.about-head{display:flex;align-items:center;gap:13px;padding:3px 2px 15px}
+.about-brandmark{width:52px;height:52px;flex:0 0 52px;display:grid;place-items:center;border-radius:16px;background:linear-gradient(145deg,var(--primary),color-mix(in srgb,var(--primary) 78%,var(--accent)));color:var(--primaryText);box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 10px 25px rgba(0,0,0,.2)}
+.about-brandmark span{font-family:var(--font-display);font-size:25px;font-weight:700;line-height:1}
+.about-heading-copy{min-width:0}.about-eyebrow{color:var(--accent);font-size:8px;font-weight:900;letter-spacing:1.7px}.about-heading-copy h2{margin:3px 0 0;font-family:var(--font-display);font-size:26px;line-height:1;font-weight:700;letter-spacing:.2px}.about-heading-tagline{margin-top:5px;color:var(--muted);font-size:9px;font-weight:650;letter-spacing:.25px}
+.about-intro{padding:14px 14px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,var(--soft),color-mix(in srgb,var(--surface) 70%,var(--soft)));box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+.about-intro p{margin:0;color:var(--muted);font-size:10.5px;line-height:1.55}.about-intro p:first-letter{color:var(--text)}
+.about-section-label{margin:16px 2px 8px;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.55px}
+.about-feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.about-feature{min-width:0;display:flex;align-items:center;gap:9px;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.about-feature-icon{width:27px;height:27px;flex:0 0 27px;display:grid;place-items:center;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:12px;font-weight:900}
+.about-feature b{display:block;color:var(--text);font-size:9px;font-weight:900;line-height:1.2}.about-feature small{display:block;margin-top:3px;color:var(--muted);font-size:7.5px;line-height:1.25}
+.about-info-card{margin-top:8px;padding:2px 12px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
+.about-info-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:9px}.about-info-row:last-child{border-bottom:0}.about-info-row span{color:var(--muted);font-weight:700}.about-info-row b{color:var(--text);font-weight:850;text-align:right}
+.about-developer{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:8px;padding:12px;border:1px solid color-mix(in srgb,var(--accent) 22%,var(--line));border-radius:15px;background:linear-gradient(145deg,var(--accent-soft),var(--surface))}
+.about-developer .about-section-label{margin:0 0 4px}.about-developer-copy strong{display:block;color:var(--text);font-size:11px;font-weight:900}.about-developer-copy a{display:block;margin-top:3px;color:var(--accent);font-size:9px;font-weight:750;text-decoration:none;word-break:break-all}.about-contact-mark{width:32px;height:32px;flex:0 0 32px;display:grid;place-items:center;border:1px solid color-mix(in srgb,var(--accent) 32%,var(--line));border-radius:10px;color:var(--accent);font-size:12px;font-weight:900}
+.about-footer-note{margin:11px 3px 0;color:var(--muted);font-size:7.5px;line-height:1.45;text-align:center}
+.about-actions{grid-template-columns:1fr!important;margin-top:12px!important}.about-actions .button{min-height:45px}
+@media(max-width:360px){.about-feature-grid{gap:6px}.about-feature{padding:9px 8px;gap:7px}.about-feature small{font-size:7px}}
+
 </style>
 
 
@@ -426,9 +456,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 <div class="app-shell">
   <header class="app-header">
     <div class="app-header-inner">
-      <div class="brand-card" aria-label="HAYGER — One Day At A Time">
-        <div class="brand">HAYGER</div>
-        <div class="brand-sub">ONE DAY AT A TIME</div>
+      <div class="brand-lockup" aria-label="HAYGER — One day at a time">
+        <div class="brand-card" aria-hidden="true">
+          <div class="brand">HAYGER</div>
+        </div>
+        <div class="brand-sub">One day at a time</div>
       </div>
       <button id="themeButton" class="theme-button" type="button" aria-label="Change theme"></button>
     </div>
@@ -482,30 +514,48 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 </div>
 
 <div id="aboutModal" class="modal-backdrop" aria-hidden="true">
-  <section class="modal" role="dialog" aria-modal="true">
-    <div class="about-card">
-      <div class="about-logo">H</div>
-      <div class="about-title">HAYGER</div>
-      <div class="about-tagline">ONE DAY AT A TIME</div>
-      <div class="about-copy">A calm daily journey for showing up, tracking progress and building consistency — one day at a time.</div>
-      <div class="about-list">
-        <div>📅 <b>Daily check-ins</b> — keep a simple record of each day.</div>
-        <div>😊 <b>Feeling tracking</b> — save one feeling with each completed check-in.</div>
-        <div>📊 <b>Weekly activity</b> — explore each of the last 8 weeks separately.</div>
-        <div>🏆 <b>Milestones & awards</b> — celebrate consistency as you progress.</div>
-        <div>🎯 <b>Goals & progress</b> — set a target and watch it move.</div>
-        <div>🔒 <b>App lock</b> — protect the app with a 4-digit PIN and retry cooldowns.</div>
+  <section class="modal about-modal" role="dialog" aria-modal="true" aria-labelledby="aboutHeading">
+    <div class="about-head">
+      <div class="about-brandmark" aria-hidden="true"><span>H</span></div>
+      <div class="about-heading-copy">
+        <div class="about-eyebrow">ABOUT THE APP</div>
+        <h2 id="aboutHeading">HAYGER</h2>
+        <div class="about-heading-tagline">One day at a time</div>
       </div>
-      <div class="about-meta">
-        <div><b>Version</b> · <span id="aboutVersion">—</span></div>
-        <div><b>Developer</b> · <span id="aboutDeveloper">—</span></div>
-        <div><b>Contact</b> · <span id="aboutContact">—</span></div>
-        <div><b>Data</b> · HAYGER stores your core progress locally on this device.</div>
-      </div>
-      <div class="about-note">Developer name and contact are configured in <b>ABOUT_CONFIG</b> near the top of the app script. Replace the placeholders before publishing.</div>
     </div>
-    <div class="modal-actions" style="grid-template-columns:1fr;margin-top:12px">
-      <button id="aboutClose" class="button secondary" type="button">Close</button>
+
+    <div class="about-intro">
+      <p>HAYGER is a quiet space for showing up, keeping your promise to yourself, and building consistency one day at a time.</p>
+    </div>
+
+    <div class="about-section-label">BUILT FOR CONSISTENCY</div>
+    <div class="about-feature-grid">
+      <div class="about-feature"><span class="about-feature-icon">✓</span><div><b>Daily check-ins</b><small>Keep your daily streak moving.</small></div></div>
+      <div class="about-feature"><span class="about-feature-icon">☺</span><div><b>Daily feeling</b><small>Save one feeling for each day.</small></div></div>
+      <div class="about-feature"><span class="about-feature-icon">▥</span><div><b>Weekly activity</b><small>Explore each week separately.</small></div></div>
+      <div class="about-feature"><span class="about-feature-icon">★</span><div><b>Milestones</b><small>Celebrate progress as it grows.</small></div></div>
+      <div class="about-feature"><span class="about-feature-icon">◒</span><div><b>Goals & progress</b><small>See how far you've come.</small></div></div>
+      <div class="about-feature"><span class="about-feature-icon">⌑</span><div><b>App lock</b><small>Protect HAYGER with a PIN.</small></div></div>
+    </div>
+
+    <div class="about-info-card">
+      <div class="about-info-row"><span>Version</span><b id="aboutVersion">—</b></div>
+      <div class="about-info-row"><span>Data</span><b>Stored locally on this device</b></div>
+    </div>
+
+    <div class="about-developer">
+      <div class="about-developer-copy">
+        <div class="about-section-label">DEVELOPER</div>
+        <strong id="aboutDeveloper">—</strong>
+        <a id="aboutContact" href="#" aria-label="Contact developer">—</a>
+      </div>
+      <div class="about-contact-mark" aria-hidden="true">@</div>
+    </div>
+
+    <div class="about-footer-note">Your progress is yours. HAYGER keeps its core journey data on this device.</div>
+
+    <div class="modal-actions about-actions">
+      <button id="aboutClose" class="button secondary" type="button">Done</button>
     </div>
   </section>
 </div>
@@ -537,7 +587,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
   const PIN_ATTEMPTS_KEY="hayger_pin_attempts";
-  const ABOUT_CONFIG={developerName:"Your Name",contactEmail:"your@email.com",version:"1.0.0"};
+  const ABOUT_CONFIG={developerName:"Sohel Alchi",contactEmail:"githuband27@gmail.com",version:"1.0.0"};
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -1601,7 +1651,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function openAbout(){
     document.getElementById("aboutVersion").textContent=ABOUT_CONFIG.version;
     document.getElementById("aboutDeveloper").textContent=ABOUT_CONFIG.developerName;
-    document.getElementById("aboutContact").textContent=ABOUT_CONFIG.contactEmail;
+    const contact=document.getElementById("aboutContact");
+    contact.textContent=ABOUT_CONFIG.contactEmail;
+    contact.href=ABOUT_CONFIG.contactEmail && ABOUT_CONFIG.contactEmail.includes("@") ? `mailto:${ABOUT_CONFIG.contactEmail}` : "#";
     const m=document.getElementById("aboutModal");m.classList.add("open");m.setAttribute("aria-hidden","false");
   }
   function closeAbout(){const m=document.getElementById("aboutModal");m.classList.remove("open");m.setAttribute("aria-hidden","true")}
