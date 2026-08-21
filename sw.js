@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-ultra-v8-interactions-pin-cooldown-v1";
+const CACHE_NAME = "hayger-ultra-v8-feeling-weekly-about-pin-polish-v1";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

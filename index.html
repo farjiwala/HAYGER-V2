@@ -49,6 +49,8 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .app-header-inner{display:flex;align-items:center;justify-content:space-between;max-width:460px;margin:0 auto;width:100%}
 .brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1}
 .brand-sub{margin-top:5px;color:var(--muted);font-size:9px;font-weight:750;letter-spacing:1.6px}
+.brand-card{padding:8px 11px 9px;border:1px solid color-mix(in srgb,var(--line) 88%,var(--text));border-radius:14px;background:color-mix(in srgb,var(--surface) 72%,transparent);box-shadow:0 5px 16px rgba(0,0,0,.08);transition:background .2s,border-color .2s,transform .15s}
+.brand-card:active{transform:scale(.985)}
 .theme-button{
   width:40px;height:40px;padding:0;display:grid;place-items:center;flex:0 0 auto;
   border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);
@@ -256,31 +258,41 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
 .badge.unlocked .badge-label{color:var(--text)}
 
-/* Ultra: compact check-in + one-time mood picker */
-.checkin-actions{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(104px,.85fr);gap:8px;margin-top:9px;position:relative}
-.checkin-actions .checkin-button{margin-top:0;min-height:44px}
-.mood-trigger{min-height:44px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:10px;font-weight:900;transition:.15s;position:relative}
-.mood-trigger:active:not(:disabled){transform:scale(.985)}
-.mood-trigger.ready{border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
-.mood-trigger.locked{opacity:.72}
-.mood-trigger:disabled{cursor:default}
-.mood-bubble{position:absolute;z-index:8;right:0;top:calc(100% + 9px);display:flex;gap:6px;padding:8px;border:1px solid var(--line);border-radius:15px;background:var(--surface);box-shadow:var(--shadow);animation:up .18s ease both}
-.mood-bubble:before{content:"";position:absolute;right:35px;top:-5px;width:9px;height:9px;background:var(--surface);border-left:1px solid var(--line);border-top:1px solid var(--line);transform:rotate(45deg)}
-.mood-chip{width:37px;height:37px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:11px;background:var(--soft);font-size:17px;transition:.15s}
-.mood-chip:active{transform:scale(.92)}
-.mood-selection{margin-top:8px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
-.mood-selection strong{color:var(--text)}
+/* Ultra: mood */
+.checkin-actions{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,.8fr);gap:9px;margin-top:9px}
+.checkin-button{margin-top:0!important}
+.feeling-wrap{position:relative}
+.feeling-button{width:100%;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:11px;font-weight:900;transition:.15s}
+.feeling-button:active{transform:scale(.985)}
+.feeling-button.saved{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 55%,var(--line));color:var(--text)}
+.mood-popover{position:absolute;z-index:20;right:0;bottom:calc(100% + 9px);display:flex;gap:6px;padding:8px;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:var(--shadow);animation:up .18s ease both}
+.mood-popover:after{content:"";position:absolute;right:24px;bottom:-6px;width:10px;height:10px;background:var(--surface);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transform:rotate(45deg)}
+.mood-chip{width:38px;height:38px;padding:0;display:grid;place-items:center;border:1px solid var(--line);border-radius:11px;background:var(--soft);font-size:17px;transition:.15s}
+.mood-chip:active{transform:scale(.9)}
+.mood-hint{margin-top:9px;color:var(--muted);font-size:9px;font-weight:750;text-align:center}
 
 /* Ultra: charts */
-.chart-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft);cursor:pointer;transition:transform .15s,border-color .2s,box-shadow .2s}
-.chart-card:active{transform:scale(.992)}
-.chart-card:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.chart-card:hover{border-color:color-mix(in srgb,var(--accent) 28%,var(--line));box-shadow:0 8px 24px rgba(0,0,0,.06)}
+.chart-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .chart-title{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px}
 .chart-title b{font-size:11px;font-weight:900}
 .chart-title span{color:var(--muted);font-size:9px;font-weight:750}
-.chart-tap-hint{margin-top:6px;color:var(--muted);font-size:8px;font-weight:800;text-align:center;letter-spacing:.2px}
 .chart-card canvas{display:block;width:100%;height:74px}
+.weekly-bars{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:6px;align-items:end;height:104px;padding-top:8px}
+.week-bar-btn{position:relative;min-width:0;height:100%;padding:0 1px 4px;border:0;background:transparent;color:var(--muted);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px;border-radius:10px;transition:background .15s,transform .15s}
+.week-bar-btn:active{transform:scale(.96)}
+.week-bar-btn.selected{background:var(--accent-soft)}
+.week-bar-track{width:100%;height:74px;display:flex;align-items:flex-end;justify-content:center}
+.week-bar-fill{width:72%;min-width:7px;max-width:24px;height:var(--bar-height);min-height:4px;border-radius:7px 7px 3px 3px;background:var(--accent);box-shadow:0 4px 10px color-mix(in srgb,var(--accent) 18%,transparent)}
+.week-bar-fill.empty{height:4px;background:var(--soft2);box-shadow:none}
+.week-bar-label{font-size:8px;font-weight:900;letter-spacing:.2px}
+.weekly-selected{margin-top:9px;padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--muted);font-size:9px;font-weight:750;text-align:center}
+.weekly-selected strong{color:var(--text)}
+.week-detail-days{display:grid;gap:0;margin-top:4px}
+.week-day-row{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--line)}
+.week-day-row:last-child{border-bottom:0}
+.week-day-date{width:72px;flex:0 0 72px;font-size:9px;font-weight:850;color:var(--muted)}
+.week-day-status{flex:1;font-size:10px;font-weight:700}
+.week-day-mood{font-size:18px}
 
 /* Ultra: notes search */
 .note-search{width:100%;height:40px;padding:0 12px;margin-top:10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);outline:none;font-size:11px}
@@ -299,15 +311,27 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .pin-key:active{transform:scale(.94)}
 .pin-key.ghost{background:transparent;border-color:transparent;color:var(--muted);font-size:11px;font-weight:800}
 .pin-error{min-height:16px;margin-top:14px;color:var(--danger);font-size:11px;font-weight:700;text-align:center}
-.pin-keypad.locked{opacity:.5;pointer-events:none;filter:saturate(.7)}
-.pin-cooldown{margin:8px auto 0;width:max-content;min-width:150px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:900;text-align:center}
-.pin-cooldown strong{color:var(--text)}
 .pin-setup-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
 .pin-setup-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
 .pin-box{width:38px;height:44px;text-align:center;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font-size:18px;outline:none}
 .pin-box:focus{border-color:var(--accent)}
 .lock-footer{margin-top:16px;text-align:center}
 .lock-footer button{background:none;border:0;color:var(--muted);font-size:10px;font-weight:800;text-decoration:underline;padding:6px}
+
+
+.about-card{padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--soft)}
+.about-logo{width:58px;height:58px;display:grid;place-items:center;margin:0 auto 12px;border-radius:18px;background:var(--primary);color:var(--primaryText);font-family:var(--font-display);font-size:23px;font-weight:900;box-shadow:0 10px 25px rgba(0,0,0,.14)}
+.about-title{text-align:center;font-family:var(--font-display);font-size:22px;font-weight:700}
+.about-tagline{text-align:center;margin-top:4px;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:1.3px}
+.about-copy{margin-top:13px;color:var(--muted);font-size:10px;line-height:1.55;text-align:center}
+.about-list{display:grid;gap:7px;margin-top:14px}
+.about-list div{padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:var(--surface);font-size:9px;color:var(--muted)}
+.about-list b{color:var(--text)}
+.about-meta{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);display:grid;gap:6px;font-size:9px;color:var(--muted)}
+.about-meta b{color:var(--text)}
+.about-note{margin-top:12px;color:var(--muted);font-size:8px;line-height:1.45;text-align:center}
+.pin-cooldown{margin:8px auto 14px;max-width:270px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--accent) 35%,var(--line));border-radius:13px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:850;text-align:center}
+.pin-key:disabled{opacity:.38;cursor:not-allowed}
 
 /* Ultra: confetti overlay */
 #confettiCanvas{position:fixed;inset:0;z-index:80;pointer-events:none}
@@ -399,7 +423,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 <div class="app-shell">
   <header class="app-header">
     <div class="app-header-inner">
-      <div>
+      <div class="brand-card" aria-label="HAYGER — One Day At A Time">
         <div class="brand">HAYGER</div>
         <div class="brand-sub">ONE DAY AT A TIME</div>
       </div>
@@ -444,6 +468,45 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   </section>
 </div>
 
+<div id="weekModal" class="modal-backdrop" aria-hidden="true">
+  <section class="modal" role="dialog" aria-modal="true">
+    <h2 id="weekModalTitle">Week</h2>
+    <div id="weekModalBody"></div>
+    <div class="modal-actions" style="grid-template-columns:1fr;margin-top:14px">
+      <button id="weekModalClose" class="button secondary" type="button">Close</button>
+    </div>
+  </section>
+</div>
+
+<div id="aboutModal" class="modal-backdrop" aria-hidden="true">
+  <section class="modal" role="dialog" aria-modal="true">
+    <div class="about-card">
+      <div class="about-logo">H</div>
+      <div class="about-title">HAYGER</div>
+      <div class="about-tagline">ONE DAY AT A TIME</div>
+      <div class="about-copy">A calm daily journey for showing up, tracking progress and building consistency — one day at a time.</div>
+      <div class="about-list">
+        <div>📅 <b>Daily check-ins</b> — keep a simple record of each day.</div>
+        <div>😊 <b>Feeling tracking</b> — save one feeling with each completed check-in.</div>
+        <div>📊 <b>Weekly activity</b> — explore each of the last 8 weeks separately.</div>
+        <div>🏆 <b>Milestones & awards</b> — celebrate consistency as you progress.</div>
+        <div>🎯 <b>Goals & progress</b> — set a target and watch it move.</div>
+        <div>🔒 <b>App lock</b> — protect the app with a 4-digit PIN and retry cooldowns.</div>
+      </div>
+      <div class="about-meta">
+        <div><b>Version</b> · <span id="aboutVersion">—</span></div>
+        <div><b>Developer</b> · <span id="aboutDeveloper">—</span></div>
+        <div><b>Contact</b> · <span id="aboutContact">—</span></div>
+        <div><b>Data</b> · HAYGER stores your core progress locally on this device.</div>
+      </div>
+      <div class="about-note">Developer name and contact are configured in <b>ABOUT_CONFIG</b> near the top of the app script. Replace the placeholders before publishing.</div>
+    </div>
+    <div class="modal-actions" style="grid-template-columns:1fr;margin-top:12px">
+      <button id="aboutClose" class="button secondary" type="button">Close</button>
+    </div>
+  </section>
+</div>
+
 <div id="updateBanner" class="update-banner" role="status" aria-live="polite">
   <div class="update-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -471,6 +534,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
   const PIN_ATTEMPTS_KEY="hayger_pin_attempts";
+  const ABOUT_CONFIG={developerName:"Sohel Alchi",contactEmail:"githuband27@gmail.com",version:"1.0.0"};
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -554,96 +618,79 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     };
   }
 
-  // ---- Ultra: PIN lock (SHA-256, device-local only — no recovery) ----
+  // ---- PIN lock (SHA-256, device-local only) ----
   async function sha256Hex(text){
     const buf=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(text));
     return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,"0")).join("");
   }
   function pinRecord(){return readJSON(PIN_KEY,null)}
-  function pinAttempts(){return readJSON(PIN_ATTEMPTS_KEY,{fails:0,lockedUntil:0})||{fails:0,lockedUntil:0}}
-  function savePinAttempts(v){writeJSON(PIN_ATTEMPTS_KEY,v)}
-  function clearPinAttempts(){remove(PIN_ATTEMPTS_KEY)}
-  function pinCooldownMs(fails){
-    if(fails<3) return 0;
-    const seconds=fails===3?3:fails===4?8:fails===5?20:fails===6?45:90;
-    return seconds*1000;
-  }
-  function pinCooldownRemaining(){
-    const a=pinAttempts();
-    return Math.max(0,Number(a.lockedUntil||0)-Date.now());
-  }
-  function registerPinFailure(){
-    const a=pinAttempts();
-    a.fails=Math.min(20,Number(a.fails||0)+1);
-    const cooldown=pinCooldownMs(a.fails);
-    a.lockedUntil=cooldown?Date.now()+cooldown:0;
-    savePinAttempts(a);
-    return {fails:a.fails,cooldown};
-  }
   async function setPin(pin){
-    writeJSON(PIN_KEY,{hash:await sha256Hex(pin),version:2});
-    clearPinAttempts();
-  }
-  async function verifyPin(pin){
-    const rec=pinRecord();
-    if(!rec) return true;
-    return (await sha256Hex(pin))===rec.hash;
+    writeJSON(PIN_KEY,{hash:await sha256Hex(pin)});
+    writeJSON(PIN_ATTEMPTS_KEY,{failures:0,lockedUntil:0});
   }
   function pinEnabled(){return !!pinRecord()}
-
-  // ---- Ultra: weekly activity chart ----
-  function weeksAgoMonday(offset){
-    const d=today();
-    const dow=(d.getDay()+6)%7;
-    d.setDate(d.getDate()-dow-offset*7);
-    return d;
+  function pinAttemptRecord(){return readJSON(PIN_ATTEMPTS_KEY,{failures:0,lockedUntil:0})}
+  function pinCooldownMs(failures){
+    const steps=[0,0,2000,5000,15000,30000,60000,120000];
+    return steps[Math.min(Math.max(failures,0),steps.length-1)]||120000;
   }
-  function weeklyCounts(weeks){
-    const data=checkins();
-    const out=[];
-    for(let w=weeks-1;w>=0;w--){
-      const monday=weeksAgoMonday(w);
-      let count=0;
-      for(let i=0;i<7;i++){
-        const d=new Date(monday);d.setDate(d.getDate()+i);
-        if(d>today()) continue;
-        if(data[toInputDate(d)]) count++;
-      }
-      out.push(count);
+  function pinCooldownRemaining(){return Math.max(0,pinAttemptRecord().lockedUntil-Date.now())}
+  async function verifyPin(pin){
+    const rec=pinRecord();
+    if(!rec) return {ok:true};
+    const attempts=pinAttemptRecord();
+    const remaining=Math.max(0,attempts.lockedUntil-Date.now());
+    if(remaining>0) return {ok:false,locked:true,remaining};
+    const ok=(await sha256Hex(pin))===rec.hash;
+    if(ok){
+      writeJSON(PIN_ATTEMPTS_KEY,{failures:0,lockedUntil:0});
+      return {ok:true};
     }
-    return out;
+    const failures=(Number(attempts.failures)||0)+1;
+    const cooldown=pinCooldownMs(failures);
+    const lockedUntil=cooldown?Date.now()+cooldown:0;
+    writeJSON(PIN_ATTEMPTS_KEY,{failures,lockedUntil});
+    return {ok:false,locked:cooldown>0,remaining:cooldown,failures};
   }
-  function drawWeeklyChart(canvas){
-    if(!canvas) return;
-    const counts=weeklyCounts(8);
-    const dpr=window.devicePixelRatio||1;
-    const w=canvas.clientWidth||280, h=canvas.clientHeight||74;
-    canvas.width=w*dpr;canvas.height=h*dpr;
-    const ctx=canvas.getContext("2d");
-    ctx.scale(dpr,dpr);
-    ctx.clearRect(0,0,w,h);
-    const styles=getComputedStyle(document.documentElement);
-    const line=styles.getPropertyValue("--line").trim();
-    const primary=styles.getPropertyValue("--accent").trim();
-    const barW=Math.max(8,(w/counts.length)-8);
-    counts.forEach((c,i)=>{
-      const x=i*(w/counts.length)+((w/counts.length)-barW)/2;
-      const barH=Math.max(3,(c/7)*(h-14));
-      ctx.fillStyle=line;
-      ctx.fillRect(x,h-14,barW,3);
-      ctx.fillStyle=c>0?primary:line;
-      ctx.beginPath();
-      const r=Math.min(4,barW/2);
-      const top=h-14-barH;
-      ctx.moveTo(x,top+r);
-      ctx.arcTo(x,top,x+r,top,r);
-      ctx.lineTo(x+barW-r,top);
-      ctx.arcTo(x+barW,top,x+barW,top+r,r);
-      ctx.lineTo(x+barW,h-14);
-      ctx.lineTo(x,h-14);
-      ctx.closePath();
-      ctx.fill();
-    });
+
+  // ---- Weekly activity: 8 independently tappable weeks ----
+  function weekInfo(index){
+    const monday=weeksAgoMonday(7-index);
+    const days=[];
+    const data=checkins();
+    let count=0;
+    for(let i=0;i<7;i++){
+      const d=new Date(monday);d.setDate(d.getDate()+i);
+      const key=toInputDate(d), entry=data[key];
+      if(entry) count++;
+      days.push({date:d,key,entry,future:d>today()});
+    }
+    return {index,monday,days,count};
+  }
+  function weeklyCounts(weeks){return Array.from({length:weeks},(_,i)=>weekInfo(i).count)}
+  function weekRangeLabel(info){
+    const end=new Date(info.monday);end.setDate(end.getDate()+6);
+    return `${formatDate(info.monday)} – ${formatDate(end)}`;
+  }
+  function openWeekDetail(index){
+    const info=weekInfo(Number(index));
+    const wm=document.getElementById("weekModal");
+    document.getElementById("weekModalTitle").textContent=`Week ${info.index+1}`;
+    const rows=info.days.map(d=>{
+      const status=d.future?"Upcoming":d.entry?"✓ Checked in":"Not checked in";
+      const mood=d.entry&&d.entry.mood?d.entry.mood:"";
+      return `<div class="week-day-row"><div class="week-day-date">${formatDate(d.date).replace(/,\s*\d{4}$/,'')}</div><div class="week-day-status">${status}</div>${mood?`<div class="week-day-mood">${mood}</div>`:""}</div>`;
+    }).join("");
+    document.getElementById("weekModalBody").innerHTML=`<div class="day-detail-row"><div class="day-detail-label">Range</div><div class="day-detail-value">${weekRangeLabel(info)}</div></div><div class="day-detail-row"><div class="day-detail-label">Check-ins</div><div class="day-detail-value">${info.count} / 7</div></div><div class="week-detail-days">${rows}</div>`;
+    wm.classList.add("open");wm.setAttribute("aria-hidden","false");
+  }
+  function closeWeekDetail(){
+    const wm=document.getElementById("weekModal");
+    wm.classList.remove("open");wm.setAttribute("aria-hidden","true");
+  }
+  function renderWeeklyActivity(){
+    const counts=weeklyCounts(8), currentIndex=7;
+    return `<div class="chart-card" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div><div class="weekly-bars">${counts.map((c,i)=>{const selected=i===currentIndex;const label=`W${i+1}`;const h=Math.max(5,Math.round((c/7)*64));return `<button class="week-bar-btn${selected?" selected":""}" data-week-index="${i}" type="button" aria-label="Week ${i+1}, ${c} of 7 check-ins"><span class="week-bar-track"><span class="week-bar-fill${c===0?" empty":""}" style="--bar-height:${h}px"></span></span><span class="week-bar-label">${label}</span></button>`}).join("")}</div><div id="weeklySelectedSummary" class="weekly-selected"><strong>Tap any week</strong> to see only that week's activity.</div></div>`;
   }
 
   // ---- Ultra: confetti ----
@@ -715,24 +762,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const dm=document.getElementById("dayModal");
     dm.classList.remove("open");dm.setAttribute("aria-hidden","true");
   }
-
-  function openWeeklyActivityDetail(){
-    const dm=document.getElementById("dayModal");
-    const counts=weeklyCounts(8);
-    const rows=[];
-    for(let i=0;i<8;i++){
-      const monday=weeksAgoMonday(7-i);
-      const sunday=new Date(monday);sunday.setDate(sunday.getDate()+6);
-      const label=`${monday.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${sunday.toLocaleDateString(undefined,{month:"short",day:"numeric"})}`;
-      const count=counts[i];
-      rows.push(`<div class="day-detail-row"><div class="day-detail-label">Week ${i+1}</div><div class="day-detail-value">${label}<br><span style="color:var(--muted);font-size:10px">${count} / 7 check-ins</span></div><div style="font-family:var(--font-display);font-size:18px;font-weight:700;color:${count?"var(--accent)":"var(--muted)"}">${count}</div></div>`);
-    }
-    document.getElementById("dayModalTitle").textContent="Weekly Activity";
-    document.getElementById("dayModalBody").innerHTML=rows.join("");
-    dm.classList.add("open");dm.setAttribute("aria-hidden","false");
-  }
   document.getElementById("dayModalClose").addEventListener("click",closeDayDetail);
   document.getElementById("dayModal").addEventListener("click",e=>{if(e.target.id==="dayModal")closeDayDetail()});
+  document.getElementById("weekModalClose").addEventListener("click",closeWeekDetail);
+  document.getElementById("weekModal").addEventListener("click",e=>{if(e.target.id==="weekModal")closeWeekDetail()});
 
   // ---- Ultra: generic confirm modal ----
   function askConfirm(title,text){
@@ -1014,11 +1047,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
       </div>
 
-      <div class="chart-card" id="weeklyActivityCard" style="margin-top:10px" role="button" tabindex="0" aria-label="View weekly activity details">
-        <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
-        <canvas id="weeklyChart"></canvas>
-        <div class="chart-tap-hint">TAP TO VIEW WEEK-BY-WEEK DETAILS</div>
-      </div>
+      ${renderWeeklyActivity()}
 
       <div class="goal-card" style="margin-top:10px">
         <div class="goal-row">
@@ -1143,6 +1172,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>`:""}
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
+          <div class="setting-copy"><b>About HAYGER</b><span>App information, features, version and developer contact.</span></div>
+          <button id="aboutApp" class="small-button" type="button">VIEW</button>
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
           <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
         </div>
@@ -1247,10 +1283,12 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
         <div class="checkin-actions">
           <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
-          ${checked?`<button id="moodTrigger" class="mood-trigger ${data[key]?.mood?"locked":"ready"}" type="button" ${data[key]?.mood?"disabled":""}>${data[key]?.mood?`FEELING ${data[key].mood}`:"FEELING"}</button>`:`<button class="mood-trigger locked" type="button" disabled>FEELING</button>`}
-          ${checked&&!data[key]?.mood?`<div id="moodBubble" class="mood-bubble" hidden>${MOODS.map(m=>`<button class="mood-chip" data-mood="${m}" type="button" aria-label="Set mood ${m}">${m}</button>`).join("")}</div>`:""}
+          <div class="feeling-wrap">
+            <button id="feelingButton" class="feeling-button${data[key]?.mood?" saved":""}" type="button" ${!checked||data[key]?.mood?"aria-disabled=\"true\"":""}>${data[key]?.mood?`FEELING ${data[key].mood}`:"FEELING 😊"}</button>
+            ${checked&&!data[key]?.mood?`<div id="moodPopover" class="mood-popover" hidden>${MOODS.map(m=>`<button class="mood-chip" data-mood="${m}" type="button" aria-label="Set feeling ${m}">${m}</button>`).join("")}</div>`:""}
+          </div>
         </div>
-        ${checked&&data[key]?.mood?`<div class="mood-selection">Feeling saved as <strong>${data[key].mood}</strong> · can’t be changed later</div>`:""}
+        ${checked?`<div class="mood-hint">${data[key]?.mood?`Feeling saved as ${data[key].mood} · can't be changed later`:`Tap FEELING to save how you feel today.`}</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
@@ -1288,23 +1326,21 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
       });
 
-      const moodTrigger=document.getElementById("moodTrigger");
-      const moodBubble=document.getElementById("moodBubble");
-      moodTrigger?.addEventListener("click",()=>{
-        if(checkins()[key]?.mood) return;
-        if(moodBubble){
-          moodBubble.hidden=!moodBubble.hidden;
-        }
+      const feelingButton=document.getElementById("feelingButton");
+      const moodPopover=document.getElementById("moodPopover");
+      feelingButton?.addEventListener("click",()=>{
+        const d=checkins();
+        if(!d[key]||d[key].mood) return;
+        if(moodPopover) moodPopover.hidden=!moodPopover.hidden;
       });
-      document.querySelectorAll(".mood-chip").forEach(btn=>{
-        btn.addEventListener("click",()=>{
-          const d=checkins();
-          if(!d[key] || d[key].mood) return;
-          d[key].mood=btn.dataset.mood;
-          writeJSON(CHECKINS_KEY,d);
-          render();
-        });
-      });
+      moodPopover?.querySelectorAll(".mood-chip").forEach(btn=>btn.addEventListener("click",()=>{
+        const d=checkins();
+        if(!d[key]||d[key].mood) return;
+        d[key].mood=btn.dataset.mood;
+        writeJSON(CHECKINS_KEY,d);
+        render();
+        showToast(`✓ Feeling saved as ${btn.dataset.mood}.`);
+      }));
     }
 
     if(phaseView==="profile"){
@@ -1335,10 +1371,14 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="stats"){
-      drawWeeklyChart(document.getElementById("weeklyChart"));
-      const weeklyCard=document.getElementById("weeklyActivityCard");
-      weeklyCard?.addEventListener("click",openWeeklyActivityDetail);
-      weeklyCard?.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();openWeeklyActivityDetail();}});
+      document.querySelectorAll("[data-week-index]").forEach(btn=>btn.addEventListener("click",()=>{
+        const index=Number(btn.dataset.weekIndex);
+        document.querySelectorAll("[data-week-index]").forEach(b=>b.classList.toggle("selected",Number(b.dataset.weekIndex)===index));
+        const info=weekInfo(index);
+        const summary=document.getElementById("weeklySelectedSummary");
+        if(summary) summary.innerHTML=`<strong>Week ${index+1}</strong> · ${weekRangeLabel(info)} · ${info.count}/7 check-ins`;
+        openWeekDetail(index);
+      }));
 
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
@@ -1399,6 +1439,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="profile"){
+      document.getElementById("aboutApp")?.addEventListener("click",openAbout);
       const enabled=document.getElementById("reminderEnabled");
       const time=document.getElementById("reminderTime");
       const saveReminder=async()=>{
@@ -1434,7 +1475,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           pinSetupOpen=true;render();
         }else{
           const ok=await askConfirm("Turn off app lock?","HAYGER will open without a PIN from now on.");
-          if(ok){remove(PIN_KEY);showToast("✓ App lock turned off.")}
+          if(ok){remove(PIN_KEY);remove(PIN_ATTEMPTS_KEY);showToast("✓ App lock turned off.")}
           render();
         }
       });
@@ -1483,58 +1524,49 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   let lockTimer=null;
   function renderLock(){
     applyTheme();
-    clearInterval(lockTimer);
+    clearTimeout(lockTimer);
     const remaining=pinCooldownRemaining();
-    const seconds=Math.ceil(remaining/1000);
     const dots=Array.from({length:4},(_,i)=>`<div class="pin-dot${i<lockInput.length?" filled":""}"></div>`).join("");
+    const disabled=remaining>0;
+    const seconds=Math.ceil(remaining/1000);
     document.body.classList.remove("has-tabbar");
     app.innerHTML=`<div class="container">
       <div class="setup">
         <div class="setup-icon">H</div>
         <h1>Locked</h1>
-        <p>${remaining?"Too many incorrect attempts. HAYGER is temporarily locked.":"Enter your PIN to open HAYGER."}</p>
+        <p>${disabled?"Too many incorrect attempts. Please wait before trying again.":"Enter your PIN to open HAYGER."}</p>
       </div>
       <div class="pin-dots">${dots}</div>
-      ${remaining?`<div class="pin-cooldown">Try again in <strong id="pinCountdown">${seconds}s</strong></div>`:`<div id="lockError" class="pin-error">${escapeHTML(lockErrorMsg)}</div>`}
-      <div class="pin-keypad${remaining?" locked":""}">
-        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="pin-key" data-key="${n}" type="button">${n}</button>`).join("")}
+      ${disabled?`<div class="pin-cooldown">Try again in <strong id="lockCountdown">${seconds}s</strong></div>`:""}
+      <div id="lockError" class="pin-error">${escapeHTML(lockErrorMsg)}</div>
+      <div class="pin-keypad">
+        ${[1,2,3,4,5,6,7,8,9].map(n=>`<button class="pin-key" data-key="${n}" type="button" ${disabled?"disabled":""}>${n}</button>`).join("")}
         <span></span>
-        <button class="pin-key" data-key="0" type="button">0</button>
-        <button class="pin-key ghost" data-key="del" type="button">DEL</button>
+        <button class="pin-key" data-key="0" type="button" ${disabled?"disabled":""}>0</button>
+        <button class="pin-key ghost" data-key="del" type="button" ${disabled?"disabled":""}>DEL</button>
       </div>
       <div class="lock-footer"><button id="lockResetLink" type="button">Forgot PIN? Reset HAYGER</button></div>
     </div>`;
 
-    if(remaining){
-      lockTimer=setInterval(()=>{
-        const left=pinCooldownRemaining();
-        const el=document.getElementById("pinCountdown");
-        if(!left){clearInterval(lockTimer);renderLock();return}
-        if(el)el.textContent=`${Math.ceil(left/1000)}s`;
-      },250);
+    if(disabled){
+      lockTimer=setTimeout(renderLock,Math.min(1000,remaining));
     }
-
     document.querySelectorAll(".pin-key").forEach(btn=>{
       btn.addEventListener("click",async()=>{
-        if(pinCooldownRemaining()) return;
+        if(pinCooldownRemaining()>0) return;
         const k=btn.dataset.key;
         if(k==="del"){lockInput=lockInput.slice(0,-1);lockErrorMsg="";renderLock();return}
         if(lockInput.length>=4) return;
         lockInput+=k;
         lockErrorMsg="";
         if(lockInput.length===4){
-          const ok=await verifyPin(lockInput);
-          if(ok){
-            unlocked=true;
-            sessionStorage.setItem("hayger_unlocked","1");
-            lockInput="";
-            lockErrorMsg="";
-            clearPinAttempts();
-            render();
+          renderLock();
+          const result=await verifyPin(lockInput);
+          if(result.ok){
+            unlocked=true;sessionStorage.setItem("hayger_unlocked","1");lockInput="";lockErrorMsg="";render();
           }else{
-            const result=registerPinFailure();
             lockInput="";
-            lockErrorMsg=result.cooldown?`Incorrect PIN. Too many failed attempts.`:"Incorrect PIN. Try again.";
+            lockErrorMsg=result.locked?`Incorrect PIN. Too many attempts — please wait ${Math.ceil(result.remaining/1000)}s.`:"Incorrect PIN. Try again.";
             renderLock();
           }
           return;
@@ -1547,8 +1579,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
         [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PIN_ATTEMPTS_KEY].forEach(remove);
-        sessionStorage.removeItem("hayger_unlocked");
-        location.reload();
+        sessionStorage.removeItem("hayger_unlocked");location.reload();
       }
     });
   }
@@ -1558,6 +1589,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     applyTheme();challenge();
   }
 
+  function openAbout(){
+    document.getElementById("aboutVersion").textContent=ABOUT_CONFIG.version;
+    document.getElementById("aboutDeveloper").textContent=ABOUT_CONFIG.developerName;
+    document.getElementById("aboutContact").textContent=ABOUT_CONFIG.contactEmail;
+    const m=document.getElementById("aboutModal");m.classList.add("open");m.setAttribute("aria-hidden","false");
+  }
+  function closeAbout(){const m=document.getElementById("aboutModal");m.classList.remove("open");m.setAttribute("aria-hidden","true")}
   function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false")}
   function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
   function showToast(text){
@@ -1568,7 +1606,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   document.getElementById("cancel").addEventListener("click",closeModal);
   document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);closeModal();render()});
   modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
-  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();}});
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();closeWeekDetail();closeAbout();}});
+  document.getElementById("aboutClose").addEventListener("click",closeAbout);
+  document.getElementById("aboutModal").addEventListener("click",e=>{if(e.target.id==="aboutModal")closeAbout()});
 
   if(window.matchMedia){
     const mq=window.matchMedia("(prefers-color-scheme: dark)");
