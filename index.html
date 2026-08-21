@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#eef0ee">
-<meta name="description" content="HAYGER — one day at a time. Goals, streaks, history and daily progress.">
+<meta name="description" content="HAYGER — one day at a time. Daily check-ins, reflections, streaks, insights and progress.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<title>HAYGER — Ultra</title>
+<title>HAYGER — One Day At A Time</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -395,6 +395,48 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .data-health b{color:var(--text)}
 .pin-attempts{margin:8px 0;color:var(--danger);font-size:10px;font-weight:800;text-align:center}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* HAYGER V4 — premium product layer */
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button,input,textarea,select{accent-color:var(--accent)}
+.section-kicker{margin:0 0 7px;color:var(--accent);font-size:10px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase}
+.reflection-card,.insight-stack,.records-v4,.smart-reminder-card,.install-card,.data-health-card{padding:18px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.035)}
+.reflection-card{margin-top:14px}
+.reflection-title{font-family:var(--font-display);font-size:22px;font-weight:700;letter-spacing:-.2px}
+.reflection-copy{margin-top:6px;color:var(--muted);font-size:12px;line-height:1.5}
+.reflection-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.reflection-field{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}
+.reflection-field label{display:block;margin-bottom:8px;color:var(--muted);font-size:9px;font-weight:850;letter-spacing:1px;text-transform:uppercase}
+.reflection-field textarea,.reflection-field input{width:100%;border:0;background:transparent;color:var(--text);outline:0;resize:none}
+.reflection-field textarea{min-height:70px;line-height:1.45;font-size:12px}
+.energy-row{display:flex;gap:6px}
+.energy-btn{width:30px;height:30px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--muted);font-weight:900}
+.energy-btn.active{background:var(--primary);color:var(--primaryText);border-color:var(--primary)}
+.reflection-actions{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.reflection-saved{color:var(--muted);font-size:10px;font-weight:700}
+.insight-stack{margin-top:10px}
+.insight-row{display:flex;justify-content:space-between;gap:16px;padding:11px 0;border-bottom:1px solid var(--line)}
+.insight-row:last-child{border-bottom:0;padding-bottom:0}
+.insight-row:first-child{padding-top:0}
+.insight-row b{font-size:12px}.insight-row span{color:var(--muted);font-size:11px;text-align:right;line-height:1.4}
+.records-v4{margin-top:10px}
+.records-v4-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.record-v4-item{padding:12px 8px;border-radius:15px;background:var(--soft);text-align:center}
+.record-v4-item b{display:block;font-family:var(--font-display);font-size:25px;line-height:1}.record-v4-item span{display:block;margin-top:6px;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.7px;text-transform:uppercase}
+.week-score{display:flex;align-items:end;gap:5px;height:62px;margin-top:14px}
+.week-bar{flex:1;min-width:0;background:var(--soft2);border-radius:7px 7px 3px 3px;position:relative}.week-bar.done{background:var(--accent)}.week-bar span{position:absolute;bottom:-15px;left:50%;transform:translateX(-50%);font-size:8px;color:var(--muted);font-weight:800}
+.achievement-special{margin-top:10px;padding:14px;border:1px dashed var(--accent);border-radius:16px;background:var(--accent-soft)}
+.achievement-special b{display:block;font-size:12px}.achievement-special span{display:block;margin-top:4px;color:var(--muted);font-size:10px;line-height:1.45}
+.smart-reminder-card{margin-top:10px}
+.install-card{margin-top:10px}
+.install-card.hidden{display:none}
+.data-health-card{margin-top:10px}
+.health-pill{display:inline-flex;padding:5px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:9px;font-weight:900;letter-spacing:.6px}
+.health-list{margin:10px 0 0;padding:0;list-style:none}.health-list li{padding:7px 0;border-bottom:1px solid var(--line);font-size:11px}.health-list li:last-child{border-bottom:0}
+.share-card-preview{margin-top:12px;padding:20px;border-radius:20px;background:linear-gradient(145deg,var(--primary),var(--soft));color:var(--primaryText);text-align:center}
+.share-card-preview .share-day{font-family:var(--font-display);font-size:54px;line-height:1}.share-card-preview .share-brand{font-size:10px;font-weight:900;letter-spacing:2px}.share-card-preview .share-line{margin-top:8px;font-size:11px;opacity:.75}
+.note-modal textarea{min-height:180px;width:100%;padding:14px;border:1px solid var(--line);border-radius:15px;background:var(--soft);color:var(--text);resize:vertical;line-height:1.5}
+@media(max-width:380px){.reflection-grid{grid-template-columns:1fr}.records-v4-grid{grid-template-columns:1fr 1fr}}
 </style>
 
 
@@ -449,6 +491,18 @@ button:disabled{opacity:.55;cursor:not-allowed}
   </section>
 </div>
 
+<div id="noteModal" class="modal-backdrop" aria-hidden="true">
+  <section class="modal note-modal" role="dialog" aria-modal="true" aria-labelledby="noteModalTitle">
+    <h2 id="noteModalTitle">Edit note</h2>
+    <p id="noteModalDate"></p>
+    <textarea id="noteModalText" maxlength="500" placeholder="Write something worth remembering..."></textarea>
+    <div class="modal-actions">
+      <button id="noteModalCancel" class="button secondary" type="button">Cancel</button>
+      <button id="noteModalSave" class="button primary" type="button">Save note</button>
+    </div>
+  </section>
+</div>
+
 <div id="updateBanner" class="update-banner" role="status" aria-live="polite">
   <div class="update-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -475,6 +529,9 @@ button:disabled{opacity:.55;cursor:not-allowed}
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
+  const REFLECTION_KEY="hayger_reflections";
+  const DEVICE_KEY="hayger_device_id";
+  const LAST_BACKUP_KEY="hayger_last_backup";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -502,14 +559,36 @@ button:disabled{opacity:.55;cursor:not-allowed}
   };
 
   // ---- V3: IndexedDB durability layer + schema metadata ----
-  const DATA_DB="hayger_data_v3", DATA_STORE="kv", DATA_SCHEMA=3;
+  const DATA_DB="hayger_data_v4", DATA_STORE="kv", DATA_SCHEMA=4;
   let dataDb=null;
+  async function idbGet(k){const db=await dataDbReady;if(!db)return null;return new Promise((res,rej)=>{try{const tx=db.transaction(DATA_STORE,"readonly");const req=tx.objectStore(DATA_STORE).get(k);req.onsuccess=()=>res(req.result??null);req.onerror=()=>rej(req.error)}catch(e){rej(e)}})}
+  async function migrateLegacyIDB(){
+    if(!window.indexedDB)return;
+    try{
+      const legacy=await new Promise((resolve,reject)=>{const req=indexedDB.open("hayger_data_v3");req.onsuccess=()=>resolve(req.result);req.onerror=()=>reject(req.error)});
+      const tx=legacy.transaction("kv","readonly"), store=tx.objectStore("kv");
+      const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
+      const values={};
+      await Promise.all(keys.map(k=>new Promise(r=>{const q=store.get(k);q.onsuccess=()=>{values[k]=q.result;r()};q.onerror=()=>r()})));
+      legacy.close();
+      for(const [k,v] of Object.entries(values)){if(v!=null&&localStorage.getItem(k)==null)localStorage.setItem(k,v)}
+    }catch{}
+  }
   const dataDbReady=new Promise(resolve=>{
     if(!window.indexedDB){resolve(null);return}
     try{
       const req=indexedDB.open(DATA_DB,DATA_SCHEMA);
       req.onupgradeneeded=()=>{const db=req.result;if(!db.objectStoreNames.contains(DATA_STORE))db.createObjectStore(DATA_STORE)};
-      req.onsuccess=()=>{dataDb=req.result;resolve(dataDb);setTimeout(()=>syncLocalDataToIDB().catch(()=>{}),0)};
+      req.onsuccess=async()=>{
+        dataDb=req.result;
+        // Restore from the previous V3 database only when the new store is empty.
+        await migrateLegacyIDB();
+        const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,REFLECTION_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
+        const existing=await new Promise(r=>{const tx=dataDb.transaction(DATA_STORE,"readonly"),st=tx.objectStore(DATA_STORE),q=st.get(START_KEY);q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)});
+        if(existing!=null&&localStorage.getItem(START_KEY)==null){for(const k of keys){const v=await new Promise(r=>{const q=dataDb.transaction(DATA_STORE,"readonly").objectStore(DATA_STORE).get(k);q.onsuccess=()=>r(q.result);q.onerror=()=>r(null)});if(v!=null)localStorage.setItem(k,v)}}
+        resolve(dataDb);
+        setTimeout(()=>syncLocalDataToIDB().catch(()=>{}),0);
+      };
       req.onerror=()=>resolve(null);
     }catch{resolve(null)}
   });
@@ -517,7 +596,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
   async function idbDelete(k){const db=await dataDbReady;if(!db)return;return new Promise((res,rej)=>{try{const tx=db.transaction(DATA_STORE,"readwrite");tx.objectStore(DATA_STORE).delete(k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)}catch(e){rej(e)}})}
   async function syncLocalDataToIDB(){
     const db=await dataDbReady;if(!db)return;
-    const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
+    const keys=[START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,REFLECTION_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"];
     for(const k of keys){const v=localStorage.getItem(k);if(v!=null)await idbPut(k,v)}
     await idbPut("__schema",String(DATA_SCHEMA));
   }
@@ -533,6 +612,39 @@ button:disabled{opacity:.55;cursor:not-allowed}
   function notes(){return readJSON(NOTES_KEY,{})}
   function goal(){return Number(get(GOAL_KEY)||0)}
   function reminder(){return readJSON(REMINDER_KEY,{enabled:false,time:"20:00"})}
+
+  function reflections(){return readJSON(REFLECTION_KEY,{})}
+  function deviceId(){
+    let id=get(DEVICE_KEY);
+    if(!id){id=(crypto.randomUUID?crypto.randomUUID():"hayger-"+Date.now()+"-"+Math.random().toString(36).slice(2));set(DEVICE_KEY,id)}
+    return id;
+  }
+  function reflectionFor(key){return reflections()[key]||null}
+  function saveReflection(key,value){const all=reflections();all[key]={...value,updatedAt:new Date().toISOString()};return writeJSON(REFLECTION_KEY,all)}
+  function moodScore(m){return {"😊":5,"🙂":4,"😐":3,"😔":2,"😣":1}[m]||0}
+  function energyAverage(){const vals=Object.values(reflections()).map(x=>Number(x.energy)).filter(Boolean);return vals.length?Math.round(vals.reduce((a,b)=>a+b,0)/vals.length*10)/10:0}
+  function weeklyInsight(){
+    const data=checkins(), start=weeksAgoMonday(0), rows=[];
+    for(let i=0;i<7;i++){const d=new Date(start);d.setDate(d.getDate()+i);if(d<=today()) rows.push({key:toInputDate(d),done:!!data[toInputDate(d)]})}
+    const done=rows.filter(x=>x.done).length;
+    const current=streakStats().current;
+    return {done,elapsed:rows.length||1,rate:Math.round(done/(rows.length||1)*100),current,start};
+  }
+  function advancedAchievements(){
+    const x=computeInsights(), s=streakStats(), days=completedDays(), refs=reflections();
+    const weeks={}; days.forEach(k=>{const d=parseDate(k),m=new Date(d);m.setDate(d.getDate()-((d.getDay()+6)%7));const wk=toInputDate(m);weeks[wk]=(weeks[wk]||0)+1});
+    const perfectWeeks=Object.values(weeks).filter(v=>v>=7).length;
+    const reflectionCount=Object.keys(refs).length;
+    const comebackUnlocked=x.comebacks>=1;
+    return [
+      {icon:"↩️",label:"COMEBACK",desc:"Return after missing a day.",unlocked:comebackUnlocked},
+      {icon:"🗓️",label:"PERFECT WEEK",desc:"Complete all 7 days in one week.",unlocked:perfectWeeks>=1},
+      {icon:"📝",label:"REFLECTOR",desc:"Save 7 daily reflections.",unlocked:reflectionCount>=7},
+      {icon:"⚡",label:"CONSISTENT 14",desc:"Build a 14-day streak.",unlocked:s.best>=14},
+      {icon:"🌟",label:"100 CHECK-INS",desc:"Reach 100 completed days.",unlocked:x.total>=100},
+      {icon:"🧭",label:"FIND YOUR RHYTHM",desc:"Check in on 5 different weekdays.",unlocked:x.strongest>=2 && new Set(days.map(k=>parseDate(k).getDay())).size>=5}
+    ];
+  }
   function checkinKey(d){return toInputDate(d)}
   function escapeHTML(v){
     return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -713,6 +825,20 @@ button:disabled{opacity:.55;cursor:not-allowed}
       try{await navigator.clipboard.writeText(text);showToast("✓ Progress copied.")}
       catch{showToast("Couldn't share progress.")}
     }
+  }
+
+
+  async function shareProgressCard(){
+    const start=parseDate(get(START_KEY)),day=dayCount(start),s=streakStats(),x=computeInsights();
+    const canvas=document.createElement("canvas");canvas.width=1080;canvas.height=1350;const ctx=canvas.getContext("2d");
+    ctx.fillStyle="#15171c";ctx.fillRect(0,0,1080,1350);ctx.fillStyle="#e3a94a";ctx.fillRect(70,100,110,8);
+    ctx.fillStyle="#f4f4f2";ctx.font="700 44px Georgia";ctx.fillText("HAYGER",70,180);ctx.font="900 24px Inter, sans-serif";ctx.fillStyle="#93979f";ctx.fillText("ONE DAY AT A TIME",70,220);
+    ctx.fillStyle="#f4f4f2";ctx.font="700 220px Georgia";ctx.fillText(String(day),70,500);ctx.font="900 28px Inter, sans-serif";ctx.fillStyle="#93979f";ctx.fillText("CURRENT DAY",75,555);
+    ctx.fillStyle="#f4f4f2";ctx.font="700 44px Inter, sans-serif";ctx.fillText(`${s.current} day streak`,75,700);ctx.fillText(`${s.best} best streak`,75,770);ctx.fillText(`${x.total} total check-ins`,75,840);
+    ctx.fillStyle="#93979f";ctx.font="400 28px Inter, sans-serif";ctx.fillText("Consistency is built one day at a time.",75,1110);ctx.fillText(new Date().toLocaleDateString(),75,1170);
+    const blob=await new Promise(res=>canvas.toBlob(res,"image/png"));
+    try{if(navigator.share&&blob){const file=new File([blob],"hayger-progress.png",{type:"image/png"});if(!navigator.canShare||navigator.canShare({files:[file]})){await navigator.share({title:"HAYGER Progress",text:"One day at a time.",files:[file]});return}}}catch{}
+    try{const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="hayger-progress.png";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);showToast("✓ Progress card saved.")}catch{showToast("Couldn't create progress card.")}
   }
 
   // ---- Ultra: day detail modal (History tab) ----
@@ -921,8 +1047,14 @@ button:disabled{opacity:.55;cursor:not-allowed}
         <div class="badge-section-title">Streak badges</div>
         ${grid(b.streak)}
       </div>
+      <div class="badge-section">
+        <div class="badge-section-title">Special achievements</div>
+        ${advancedAchievements().map(x=>`<div class="achievement-special" style="opacity:${x.unlocked?1:.55}"><b>${x.icon} ${x.label} ${x.unlocked?"· UNLOCKED":"· LOCKED"}</b><span>${x.desc}</span></div>`).join("")}
+      </div>
+      <div class="share-card-preview"><div class="share-brand">HAYGER</div><div class="share-day">DAY ${day}</div><div class="share-line">${streakStats().current} day current streak · ${streakStats().best} best streak</div></div>
       <div class="share-row">
         <button id="shareProgressBtn" class="button secondary" type="button">SHARE PROGRESS</button>
+        <button id="shareCardBtn" class="button secondary" type="button">SHARE CARD</button>
         <button id="exportAwards" class="button secondary" type="button">EXPORT BACKUP</button>
       </div>
     </div>`;
@@ -1019,6 +1151,17 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="record-card"><div class="insight-kicker">PERSONAL RECORDS</div><div class="record-grid"><div class="record-item"><b>${x.best}</b><span>Best streak</span></div><div class="record-item"><b>${x.total}</b><span>Total days</span></div><div class="record-item"><b>${x.comebacks}</b><span>Comebacks</span></div><div class="record-item"><b>${x.longestGap}</b><span>Longest gap</span></div></div></div>`;
   }
 
+
+  function renderAdvancedStats(){
+    const w=weeklyInsight(), x=computeInsights(), energy=energyAverage(), month=(()=>{
+      const now=today(), y=now.getFullYear(),m=now.getMonth(),last=new Date(y,m+1,0).getDate(),data=checkins();let done=0,elapsed=0;
+      for(let d=1;d<=last;d++){const dt=new Date(y,m,d);if(dt<=now){elapsed++;if(data[toInputDate(dt)])done++}}
+      return {done,elapsed,rate:elapsed?Math.round(done/elapsed*100):0};
+    })();
+    const bars=Array.from({length:7},(_,i)=>{const d=new Date(w.start||weeksAgoMonday(0));d.setDate(d.getDate()+i);const done=checkins()[toInputDate(d)];return `<div class="week-bar ${done?"done":""}" style="height:${done?"100%":"28%"}"><span>${["M","T","W","T","F","S","S"][i]}</span></div>`}).join("");
+    return `<div class="insight-stack"><div class="section-kicker">THIS WEEK</div><div class="insight-row"><b>${w.done}/${w.elapsed} days complete</b><span>${w.rate}% consistency</span></div><div class="week-score">${bars}</div></div>
+      <div class="records-v4"><div class="section-kicker">DEEPER SIGNALS</div><div class="records-v4-grid"><div class="record-v4-item"><b>${month.rate}%</b><span>This month</span></div><div class="record-v4-item"><b>${energy||"—"}</b><span>Avg energy</span></div><div class="record-v4-item"><b>${x.strongDay?x.strongDay.slice(0,3):"—"}</b><span>Best weekday</span></div></div><div class="insight-row" style="margin-top:10px"><b>${x.longestGap?`Your longest gap was ${x.longestGap} day${x.longestGap===1?"":"s"}.`:`No gap pattern yet.`}</b><span>${x.comebacks?`${x.comebacks} comeback${x.comebacks===1?"":"s"}`:"Keep your first streak alive"}</span></div></div>`;
+  }
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
     const checkinRate=Math.min(100,Math.round((s.total/day)*100));
@@ -1168,6 +1311,8 @@ button:disabled{opacity:.55;cursor:not-allowed}
           <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
         </div>
       </div>`:""}
+      <div id="installCard" class="install-card hidden"><div class="section-kicker">INSTALL</div><div class="setting-copy"><b>Make HAYGER feel like an app</b><span>Add it to your home screen for a faster, distraction-free check-in.</span></div><button id="installApp" class="small-button" type="button" style="margin-top:10px">INSTALL HAYGER</button></div>
+      <div class="data-health-card"><div class="section-kicker">DATA HEALTH</div><span class="health-pill">LOCAL-FIRST · V4</span><ul class="health-list"><li>✓ Check-ins, notes and reflections are backed by IndexedDB + local cache.</li><li>✓ Backup includes a device ID and revision for future sync.</li><li>✓ No account or server is required for core use.</li></ul></div>
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
@@ -1187,6 +1332,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
 
   let reminderTimer=null;
+  let deferredInstallPrompt=null;
   async function scheduleReminder(){
     const r=reminder();const status=document.getElementById("reminderStatus");
     if(!r.enabled){if(status)status.textContent="Reminders are off.";return}
@@ -1210,23 +1356,25 @@ button:disabled{opacity:.55;cursor:not-allowed}
       clearTimeout(reminderTimer);
       const delay=Math.max(1000,next-now);
       reminderTimer=setTimeout(async()=>{
-        try{new Notification("HAYGER",{body:"Your day is waiting. Keep going.",icon:"./icon-192.png"})}catch{}
+        if(!checkins()[toInputDate(today())]){try{new Notification("HAYGER",{body:streakStats().current?`Protect your ${streakStats().current}-day streak — check in today.`:"Your first check-in is waiting.",icon:"./icon-192.png",tag:"hayger-daily"})}catch{}}
         scheduleReminder();
       },delay);
     }
-    if(status)status.textContent=scheduled?`Daily reminder scheduled for ${r.time}.`: `Reminder set for ${r.time}. It will fire reliably while HAYGER is active; browser support for background scheduling varies.`;
+    if(status)status.textContent=scheduled?`Daily reminder scheduled for ${r.time}.`: `Reminder set for ${r.time}. HAYGER only alerts when today is still unchecked; background reliability depends on browser support.`;
   }
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:3,schema:3,exportedAt:new Date().toISOString(),
-      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
-      goal:goal(),reminder:reminder(),theme:theme()
+      app:"HAYGER",version:4,schema:4,format:"HAYGER_BACKUP",exportedAt:new Date().toISOString(),
+      deviceId:deviceId(),revision:Date.now(),
+      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),reflections:reflections(),
+      goal:goal(),reminder:reminder(),theme:theme(),profile:readJSON("hayger_profile_v2",{})
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
     a.href=url;a.download=`hayger-backup-${toInputDate(today())}.json`;
     document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    set(LAST_BACKUP_KEY,new Date().toISOString());
     showToast("✓ Backup exported.");
   }
 
@@ -1243,10 +1391,13 @@ button:disabled{opacity:.55;cursor:not-allowed}
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
+        writeJSON(REFLECTION_KEY,d.reflections&&typeof d.reflections==="object"?d.reflections:{});
+        if(d.profile&&typeof d.profile==="object") writeJSON("hayger_profile_v2",d.profile);
         if(Number(d.goal)>0) set(GOAL_KEY,String(Number(d.goal)));
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) set(THEME_KEY,d.theme);
+        set(LAST_BACKUP_KEY,new Date().toISOString());
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1254,6 +1405,31 @@ button:disabled{opacity:.55;cursor:not-allowed}
     reader.readAsText(file);
   }
 
+
+  function renderReflectionCard(key){
+    const r=reflectionFor(key)||{};
+    const energy=Number(r.energy)||0;
+    return `<div class="reflection-card" id="reflectionCard">
+      <div class="section-kicker">DAILY REFLECTION</div>
+      <div class="reflection-title">How did today feel?</div>
+      <div class="reflection-copy">Two tiny prompts. Enough to notice the pattern without turning HAYGER into homework.</div>
+      <div class="reflection-grid">
+        <div class="reflection-field">
+          <label>Energy</label>
+          <div class="energy-row">${[1,2,3,4,5].map(n=>`<button type="button" class="energy-btn ${energy===n?"active":""}" data-energy="${n}" aria-label="Energy ${n} of 5">${n}</button>`).join("")}</div>
+        </div>
+        <div class="reflection-field">
+          <label>What went well?</label>
+          <textarea id="reflectionWin" maxlength="220" placeholder="One small win...">${escapeHTML(r.win||"")}</textarea>
+        </div>
+        <div class="reflection-field" style="grid-column:1/-1">
+          <label>Tomorrow's intention</label>
+          <textarea id="reflectionIntent" maxlength="220" placeholder="What do you want to carry forward?">${escapeHTML(r.intention||"")}</textarea>
+        </div>
+      </div>
+      <div class="reflection-actions"><span class="reflection-saved">${r.updatedAt?"Saved for today":"Private on this device"}</span><button id="saveReflection" class="small-button" type="button">${r.updatedAt?"UPDATE REFLECTION":"SAVE REFLECTION"}</button></div>
+    </div>`;
+  }
   function renderHome(start,current,day,data,key,checked){
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
     const g=goal();
@@ -1283,10 +1459,27 @@ button:disabled{opacity:.55;cursor:not-allowed}
         <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
+      ${checked?renderReflectionCard(key):`<div class="reflection-card"><div class="section-kicker">DAILY REFLECTION</div><div class="reflection-title">Check in first, then reflect.</div><div class="reflection-copy">Your reflection becomes part of your personal pattern — private on this device.</div></div>`}
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
     </div>`;
   }
 
+
+  function openNoteEditor(key){
+    const m=document.getElementById("noteModal"), t=document.getElementById("noteModalText");
+    const map=notes();
+    m.dataset.key=key;document.getElementById("noteModalTitle").textContent=key===toInputDate(today())?"Today's note":"Edit note";
+    document.getElementById("noteModalDate").textContent=formatDate(parseDate(key));t.value=map[key]||"";
+    m.classList.add("open");m.setAttribute("aria-hidden","false");setTimeout(()=>t.focus(),50);
+  }
+  function closeNoteEditor(){const m=document.getElementById("noteModal");m.classList.remove("open");m.setAttribute("aria-hidden","true")}
+  document.getElementById("noteModalCancel")?.addEventListener("click",closeNoteEditor);
+  document.getElementById("noteModal")?.addEventListener("click",e=>{if(e.target.id==="noteModal")closeNoteEditor()});
+  document.getElementById("noteModalSave")?.addEventListener("click",()=>{
+    const m=document.getElementById("noteModal"),key=m.dataset.key,text=document.getElementById("noteModalText").value.trim();
+    if(!key||!text){showToast("Write something before saving.");return}
+    const map=notes();map[key]=text;writeJSON(NOTES_KEY,map);closeNoteEditor();render();showToast("✓ Note saved.");
+  });
   function challenge(){
     const value=get(START_KEY);
     const start=parseDate(value);
@@ -1326,6 +1519,15 @@ button:disabled{opacity:.55;cursor:not-allowed}
           writeJSON(CHECKINS_KEY,d);
           render();
         });
+      });
+      document.querySelectorAll("[data-energy]").forEach(btn=>btn.addEventListener("click",()=>{
+        const all=reflections(), r=all[key]||{};r.energy=Number(btn.dataset.energy);all[key]=r;writeJSON(REFLECTION_KEY,all);render();
+      }));
+      document.getElementById("saveReflection")?.addEventListener("click",()=>{
+        const all=reflections(), prev=all[key]||{};
+        const value={energy:Number(prev.energy)||0,win:(document.getElementById("reflectionWin")?.value||"").trim(),intention:(document.getElementById("reflectionIntent")?.value||"").trim()};
+        if(!value.energy&&!value.win&&!value.intention){showToast("Add one small reflection first.");return}
+        saveReflection(key,value);showToast("✓ Reflection saved.");render();
       });
     }
 
@@ -1398,11 +1600,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
           if(again){again.focus();again.setSelectionRange(cursor,cursor)}
         });
       }
-      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>{
-        editingNoteKey=btn.dataset.noteEdit;
-        render();
-        setTimeout(()=>document.getElementById("dailyNote")?.focus(),60);
-      }));
+      document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>openNoteEditor(btn.dataset.noteEdit)));
       document.querySelectorAll("[data-note-delete]").forEach(btn=>btn.addEventListener("click",()=>{
         const key=btn.dataset.noteDelete, map=notes();
         if(!map[key]) return;
@@ -1415,6 +1613,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 
     if(phaseView==="awards"){
       document.getElementById("shareProgressBtn")?.addEventListener("click",shareProgress);
+      document.getElementById("shareCardBtn")?.addEventListener("click",shareProgressCard);
       document.getElementById("exportAwards")?.addEventListener("click",exportData);
     }
 
@@ -1433,6 +1632,13 @@ button:disabled{opacity:.55;cursor:not-allowed}
       time?.addEventListener("change",saveReminder);
       scheduleReminder();
 
+
+      const installCard=document.getElementById("installCard");
+      if(deferredInstallPrompt&&installCard) installCard.classList.remove("hidden");
+      document.getElementById("installApp")?.addEventListener("click",async()=>{
+        if(!deferredInstallPrompt){showToast("Use your browser's Add to Home Screen option.");return}
+        deferredInstallPrompt.prompt();await deferredInstallPrompt.userChoice;deferredInstallPrompt=null;installCard?.classList.add("hidden");
+      });
       document.getElementById("exportData")?.addEventListener("click",exportData);
       document.getElementById("importData")?.addEventListener("click",()=>document.getElementById("importFile")?.click());
       document.getElementById("importFile")?.addEventListener("change",e=>{
@@ -1442,7 +1648,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,REFLECTION_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1551,7 +1757,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,REFLECTION_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,DEVICE_KEY,LAST_BACKUP_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }
@@ -1636,12 +1842,16 @@ button:disabled{opacity:.55;cursor:not-allowed}
     });
   }
 
+
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;});
+  window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;showToast("✓ HAYGER installed.");});
+
   // V3: announce data durability and improve keyboard/modal ergonomics.
-  window.HAYGER_V3={schema:DATA_SCHEMA,storage:"IndexedDB + localStorage compatibility cache",getInsights:computeInsights};
+  window.HAYGER_V4={schema:DATA_SCHEMA,storage:"IndexedDB + local cache",features:["daily-reflection","smart-reminders","advanced-achievements","progress-card","install-flow","sync-ready-backups"],getInsights:computeInsights};
   document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")syncLocalDataToIDB().catch(()=>{})});
   window.addEventListener("online",()=>syncLocalDataToIDB().catch(()=>{}));
 
-  render();
+  dataDbReady.then(()=>render()).catch(()=>render());
 })();
 </script>
 

@@ -1,20 +1,37 @@
-HAYGER PRODUCTION V3
+HAYGER V4 — ONE DAY AT A TIME
 
-This build keeps the existing HAYGER visual direction and adds a production-focused foundation.
+This build implements the four upgrade phases discussed for the HAYGER production roadmap.
 
-Highlights:
-- IndexedDB durability layer (hayger_data_v3) with localStorage compatibility cache and automatic mirroring.
-- Schema metadata for future migrations.
-- PBKDF2-SHA256 + random salt for new 4-digit PINs; old SHA-256 PINs migrate after successful unlock.
-- Personal Insights, Personal Records and Comeback metrics in Stats.
-- Better focus-visible states and reduced-motion support.
-- Notification Trigger scheduling when supported, with a graceful foreground fallback.
-- Improved PWA cache/versioning and notification click behavior.
-- Existing backup/restore remains compatible; exports are now marked schema/version 3.
+PHASE 1 — FOUNDATION
+- IndexedDB V4 durability layer with local cache compatibility
+- V3 IndexedDB migration attempt + startup hydration
+- Versioned HAYGER_BACKUP schema 4 with device ID/revision
+- PBKDF2-SHA256 PINs with random salt and legacy migration
+- Local-date-safe date handling
+- Lightweight core smoke tests in tests/core-smoke.js
 
-Important:
-- Browser background notification scheduling is platform-dependent. Universal reliable daily reminders require a push backend or native wrapper.
-- The current localStorage compatibility cache is not encrypted. For high-security at-rest privacy, the next architecture step is IndexedDB-only encrypted storage using WebCrypto.
+PHASE 2 — PREMIUM UX
+- Daily reflection experience
+- Dedicated note editor modal
+- Install-to-home-screen flow
+- Accessibility focus states + reduced-motion support
+- Shareable progress card
 
-Recommended next step:
-- Move sensitive reads fully to IndexedDB transactions, then add optional encrypted cloud sync and automated unit/e2e tests.
+PHASE 3 — RETENTION
+- Smarter missing-check-in reminders
+- Weekly consistency signals
+- Deeper personal records
+- Reflection-powered energy averages
+- Special achievements and comeback/perfect-week mechanics
+
+PHASE 4 — ADVANCED / SYNC-READY
+- Sync-ready backup metadata
+- PWA shortcuts
+- V4 service-worker cache
+- Local-first architecture ready for a future cloud sync provider
+
+IMPORTANT PLATFORM NOTE
+True cross-device cloud sync and guaranteed background push notifications require a server/push provider or native wrapper. This package intentionally keeps the core app account-free and local-first while preparing the data model for that future layer.
+
+TEST
+node tests/core-smoke.js

@@ -18,6 +18,11 @@
   ],
   "background_color": "#eef0ee",
   "theme_color": "#eef0ee",
+  "shortcuts": [
+    {"name":"Today","short_name":"Today","url":"./#home"},
+    {"name":"History","short_name":"History","url":"./#history"},
+    {"name":"Stats","short_name":"Stats","url":"./#stats"}
+  ],
   "icons": [
     {
       "src": "./icon-192.png",
