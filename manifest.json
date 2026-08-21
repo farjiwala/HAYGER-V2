@@ -1,7 +1,7 @@
 {
-  "name": "HAYGER \u2014 One Day At A Time",
+  "name": "HAYGER — One Day At A Time",
   "short_name": "HAYGER",
-  "description": "HAYGER \u2014 one day at a time. Goals, streaks, history and daily progress.",
+  "description": "A private, offline-first daily consistency companion for check-ins, goals, reflections and progress.",
   "start_url": "./",
   "scope": "./",
   "id": "./",
@@ -14,7 +14,8 @@
   "dir": "ltr",
   "categories": [
     "productivity",
-    "lifestyle"
+    "lifestyle",
+    "health"
   ],
   "background_color": "#efece4",
   "theme_color": "#efece4",
@@ -31,5 +32,6 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ]
+  ],
+  "version": "2.0.0"
 }

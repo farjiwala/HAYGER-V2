@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-ultra-v10-goldline";
+const CACHE_NAME = "hayger-pro-v20-gold";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

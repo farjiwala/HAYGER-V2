@@ -1,30 +1,22 @@
-HAYGER — Ultra Premium Gold build (visual upgrade pass)
+HAYGER — PRO GOLD v2.0.0
 
-New in this pass:
-- Richer ink + brushed-gold palette (light & dark), layered ambient background glow, subtle grain texture.
-- Glass-blurred header with hairline gold gradient edge.
-- Day-ring now has a gradient gold stroke, soft glow, and a shimmering gold gradient day number.
-- Cards (check-in, stats, goals, notes, badges, settings) upgraded to soft gradient "glass" surfaces with deeper, warmer shadows.
-- Buttons get a gold sheen sweep on press; done/checked states use a gold gradient instead of flat color.
-- Calendar heat-map, day dots, progress bars and week charts now use the gold gradient instead of a flat accent.
-- Tab bar active state gets a soft gold highlight pill.
-- Modals use a heavier blur backdrop and a gradient card surface.
-- Service worker cache version bumped so the new build replaces the old one on next load.
+This build is a full product/functionality pass, not only a visual theme change.
 
-HAYGER — Updated build
+Key improvements:
+- Reworked Home dashboard with consistency insights, momentum, goal progress and quick navigation.
+- Stronger streak/consistency analytics including current streak, best streak, rate and longest gap.
+- Expanded mood selection and clearer daily check-in states.
+- History calendar and activity heatmap retained and refined.
+- Stats now surfaces actionable consistency feedback and weekly activity details.
+- Goals support presets and custom targets with clearer progress.
+- Notes support search, edit and delete while remaining device-local.
+- Awards include journey + streak achievements, progress completion and sharing/export.
+- Profile data is included in backups and validated on restore.
+- Backup schema upgraded to v2 with safer validation and profile preservation.
+- About HAYGER rewritten as a professional product/about page with mission, capabilities, privacy model, build type and version.
+- App lock, reminders, theme switching and PWA update handling retained.
+- Theme meta color updates with light/dark mode.
+- Service-worker cache bumped to ensure the new build is picked up.
 
-Implemented:
-- Compact Check-In + one-time Feeling control. Feeling opens as an emoji popover and becomes locked after selection.
-- Weekly Activity now has 8 independent tap targets. Tapping a week opens only that week’s date range, check-ins and saved feelings.
-- App Lock (PIN) uses device-local SHA-256 storage with progressive retry cooldowns after repeated incorrect attempts.
-- Added About HAYGER section with app purpose, features, data note, version and developer/contact fields.
-- Added a subtle premium card treatment around the HAYGER header branding without making it a functional button.
-- Bumped the service-worker cache version.
-
-Developer/contact setup:
-Open index.html and find ABOUT_CONFIG near the top of the main script. Replace:
-  developerName: "Your Name"
-  contactEmail: "your@email.com"
-with the real details before publishing.
-
-The original project files are otherwise preserved.
+Privacy:
+Core data is stored locally in browser storage. There is no cloud account or server sync in this build.
