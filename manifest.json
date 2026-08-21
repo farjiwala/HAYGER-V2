@@ -16,8 +16,8 @@
     "productivity",
     "lifestyle"
   ],
-  "background_color": "#eef0ee",
-  "theme_color": "#eef0ee",
+  "background_color": "#efece4",
+  "theme_color": "#efece4",
   "icons": [
     {
       "src": "./icon-192.png",

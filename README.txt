@@ -1,3 +1,16 @@
+HAYGER — Ultra Premium Gold build (visual upgrade pass)
+
+New in this pass:
+- Richer ink + brushed-gold palette (light & dark), layered ambient background glow, subtle grain texture.
+- Glass-blurred header with hairline gold gradient edge.
+- Day-ring now has a gradient gold stroke, soft glow, and a shimmering gold gradient day number.
+- Cards (check-in, stats, goals, notes, badges, settings) upgraded to soft gradient "glass" surfaces with deeper, warmer shadows.
+- Buttons get a gold sheen sweep on press; done/checked states use a gold gradient instead of flat color.
+- Calendar heat-map, day dots, progress bars and week charts now use the gold gradient instead of a flat accent.
+- Tab bar active state gets a soft gold highlight pill.
+- Modals use a heavier blur backdrop and a gradient card surface.
+- Service worker cache version bumped so the new build replaces the old one on next load.
+
 HAYGER — Updated build
 
 Implemented:
