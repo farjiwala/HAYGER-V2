@@ -303,6 +303,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .profile-main{min-width:0}.profile-kicker{font-size:9px;letter-spacing:1.5px;font-weight:900;color:var(--muted);margin-bottom:3px}.profile-main h2{margin:0;font-size:21px;line-height:1.1}.profile-main span{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:650}
 .profile-settings-heading{margin:18px 4px 8px;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:900}
 .setting-title{font-size:9px;letter-spacing:1.2px;font-weight:900;color:var(--muted);margin-bottom:10px}
+.about-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.about-logo{width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:var(--accent);color:#0b0b0c;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;font-family:Georgia,serif}
+.about-name{font-size:15px;font-weight:900;letter-spacing:0.5px}
+.about-tagline{font-size:10px;color:var(--muted);font-weight:650;margin-top:2px}
+.about-copy{font-size:10.5px;line-height:1.6;color:var(--muted);margin:0 0 12px}
+.about-quote{font-size:10.5px;font-style:italic;color:var(--text);border-left:2px solid var(--accent);padding:2px 0 2px 12px;margin-bottom:14px;line-height:1.5}
+.about-badge{font-size:9px;font-weight:900;letter-spacing:0.5px;color:var(--accent);border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--surface)}
 .profile-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.profile-form label:first-child{grid-column:1/-1}.profile-form label span{display:block;font-size:9px;font-weight:850;color:var(--muted);margin:0 0 5px}
 .profile-form input,.profile-form select{width:100%;height:43px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:12px}
 .profile-save{width:100%;margin-top:10px}
@@ -385,7 +392,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     <div class="app-header-inner">
       <div>
         <div class="brand">HAYGER</div>
-        <div class="brand-sub"></div>
+        <div class="brand-sub">ONE DAY AT A TIME</div>
       </div>
       <button id="themeButton" class="theme-button" type="button" aria-label="Change theme"></button>
     </div>
@@ -1090,6 +1097,30 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
           <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
+        </div>
+      </div>
+
+      <h3 class="profile-settings-heading">ABOUT</h3>
+
+      <div class="settings-card">
+        <div class="about-brand">
+          <div class="about-logo">H</div>
+          <div>
+            <div class="about-name">HAYGER</div>
+            <div class="about-tagline">One day at a time.</div>
+          </div>
+        </div>
+        <p class="about-copy">Built to help you show up for yourself, every single day. No streak-shaming, no noise — just a quiet, honest space to track your progress and stay accountable to the promise you made yourself.</p>
+        <div class="about-quote">"You don't need to win the year. Just win today."</div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Version</b><span>Ultra Final Polish</span></div>
+          <span class="about-badge">v2.0</span>
+        </div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Your data</b><span>Everything stays on this device. Nothing is uploaded, sold or shared.</span></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Made for people who show up</b><span>Thank you for trusting HAYGER with your journey.</span></div>
         </div>
       </div>
     </div>`;
