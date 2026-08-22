@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#b9791f">
-<meta name="description" content="HAYGER — a private, offline-first daily consistency companion for goals, check-ins, streaks, history and reflection.">
+<meta name="theme-color" content="#eef0ee">
+<meta name="description" content="HAYGER — one day at a time. Goals, streaks, history and daily progress.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<title>HAYGER — One Day At A Time</title>
+<title>HAYGER — Ultra</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -454,8 +454,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
-  const PROFILE_KEY="hayger_profile_v2";
-  const PROFILE_NAME_KEY="hayger_profile_name_v1";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -504,16 +502,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function streakStats(){
     const days=completedDays();
-    if(!days.length) return {current:0,best:0,total:0,longestGap:0};
+    if(!days.length) return {current:0,best:0,total:0};
     const set=new Set(days);
-    let best=0, run=0, prev=null, longestGap=0;
+    let best=0, run=0, prev=null;
     for(const key of days){
       const d=parseDate(key);
-      if(prev){
-        const diff=Math.round((d-prev)/86400000);
-        longestGap=Math.max(longestGap,Math.max(0,diff-1));
-        if(diff===1) run++; else run=1;
-      }else run=1;
+      if(prev && Math.round((d-prev)/86400000)===1) run++;
+      else run=1;
       best=Math.max(best,run);
       prev=d;
     }
@@ -522,7 +517,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       current++;
       cursor.setDate(cursor.getDate()-1);
     }
-    return {current,best,total:days.length,longestGap};
+    return {current,best,total:days.length};
   }
   function checkinKey(d){return toInputDate(d)}
   function motivational(day){
@@ -557,8 +552,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     return (await sha256Hex(pin))===rec.hash;
   }
   function pinEnabled(){return !!pinRecord()}
-function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}")}catch{return {}}}
-  function profileName(){const p=profile();return (p.name||localStorage.getItem(PROFILE_NAME_KEY)||"").trim()}
 
   // ---- Ultra: weekly activity chart ----
   function weeksAgoMonday(offset){
@@ -963,13 +956,8 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
       </div>
       <div class="stats-grid" style="margin-top:8px">
         <div class="stat"><b>${day}</b><span>DAY</span></div>
-        <div class="stat"><b>${checkinRate}%</b><span>CONSISTENCY</span></div>
+        <div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div>
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
-      </div>
-      <div class="stats-grid" style="margin-top:8px">
-        <div class="stat"><b>${s.longestGap}</b><span>LONGEST GAP</span></div>
-        <div class="stat"><b>${Math.max(0,s.total?Math.round(s.total/day*100):0)}%</b><span>FOLLOW-THROUGH</span></div>
-        <div class="stat"><b>${s.current>=7?"ON FIRE":s.current>=3?"BUILDING":"STARTING"}</b><span>MOMENTUM</span></div>
       </div>
 
       <div class="chart-card" style="margin-top:10px">
@@ -1098,23 +1086,6 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
           <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
         </div>
       </div>`:""}
-      <div class="about-card">
-        <div class="about-brand"><div class="about-mark">H</div><div><div class="about-kicker">ABOUT HAYGER</div><div class="about-title">One day at a time.</div></div></div>
-        <p class="about-copy">HAYGER is a private, offline-first consistency companion built to help you show up, track progress and reflect without turning your journey into noise.</p>
-        <div class="about-grid">
-          <div class="about-feature"><b>Daily check-ins</b><span>Record each day and capture how you feel.</span></div>
-          <div class="about-feature"><b>Streaks & goals</b><span>See momentum, milestones and long-term progress.</span></div>
-          <div class="about-feature"><b>History & insights</b><span>Review activity, notes, gaps and consistency.</span></div>
-          <div class="about-feature"><b>Private by design</b><span>Your data is stored locally on this device.</span></div>
-        </div>
-        <div class="about-meta">
-          <div class="about-meta-row"><span>VERSION</span><span>2.0 · Ultra</span></div>
-          <div class="about-meta-row"><span>STORAGE</span><span>Local device storage</span></div>
-          <div class="about-meta-row"><span>DEVELOPER</span><span id="aboutDeveloper">HAYGER Team</span></div>
-          <div class="about-meta-row"><span>CONTACT</span><span id="aboutContact">Contact details not configured</span></div>
-        </div>
-      </div>
-
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
@@ -1160,9 +1131,9 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:2,exportedAt:new Date().toISOString(),
+      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
       startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
-      goal:goal(),reminder:reminder(),theme:theme(),profile:profile()
+      goal:goal(),reminder:reminder(),theme:theme()
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1176,7 +1147,7 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
     reader.onload=()=>{
       try{
         const d=JSON.parse(reader.result);
-        if(d.app!=="HAYGER" || !d.version || Number(d.version)>2) throw new Error("Invalid backup version");
+        if(d.app!=="HAYGER" || !d.version) throw new Error("Invalid backup");
         if(d.startDate){
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
@@ -1188,10 +1159,6 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
-        if(d.profile&&typeof d.profile==="object"){
-          localStorage.setItem(PROFILE_KEY,JSON.stringify({name:String(d.profile.name||"").slice(0,40),age:String(d.profile.age||""),gender:String(d.profile.gender||""),updatedAt:d.profile.updatedAt||new Date().toISOString()}));
-          if(d.profile.name) localStorage.setItem(PROFILE_NAME_KEY,String(d.profile.name).slice(0,40));
-        }
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1205,11 +1172,6 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
     const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
     const r=88, c=2*Math.PI*r;
     const offset=c*(1-pct/100);
-    const name=profileName();
-    const greeting=name?`Welcome back, <strong>${escapeHTML(name)}</strong>.`:`Welcome back.`;
-    const s=streakStats();
-    const consistency=day?Math.min(100,Math.round((s.total/day)*100)):0;
-    const insight=s.current>=7?`You're on a <strong>${s.current}-day streak</strong>. Protect it today.`:s.total>=3?`You've checked in <strong>${s.total} times</strong>. Keep building the rhythm.`:`Your first win is simply <strong>showing up today</strong>.`;
     return `<div class="container">
       <div class="hero-panel">
         <div class="ring-wrap">
@@ -1223,7 +1185,6 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
           </div>
         </div>
         <div class="hero-date">${formatDate(current)}</div>
-        <div class="hero-tag">${greeting}</div>
         <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
       </div>
       <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
@@ -1234,9 +1195,7 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
         <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
-      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${Math.min(day,g)} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div><div class="progress-label"><span>Goal progress</span><strong>${challengeProgress(day)}%</strong></div></div>`:""}
-      <div class="insight-card"><div class="insight-label">YOUR MOMENTUM</div><div class="insight-text">${insight} Your current consistency is <strong>${consistency}%</strong>.</div></div>
-      <div class="quick-grid"><button class="quick-button" data-quick="calendar" type="button">VIEW HISTORY</button><button class="quick-button" data-quick="stats" type="button">VIEW STATS</button></div>
+      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
     </div>`;
   }
 
@@ -1281,8 +1240,6 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
         });
       });
     }
-
-    document.querySelectorAll("[data-quick]").forEach(btn=>btn.addEventListener("click",()=>{phaseView=btn.dataset.quick;render()}));
 
     if(phaseView==="profile"){
       document.getElementById("saveProfile")?.addEventListener("click",()=>{
@@ -1396,7 +1353,7 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,PROFILE_NAME_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1505,7 +1462,7 @@ function profile(){try{return JSON.parse(localStorage.getItem(PROFILE_KEY)||"{}"
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,PROFILE_NAME_KEY].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }
