@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>HAYGER — Admin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  :root{
+    --bg:#0b0c10;--surface:#15171c;--soft:#1c1f26;--line:#2a2e36;
+    --text:#f4f4f2;--muted:#93979f;--accent:#e3a94a;--danger:#ff8a8a;--good:#7fd88f;
+    --font-display:'Fraunces',Georgia,serif;--font-body:Inter,system-ui,sans-serif;
+  }
+  html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font-body)}
+  .wrap{max-width:760px;margin:0 auto;padding:28px 18px 60px}
+  h1{font-family:var(--font-display);font-size:26px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 24px}
+
+  /* login */
+  #loginBox{max-width:340px;margin:80px auto;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:28px 24px}
+  #loginBox h1{font-size:22px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px}
+  .field input{width:100%;padding:11px 12px;border-radius:10px;border:1px solid var(--line);background:var(--soft);color:var(--text);font-size:14px;outline:none}
+  .field input:focus{border-color:var(--accent)}
+  button.primary{width:100%;padding:12px 0;border:none;border-radius:10px;background:var(--accent);color:#191204;font-weight:800;font-size:14px;cursor:pointer;margin-top:6px}
+  #loginMsg{min-height:18px;font-size:12.5px;color:var(--danger);margin-top:10px;text-align:center}
+
+  .hidden{display:none !important}
+
+  /* stats */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:22px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .stat .num{font-family:var(--font-display);font-size:26px;font-weight:700}
+  .stat .lbl{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px;margin-top:2px}
+
+  .userRow{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;cursor:pointer}
+  .userRow .top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .userRow .email{font-weight:700;font-size:14px;word-break:break-all}
+  .dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto}
+  .dot.on{background:var(--good);box-shadow:0 0 0 3px rgba(127,216,143,.18)}
+  .dot.off{background:var(--muted)}
+  .userRow .meta{font-size:11.5px;color:var(--muted);margin-top:4px}
+  .userDetail{display:none;margin-top:12px;border-top:1px solid var(--line);padding-top:12px}
+  .userRow.open .userDetail{display:block}
+  .userDetail pre{background:var(--soft);border-radius:10px;padding:10px;font-size:11px;overflow:auto;max-height:260px;white-space:pre-wrap;word-break:break-all}
+
+  #signOutBtn{background:none;border:1px solid var(--line);color:var(--muted);border-radius:10px;padding:7px 12px;font-size:12px;cursor:pointer}
+  .headerRow{display:flex;justify-content:space-between;align-items:flex-start}
+</style>
+</head>
+<body>
+
+<div id="loginBox">
+  <h1>HAYGER Admin</h1>
+  <form id="loginForm">
+    <div class="field"><label>Email</label><input type="email" id="email" required></div>
+    <div class="field"><label>Password</label><input type="password" id="pass" required></div>
+    <button class="primary" type="submit">Sign In</button>
+  </form>
+  <div id="loginMsg"></div>
+</div>
+
+<div id="dash" class="wrap hidden">
+  <div class="headerRow">
+    <div>
+      <h1>Admin Dashboard</h1>
+      <p class="sub">All HAYGER users at a glance.</p>
+    </div>
+    <button id="signOutBtn">Sign out</button>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><div class="num" id="statTotal">–</div><div class="lbl">Total Users</div></div>
+    <div class="stat"><div class="num" id="statOnline">–</div><div class="lbl">Online now</div></div>
+    <div class="stat"><div class="num" id="statToday">–</div><div class="lbl">Active today</div></div>
+  </div>
+
+  <div id="userList"></div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+// ⚠️ Must match the ADMIN_EMAIL in your Firestore rules exactly.
+const ADMIN_EMAIL = "githuband27@gmail.com";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAUIvmV1sQmYGQS4JUAxvUTsqFXHL72Nqs",
+  authDomain: "hayger-app.firebaseapp.com",
+  projectId: "hayger-app",
+  storageBucket: "hayger-app.firebasestorage.app",
+  messagingSenderId: "324761543094",
+  appId: "1:324761543094:web:0f96e15dca9bfe5549e117"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault();
+  $("loginMsg").textContent = "";
+  try{
+    await signInWithEmailAndPassword(auth, $("email").value.trim(), $("pass").value);
+  }catch(err){
+    $("loginMsg").textContent = "Sign-in failed. Check your email and password.";
+  }
+});
+
+$("signOutBtn").addEventListener("click", () => signOut(auth));
+
+onAuthStateChanged(auth, async user => {
+  if (user && user.email === ADMIN_EMAIL){
+    $("loginBox").classList.add("hidden");
+    $("dash").classList.remove("hidden");
+    loadUsers();
+  } else {
+    if (user && user.email !== ADMIN_EMAIL){
+      $("loginMsg").textContent = "This account is not authorized as admin.";
+      signOut(auth);
+    }
+    $("loginBox").classList.remove("hidden");
+    $("dash").classList.add("hidden");
+  }
+});
+
+function timeAgo(ts){
+  if (!ts) return "never";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const mins = Math.floor((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return mins + "m ago";
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return hrs + "h ago";
+  return Math.floor(hrs / 24) + "d ago";
+}
+
+async function loadUsers(){
+  const snap = await getDocs(collection(db, "users"));
+  const users = [];
+  snap.forEach(d => users.push({ id: d.id, ...d.data() }));
+
+  const now = Date.now();
+  let online = 0, today = 0;
+  users.forEach(u => {
+    const t = u.lastActive?.toDate ? u.lastActive.toDate().getTime() : 0;
+    if (now - t < 2 * 60 * 1000) online++;
+    if (now - t < 24 * 60 * 60 * 1000) today++;
+  });
+
+  $("statTotal").textContent = users.length;
+  $("statOnline").textContent = online;
+  $("statToday").textContent = today;
+
+  const list = $("userList");
+  list.innerHTML = "";
+  users
+    .sort((a, b) => (b.lastActive?.toDate?.() || 0) - (a.lastActive?.toDate?.() || 0))
+    .forEach(u => {
+      const t = u.lastActive?.toDate ? u.lastActive.toDate().getTime() : 0;
+      const isOnline = (now - t) < 2 * 60 * 1000;
+      const row = document.createElement("div");
+      row.className = "userRow";
+      row.innerHTML = `
+        <div class="top">
+          <div class="email">${escapeHTML(u.email || u.id)}</div>
+          <div class="dot ${isOnline ? "on" : "off"}"></div>
+        </div>
+        <div class="meta">Last active: ${timeAgo(u.lastActive)} · Joined: ${timeAgo(u.createdAt)}</div>
+        <div class="userDetail"><pre>${escapeHTML(JSON.stringify(u.data || {}, null, 2))}</pre></div>
+      `;
+      row.addEventListener("click", () => row.classList.toggle("open"));
+      list.appendChild(row);
+    });
+}
+
+function escapeHTML(v){
+  return String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+</script>
+</body>
+</html>
