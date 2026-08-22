@@ -182,6 +182,8 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .cal-day{position:relative;aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:11px;font-weight:750;transition:transform .12s}
 .cal-day:active{transform:scale(.92)}
 .cal-day.done{background:var(--accent);color:#1c1204;border-color:var(--accent)}
+.cal-day.missed{border-color:var(--danger);opacity:.55}
+.cal-day.missed:after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--danger)}
 .cal-day.today{box-shadow:0 0 0 2px var(--text)}
 .cal-day.empty{visibility:hidden;pointer-events:none}
 .cal-mood-badge{position:absolute;bottom:-4px;right:-4px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:1.5px solid var(--bg);display:grid;place-items:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
@@ -252,6 +254,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .badge{padding:11px 4px 9px;border:1px solid var(--line);border-radius:15px;background:var(--soft);text-align:center;opacity:.4;transition:.2s}
 .badge.unlocked{opacity:1;background:var(--surface);border-color:var(--accent);box-shadow:0 6px 18px rgba(185,121,31,.12)}
+.badge.up-next{opacity:.85;border-color:var(--accent);border-style:dashed;position:relative}
+.badge-tag{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:6.5px;font-weight:900;letter-spacing:.5px;color:#1c1204;background:var(--accent);border-radius:6px;padding:2px 5px}
 .badge-icon{font-size:19px;line-height:1}
 .badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
 .badge.unlocked .badge-label{color:var(--text)}
@@ -303,12 +307,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .profile-main{min-width:0}.profile-kicker{font-size:9px;letter-spacing:1.5px;font-weight:900;color:var(--muted);margin-bottom:3px}.profile-main h2{margin:0;font-size:21px;line-height:1.1}.profile-main span{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:650}
 .profile-settings-heading{margin:18px 4px 8px;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:900}
 .setting-title{font-size:9px;letter-spacing:1.2px;font-weight:900;color:var(--muted);margin-bottom:10px}
-.about-brand{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.about-logo{width:42px;height:42px;flex:0 0 42px;border-radius:12px;background:var(--accent);color:#0b0b0c;display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:900;font-family:Georgia,serif}
-.about-name{font-size:15px;font-weight:900;letter-spacing:0.5px}
-.about-tagline{font-size:10px;color:var(--muted);font-weight:650;margin-top:2px}
-.about-copy{font-size:10.5px;line-height:1.6;color:var(--muted);margin:0 0 12px}
-.about-quote{font-size:10.5px;font-style:italic;color:var(--text);border-left:2px solid var(--accent);padding:2px 0 2px 12px;margin-bottom:14px;line-height:1.5}
+.stats-hint{font-size:9.5px;color:var(--muted);margin-top:6px;padding:0 2px}
 .about-badge{font-size:9px;font-weight:900;letter-spacing:0.5px;color:var(--accent);border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--surface)}
 .profile-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.profile-form label:first-child{grid-column:1/-1}.profile-form label span{display:block;font-size:9px;font-weight:850;color:var(--muted);margin:0 0 5px}
 .profile-form input,.profile-form select{width:100%;height:43px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:12px}
@@ -363,6 +362,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .award-progress-track{height:7px;margin-top:10px;border-radius:99px;background:var(--soft2);overflow:hidden}
 .award-progress-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .5s ease}
 .badge{position:relative;overflow:hidden}
+.badge.up-next{overflow:visible}
 .badge.unlocked::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.08),transparent 70%);transform:translateX(-100%);animation:badgeShine 4.5s ease-in-out infinite}
 @keyframes badgeShine{0%,65%,100%{transform:translateX(-100%)}78%{transform:translateX(100%)}}
 .badge.unlocked .badge-icon{filter:saturate(1.1);transform:translateY(-1px)}
@@ -844,9 +844,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const pct=total?Math.round(unlocked/total*100):0;
     const all=[...b.journey,...b.streak].filter(x=>!x.unlocked);
     const next=all[0];
-    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}">
+    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}${!x.unlocked&&next&&x.label===next.label?" up-next":""}">
       <div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div>
       <div class="badge-label">${x.label}</div>
+      ${!x.unlocked&&next&&x.label===next.label?`<div class="badge-tag">NEXT</div>`:""}
     </div>`).join("")}</div>`;
     return `<div class="container">
       <h2 class="section-title">Awards</h2>
@@ -905,7 +906,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const entry=data[key];
       const isFuture=dt>today();
       if(!isFuture){monthElapsed++; if(entry) monthDone++;}
-      const cls=(entry?" done":"")+(key===t?" today":"");
+      const isMissed=!isFuture && !entry && key!==t;
+      const cls=(entry?" done":"")+(key===t?" today":"")+(isMissed?" missed":"");
       const badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
       cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}">${d}${badge}</button>`;
     }
@@ -963,9 +965,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <div class="stats-grid" style="margin-top:8px">
         <div class="stat"><b>${day}</b><span>DAY</span></div>
-        <div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div>
+        <div class="stat"><b>${day<7?"—":checkinRate+"%"}</b><span>CHECK-IN RATE</span></div>
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
       </div>
+      ${day<7?`<div class="stats-hint">Check-in rate unlocks after 7 days of data.</div>`:""}
 
       <div class="chart-card" style="margin-top:10px">
         <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
@@ -1103,24 +1106,12 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       <h3 class="profile-settings-heading">ABOUT</h3>
 
       <div class="settings-card">
-        <div class="about-brand">
-          <div class="about-logo">H</div>
-          <div>
-            <div class="about-name">HAYGER</div>
-            <div class="about-tagline">One day at a time.</div>
-          </div>
-        </div>
-        <p class="about-copy">Built to help you show up for yourself, every single day. No streak-shaming, no noise — just a quiet, honest space to track your progress and stay accountable to the promise you made yourself.</p>
-        <div class="about-quote">"You don't need to win the year. Just win today."</div>
         <div class="setting-row">
           <div class="setting-copy"><b>Version</b><span>Ultra Final Polish</span></div>
           <span class="about-badge">v2.0</span>
         </div>
         <div class="setting-row">
-          <div class="setting-copy"><b>Your data</b><span>Everything stays on this device. Nothing is uploaded, sold or shared.</span></div>
-        </div>
-        <div class="setting-row">
-          <div class="setting-copy"><b>Made for people who show up</b><span>Thank you for trusting HAYGER with your journey.</span></div>
+          <div class="setting-copy"><b>Your data</b><span>Everything stays on this device — nothing is uploaded or shared.</span></div>
         </div>
       </div>
     </div>`;
