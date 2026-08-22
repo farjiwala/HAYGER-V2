@@ -182,8 +182,6 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .cal-day{position:relative;aspect-ratio:1;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--surface);color:var(--text);font-size:11px;font-weight:750;transition:transform .12s}
 .cal-day:active{transform:scale(.92)}
 .cal-day.done{background:var(--accent);color:#1c1204;border-color:var(--accent)}
-.cal-day.missed{border-color:var(--danger);opacity:.55}
-.cal-day.missed:after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--danger)}
 .cal-day.today{box-shadow:0 0 0 2px var(--text)}
 .cal-day.empty{visibility:hidden;pointer-events:none}
 .cal-mood-badge{position:absolute;bottom:-4px;right:-4px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:1.5px solid var(--bg);display:grid;place-items:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
@@ -254,8 +252,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badges-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .badge{padding:11px 4px 9px;border:1px solid var(--line);border-radius:15px;background:var(--soft);text-align:center;opacity:.4;transition:.2s}
 .badge.unlocked{opacity:1;background:var(--surface);border-color:var(--accent);box-shadow:0 6px 18px rgba(185,121,31,.12)}
-.badge.up-next{opacity:.85;border-color:var(--accent);border-style:dashed;position:relative}
-.badge-tag{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:6.5px;font-weight:900;letter-spacing:.5px;color:#1c1204;background:var(--accent);border-radius:6px;padding:2px 5px}
 .badge-icon{font-size:19px;line-height:1}
 .badge-label{margin-top:5px;font-size:8px;font-weight:850;color:var(--muted);letter-spacing:.2px}
 .badge.unlocked .badge-label{color:var(--text)}
@@ -307,8 +303,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .profile-main{min-width:0}.profile-kicker{font-size:9px;letter-spacing:1.5px;font-weight:900;color:var(--muted);margin-bottom:3px}.profile-main h2{margin:0;font-size:21px;line-height:1.1}.profile-main span{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:650}
 .profile-settings-heading{margin:18px 4px 8px;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:900}
 .setting-title{font-size:9px;letter-spacing:1.2px;font-weight:900;color:var(--muted);margin-bottom:10px}
-.stats-hint{font-size:9.5px;color:var(--muted);margin-top:6px;padding:0 2px}
-.about-badge{font-size:9px;font-weight:900;letter-spacing:0.5px;color:var(--accent);border:1px solid var(--line);border-radius:8px;padding:5px 10px;background:var(--surface)}
 .profile-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.profile-form label:first-child{grid-column:1/-1}.profile-form label span{display:block;font-size:9px;font-weight:850;color:var(--muted);margin:0 0 5px}
 .profile-form input,.profile-form select{width:100%;height:43px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:12px}
 .profile-save{width:100%;margin-top:10px}
@@ -362,7 +356,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .award-progress-track{height:7px;margin-top:10px;border-radius:99px;background:var(--soft2);overflow:hidden}
 .award-progress-fill{height:100%;border-radius:99px;background:var(--accent);transition:width .5s ease}
 .badge{position:relative;overflow:hidden}
-.badge.up-next{overflow:visible}
 .badge.unlocked::after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.08),transparent 70%);transform:translateX(-100%);animation:badgeShine 4.5s ease-in-out infinite}
 @keyframes badgeShine{0%,65%,100%{transform:translateX(-100%)}78%{transform:translateX(100%)}}
 .badge.unlocked .badge-icon{filter:saturate(1.1);transform:translateY(-1px)}
@@ -381,12 +374,77 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .share-row{margin-top:18px}
 
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
+/* ===== Auth Gate (HAYGER cloud login) ===== */
+#authGate{position:fixed;inset:0;z-index:5000;background:var(--bg);color:var(--text);display:flex;align-items:center;justify-content:center;padding:24px;font-family:var(--font-body)}
+#authGate.hidden{display:none}
+.authCard{width:100%;max-width:380px;background:var(--surface);border:1px solid var(--line);border-radius:var(--xl);box-shadow:var(--shadow);padding:32px 26px}
+.authCard h1{font-family:var(--font-display);font-size:26px;margin:0 0 4px;letter-spacing:.3px}
+.authCard p.sub{color:var(--muted);font-size:13px;margin:0 0 22px}
+.authTabs{display:flex;background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:3px;margin-bottom:20px}
+.authTabs button{flex:1;border:none;background:none;padding:9px 0;font-weight:700;font-size:13px;border-radius:9px;color:var(--muted);cursor:pointer;transition:.2s}
+.authTabs button.active{background:var(--primary);color:var(--primaryText)}
+.authField{margin-bottom:12px}
+.authField label{display:block;font-size:11.5px;font-weight:700;color:var(--muted);letter-spacing:.4px;margin-bottom:5px;text-transform:uppercase}
+.authField input{width:100%;padding:11px 13px;border-radius:11px;border:1px solid var(--line);background:var(--soft);color:var(--text);font-size:14.5px;outline:none}
+.authField input:focus{border-color:var(--accent)}
+.authBtn{width:100%;margin-top:6px;padding:13px 0;border:none;border-radius:12px;background:var(--primary);color:var(--primaryText);font-weight:800;font-size:14.5px;cursor:pointer}
+.authBtn:disabled{opacity:.55}
+.authMsg{min-height:18px;font-size:12.5px;color:var(--danger);margin-top:10px;text-align:center}
+.authView.hidden{display:none}
+.authLoading{position:fixed;inset:0;z-index:6000;background:var(--bg);display:flex;align-items:center;justify-content:center;color:var(--muted);font-family:var(--font-body);font-size:13px}
+.authLoading.hidden{display:none}
+body:not(.authed) .app-shell{display:none}
 </style>
 
 
 </head>
 
 <body>
+
+<div id="authLoading" class="authLoading">Loading…</div>
+
+<div id="authGate" class="authGate hidden">
+  <div class="authCard">
+    <h1>HAYGER</h1>
+    <p class="sub">Sign in to sync your progress.</p>
+
+    <div class="authTabs" id="authTabs">
+      <button type="button" id="authTabLogin" class="active">Sign In</button>
+      <button type="button" id="authTabRegister">Create Account</button>
+    </div>
+
+    <div id="authViewLogin" class="authView">
+      <form id="authFormLogin">
+        <div class="authField">
+          <label for="authLoginEmail">Email</label>
+          <input type="email" id="authLoginEmail" autocomplete="email" required>
+        </div>
+        <div class="authField">
+          <label for="authLoginPass">Password</label>
+          <input type="password" id="authLoginPass" autocomplete="current-password" required>
+        </div>
+        <button type="submit" class="authBtn" id="authLoginBtn">Sign In</button>
+      </form>
+    </div>
+
+    <div id="authViewRegister" class="authView hidden">
+      <form id="authFormRegister">
+        <div class="authField">
+          <label for="authRegEmail">Email</label>
+          <input type="email" id="authRegEmail" autocomplete="email" required>
+        </div>
+        <div class="authField">
+          <label for="authRegPass">Password (min 6 characters)</label>
+          <input type="password" id="authRegPass" autocomplete="new-password" required minlength="6">
+        </div>
+        <button type="submit" class="authBtn" id="authRegBtn">Create Account</button>
+      </form>
+    </div>
+
+    <div id="authMsg" class="authMsg"></div>
+  </div>
+</div>
+
 <div class="app-shell">
   <header class="app-header">
     <div class="app-header-inner">
@@ -844,10 +902,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const pct=total?Math.round(unlocked/total*100):0;
     const all=[...b.journey,...b.streak].filter(x=>!x.unlocked);
     const next=all[0];
-    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}${!x.unlocked&&next&&x.label===next.label?" up-next":""}">
+    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}">
       <div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div>
       <div class="badge-label">${x.label}</div>
-      ${!x.unlocked&&next&&x.label===next.label?`<div class="badge-tag">NEXT</div>`:""}
     </div>`).join("")}</div>`;
     return `<div class="container">
       <h2 class="section-title">Awards</h2>
@@ -906,8 +963,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const entry=data[key];
       const isFuture=dt>today();
       if(!isFuture){monthElapsed++; if(entry) monthDone++;}
-      const isMissed=!isFuture && !entry && key!==t;
-      const cls=(entry?" done":"")+(key===t?" today":"")+(isMissed?" missed":"");
+      const cls=(entry?" done":"")+(key===t?" today":"");
       const badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
       cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}">${d}${badge}</button>`;
     }
@@ -965,10 +1021,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <div class="stats-grid" style="margin-top:8px">
         <div class="stat"><b>${day}</b><span>DAY</span></div>
-        <div class="stat"><b>${day<7?"—":checkinRate+"%"}</b><span>CHECK-IN RATE</span></div>
+        <div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div>
         <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
       </div>
-      ${day<7?`<div class="stats-hint">Check-in rate unlocks after 7 days of data.</div>`:""}
 
       <div class="chart-card" style="margin-top:10px">
         <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
@@ -1100,18 +1155,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="setting-row">
           <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
           <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
-        </div>
-      </div>
-
-      <h3 class="profile-settings-heading">ABOUT</h3>
-
-      <div class="settings-card">
-        <div class="setting-row">
-          <div class="setting-copy"><b>Version</b><span>Ultra Final Polish</span></div>
-          <span class="about-badge">v2.0</span>
-        </div>
-        <div class="setting-row">
-          <div class="setting-copy"><b>Your data</b><span>Everything stays on this device — nothing is uploaded or shared.</span></div>
         </div>
       </div>
     </div>`;
@@ -1570,7 +1613,150 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
 
   render();
+  window.__haygerRerender = render;
 })();
+</script>
+
+<!-- ===== Firebase cloud sync + login ===== -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.1/firebase-app.js";
+import {
+  getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+  onAuthStateChanged, signOut
+} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-auth.js";
+import {
+  getFirestore, doc, getDoc, setDoc, serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.13.1/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAUIvmV1sQmYGQS4JUAxvUTsqFXHL72Nqs",
+  authDomain: "hayger-app.firebaseapp.com",
+  projectId: "hayger-app",
+  storageBucket: "hayger-app.firebasestorage.app",
+  messagingSenderId: "324761543094",
+  appId: "1:324761543094:web:0f96e15dca9bfe5549e117"
+};
+
+const fbApp = initializeApp(firebaseConfig);
+const auth = getAuth(fbApp);
+const db = getFirestore(fbApp);
+
+const $ = (id) => document.getElementById(id);
+const authGate = $("authGate");
+const authLoading = $("authLoading");
+const authMsg = $("authMsg");
+
+function setMsg(text){ authMsg.textContent = text || ""; }
+
+function showGate(show){
+  authGate.classList.toggle("hidden", !show);
+  authLoading.classList.add("hidden");
+}
+
+// tabs
+$("authTabLogin").addEventListener("click", () => {
+  $("authTabLogin").classList.add("active");
+  $("authTabRegister").classList.remove("active");
+  $("authViewLogin").classList.remove("hidden");
+  $("authViewRegister").classList.add("hidden");
+  setMsg("");
+});
+$("authTabRegister").addEventListener("click", () => {
+  $("authTabRegister").classList.add("active");
+  $("authTabLogin").classList.remove("active");
+  $("authViewRegister").classList.remove("hidden");
+  $("authViewLogin").classList.add("hidden");
+  setMsg("");
+});
+
+// collect every hayger_-prefixed localStorage key
+function snapshotLocal(){
+  const out = {};
+  for (let i = 0; i < localStorage.length; i++){
+    const k = localStorage.key(i);
+    if (k && k.toLowerCase().startsWith("hayger")) out[k] = localStorage.getItem(k);
+  }
+  return out;
+}
+function applySnapshot(data){
+  Object.keys(data || {}).forEach(k => {
+    if (k === "email" || k === "lastActive" || k === "createdAt" || k === "online") return;
+    localStorage.setItem(k, data[k]);
+  });
+}
+
+let currentUid = null;
+let syncTimer = null;
+function queueSync(){
+  if (!currentUid) return;
+  clearTimeout(syncTimer);
+  syncTimer = setTimeout(async () => {
+    try{
+      await setDoc(doc(db, "users", currentUid), {
+        data: snapshotLocal(),
+        email: auth.currentUser?.email || "",
+        lastActive: serverTimestamp()
+      }, { merge: true });
+    }catch(e){ console.warn("sync failed", e); }
+  }, 1200);
+}
+
+// patch localStorage to trigger cloud sync on any hayger_ write
+const _setItem = localStorage.setItem.bind(localStorage);
+const _removeItem = localStorage.removeItem.bind(localStorage);
+localStorage.setItem = function(k, v){ _setItem(k, v); if (String(k).toLowerCase().startsWith("hayger")) queueSync(); };
+localStorage.removeItem = function(k){ _removeItem(k); if (String(k).toLowerCase().startsWith("hayger")) queueSync(); };
+
+// heartbeat so admin panel can tell who's "online"
+setInterval(() => { if (currentUid) queueSync(); }, 60000);
+
+async function afterLogin(user){
+  currentUid = user.uid;
+  try{
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists()) applySnapshot(snap.data().data);
+    await setDoc(doc(db, "users", user.uid), {
+      email: user.email, lastActive: serverTimestamp(), createdAt: serverTimestamp()
+    }, { merge: true });
+  }catch(e){ console.warn(e); }
+  document.body.classList.add("authed");
+  showGate(false);
+  window.__haygerRerender && window.__haygerRerender();
+}
+
+onAuthStateChanged(auth, (user) => {
+  if (user){ afterLogin(user); }
+  else{ currentUid = null; document.body.classList.remove("authed"); showGate(true); }
+});
+
+$("authFormLogin").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  setMsg(""); $("authLoginBtn").disabled = true;
+  try{
+    await signInWithEmailAndPassword(auth, $("authLoginEmail").value.trim(), $("authLoginPass").value);
+  }catch(err){ setMsg(friendlyError(err)); }
+  $("authLoginBtn").disabled = false;
+});
+
+$("authFormRegister").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  setMsg(""); $("authRegBtn").disabled = true;
+  try{
+    await createUserWithEmailAndPassword(auth, $("authRegEmail").value.trim(), $("authRegPass").value);
+  }catch(err){ setMsg(friendlyError(err)); }
+  $("authRegBtn").disabled = false;
+});
+
+function friendlyError(err){
+  const c = err.code || "";
+  if (c.includes("email-already-in-use")) return "This email is already registered.";
+  if (c.includes("invalid-credential") || c.includes("wrong-password") || c.includes("user-not-found")) return "Incorrect email or password.";
+  if (c.includes("weak-password")) return "Password must be at least 6 characters.";
+  if (c.includes("invalid-email")) return "Enter a valid email address.";
+  return "Something went wrong. Please try again.";
+}
+
+window.__haygerSignOut = () => signOut(auth);
 </script>
 <script id="hayger-note-actions-js">
 (()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
