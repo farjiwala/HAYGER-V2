@@ -115,7 +115,7 @@ body.has-tabbar .app-tabbar{display:flex}
 .tab-btn.active svg{stroke:var(--accent)}
 .tab-btn:active{transform:scale(.93)}
 
-.ring-wrap{position:relative;width:198px;height:198px;margin:6px auto 0}
+.ring-wrap{position:relative;width:212px;height:212px;margin:6px auto 0}
 .ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ring-track{fill:none;stroke:var(--soft2);stroke-width:6}
 .ring-fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.22,.9,.3,1)}
@@ -416,7 +416,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 /* HAYGER requirement polish */
 .brand{color:var(--text);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 22%,transparent)}
 .brand-sub{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent)}
-.hero-streak{margin-top:8px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
+.hero-streak{margin:7px auto 0;padding:6px 12px;display:table;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
 .activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px;touch-action:pan-y;user-select:none}
 .heat-cell{width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:5px;background:var(--soft2);padding:0;transition:transform .12s,background .2s,border-color .2s}
 .heat-cell.checked{background:var(--accent);border-color:var(--accent)}
@@ -1143,23 +1143,42 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     if(!selectedWeekKey||!allWeeks.some(w=>w.key===selectedWeekKey)) selectedWeekKey=allWeeks[allWeeks.length-1]?.key;
     const selected=allWeeks.find(w=>w.key===selectedWeekKey)||allWeeks[allWeeks.length-1];
     const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    const detail=selected?`<div class="week-detail" id="selectedWeekDetail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
     return `<div class="week-strip">${weekCards}</div>${detail}`;
   }
 
   function selectWeek(key){
-    selectedWeekKey=key;
     const host=document.getElementById('weeklyActivityContent');
     if(!host)return;
-    host.innerHTML=weeklyActivityMarkup();
-    host.classList.remove('partial-refresh');void host.offsetWidth;host.classList.add('partial-refresh');
-    wireStatsWeekInteractions();
-    const selected=host.querySelector('.week-card.selected');
-    selected?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+    const cards=host.querySelectorAll('.week-card[data-week]');
+    if(!cards.length)return;
+    const start=parseDate(get(START_KEY));
+    const allWeeks=weekData(start);
+    const selected=allWeeks.find(w=>w.key===key);
+    if(!selected)return;
+    selectedWeekKey=key;
+
+    // Update only the selected card state. Do not rebuild the whole Stats page
+    // or replace the week strip, which used to make the carousel jump to week 1.
+    cards.forEach(card=>card.classList.toggle('selected',card.dataset.week===key));
+
+    const detail=host.querySelector('#selectedWeekDetail');
+    if(detail){
+      const rate=Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100);
+      detail.innerHTML=`<div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${rate}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div>`;
+    }
+
+    // Keep the chosen week visible without resetting the horizontal strip.
+    const strip=host.querySelector('.week-strip');
+    const card=host.querySelector(`.week-card[data-week="${key}"]`);
+    if(strip && card){
+      const target=card.offsetLeft - Math.max(0,(strip.clientWidth-card.offsetWidth)/2);
+      strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
+    }
   }
 
   function wireStatsWeekInteractions(){
-    document.querySelectorAll('#weeklyActivityContent [data-week]').forEach(btn=>btn.addEventListener('click',()=>selectWeek(btn.dataset.week)));
+    document.querySelectorAll('#weeklyActivityContent [data-week]').forEach(btn=>btn.onclick=()=>selectWeek(btn.dataset.week));
   }
 
   function renderStats(){
@@ -1170,7 +1189,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const noteMap=notes(),q=noteSearchQuery.trim().toLowerCase();
     const filtered=Object.keys(noteMap).sort().reverse().filter(k=>!q||noteMap[k].toLowerCase().includes(q)).slice(0,50);
     const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    const detail=selected?`<div class="week-detail" id="selectedWeekDetail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
     const noteToolbar=`<div class="notes-toolbar"><div class="notes-toolbar-title">YOUR NOTES</div><div class="notes-toolbar-actions"><button id="noteSearchBtn" class="icon-button" type="button" aria-label="Search notes">⌕</button><button id="noteMoreBtn" class="icon-button" type="button" aria-label="More notes">⋮</button></div></div>`;
     const searchBox=noteSearchOpen?`<input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">`:"";
     const noteList=filtered.length?`<div class="note-list">${filtered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${q?"No notes match your search.":"No saved notes yet."}</div>`;
@@ -1187,7 +1206,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function openAbout(){
     document.getElementById('aboutOverlay')?.remove();
     const overlay=document.createElement('div');
-    overlay.id='aboutOverlay';overlay.className='about-overlay';overlay.innerHTML=`<section class="about-sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle"><div class="about-sheet-head"><div><div class="about-title" id="aboutTitle">About</div><div class="about-sub">ONE DAY AT A TIME</div></div><button class="about-close" id="aboutClose" type="button" aria-label="Close about">×</button></div><div class="about-sheet-copy">HAYGER is a private, device-first daily journey app built to help you show up one day at a time, track your progress, reflect on your days and celebrate meaningful milestones.</div><div class="about-sheet-meta"><div><b>Developer</b><br>Sohel Alchi</div><div><b>Version</b><br>1.0</div><div><b>Contact</b><br><a class="about-link" href="mailto:your-email@example.com">githuband27@gmail.com</a></div><div><b>Data</b><br>Your HAYGER data stays on this device unless you choose to export or share it. No account is required.</div></div></section>`;
+    overlay.id='aboutOverlay';overlay.className='about-overlay';overlay.innerHTML=`<section class="about-sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle"><div class="about-sheet-head"><div><div class="about-title" id="aboutTitle">About HAYGER</div><div class="about-sub">ONE DAY AT A TIME</div></div><button class="about-close" id="aboutClose" type="button" aria-label="Close about">×</button></div><div class="about-sheet-copy">HAYGER is a private, device-first daily journey app built to help you show up one day at a time, track your progress, reflect on your days and celebrate meaningful milestones.</div><div class="about-sheet-meta"><div><b>Developer</b><br>HAYGER Team</div><div><b>Version</b><br>1.0</div><div><b>Contact</b><br><a class="about-link" href="mailto:your-email@example.com">your-email@example.com</a></div><div><b>Data</b><br>Your HAYGER data stays on this device unless you choose to export or share it. No account is required.</div></div></section>`;
     document.body.appendChild(overlay);
     const close=()=>overlay.remove();
     document.getElementById('aboutClose')?.addEventListener('click',close);
@@ -1299,9 +1318,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <div class="ring-center">
             <div class="ring-label">DAY</div>
             <div class="ring-number">${day}</div>
-            <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
           </div>
         </div>
+        <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
         <div class="hero-date">${formatDate(current)}</div>
         <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
       </div>
