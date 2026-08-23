@@ -77,20 +77,30 @@ body.has-tabbar .app-tabbar{display:flex}
 .tab-btn.active svg{stroke:var(--accent)}
 .tab-btn:active{transform:scale(.93)}
 
-.ring-wrap{position:relative;width:198px;height:198px;margin:6px auto 0}
-.ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
-.ring-track{fill:none;stroke:var(--soft2);stroke-width:6}
-.ring-fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.22,.9,.3,1)}
-.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring-label{font-size:10px;font-weight:850;letter-spacing:2.4px;color:var(--muted)}
-.ring-number{font-family:var(--font-display);font-size:clamp(54px,16vw,74px);font-weight:700;line-height:1;letter-spacing:-2px;margin-top:3px}
+.day-box{
+  margin:8px 0 0;padding:18px 18px 16px;border:1px solid var(--line);border-radius:24px;
+  background:var(--surface);box-shadow:0 10px 28px rgba(0,0,0,.055);text-align:left;
+}
+.day-box-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.day-box-label{font-size:10px;font-weight:900;letter-spacing:2.4px;color:var(--muted)}
+.day-box-status{font-size:9px;font-weight:850;letter-spacing:.5px;color:var(--muted);padding:6px 9px;border:1px solid var(--line);border-radius:999px;background:var(--soft)}
+.day-box-main{display:flex;align-items:center;gap:16px;margin-top:14px}
+.day-box-number{font-family:var(--font-display);font-size:64px;font-weight:700;line-height:.9;letter-spacing:-2px;min-width:78px}
+.day-box-copy{display:flex;flex-direction:column;gap:4px;min-width:0}
+.day-box-copy strong{font-size:14px;font-weight:850;color:var(--text)}
+.day-box-copy span{font-size:11px;line-height:1.45;color:var(--muted)}
+.day-box-progress{height:7px;margin-top:17px;border-radius:999px;background:var(--soft2);overflow:hidden}
+.day-box-progress-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .55s cubic-bezier(.22,.9,.3,1)}
+.day-box-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:9px;font-weight:800;color:var(--muted)}
+.day-box-bottom b{color:var(--text);font-size:10px}
 
 .hero-panel{padding:10px 4px 4px;text-align:center}
 .hero-date{margin-top:18px;color:var(--muted);font-size:13.5px;font-weight:600}
 .hero-tag{margin:14px auto 0;width:max-content;padding:7px 13px;border:1px solid var(--line);border-radius:999px;background:var(--soft);color:var(--muted);font-size:10px;font-weight:800;display:flex;align-items:center;gap:6px}
 .streak-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#55bd7e;box-shadow:0 0 0 4px rgba(85,189,126,.1)}
-.message{margin:20px 3px 0;padding:15px 14px;border-radius:17px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center;box-shadow:0 5px 16px rgba(0,0,0,.025)}
-.checkin{margin-top:14px!important;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.035)}
+.message{margin:20px 3px 0 3px;padding:16px 14px;border-radius:17px;background:var(--soft);color:var(--muted);font-size:12.5px;line-height:1.55;text-align:center;box-shadow:0 5px 16px rgba(0,0,0,.025)}
+.message + .checkin{margin-top:20px!important;}
+.checkin{margin-top:20px!important;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);text-align:center;box-shadow:0 8px 22px rgba(0,0,0,.035)}
 .streak-dot{position:relative;width:7px;height:7px;box-shadow:0 0 0 4px rgba(85,189,126,.10);animation:statusPulse 2.2s ease-in-out infinite}
 .streak-dot:after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(85,189,126,.35);animation:statusRing 2.2s ease-out infinite}
 @keyframes statusPulse{0%,100%{transform:scale(.92);opacity:.8}50%{transform:scale(1.16);opacity:1}}
@@ -214,8 +224,55 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .note-item b{font-size:10px}.note-item p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.4;white-space:pre-wrap}
 .reminder-status{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.4}
 
-@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}}
+@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.day-box{padding:16px}.day-box-number{font-size:58px;min-width:70px}.day-box-main{gap:12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+
+/* HAYGER FINAL-FINAL POLISH */
+.hero-panel{padding-top:14px}
+.hero-date{margin-top:20px;font-size:14px;letter-spacing:.05px}
+.hero-tag{margin-top:16px;padding:8px 14px;box-shadow:0 5px 16px rgba(0,0,0,.035)}
+.message{margin-top:22px!important;margin-bottom:0!important;min-height:68px;display:flex;align-items:center;justify-content:center}
+.message + .checkin{margin-top:20px!important}
+.checkin{padding:18px 16px 17px;border-radius:21px;box-shadow:0 10px 28px rgba(0,0,0,.045)}
+.checkin-text{font-size:11.5px}
+.checkin-button{min-height:52px;margin-top:11px;border-radius:15px;letter-spacing:.1px}
+.checkin-button.done{box-shadow:0 5px 16px rgba(0,0,0,.08)}
+.mood-row{gap:8px;margin-top:12px}
+.mood-chip{width:42px;height:42px;border-radius:13px}
+.milestone{margin-top:17px;font-size:11px}
+.goal-card{box-shadow:0 7px 20px rgba(0,0,0,.03)}
+.tab-btn{position:relative}
+.tab-btn.active:after{content:"";position:absolute;bottom:1px;width:18px;height:2px;border-radius:99px;background:var(--accent);opacity:.8}
+.tab-btn.active svg{transform:translateY(-1px)}
+.tab-btn svg{transition:transform .18s ease}
+/* Premium note actions */
+.note-item{padding:14px!important;border-radius:17px!important;box-shadow:0 8px 22px rgba(0,0,0,.04)!important}
+.note-actions{justify-content:stretch!important;gap:8px!important;margin-top:11px!important;padding-top:10px!important}
+.note-actions button{flex:1 1 0!important;min-width:0!important;height:36px!important;border-radius:11px!important;font-size:9px!important}
+.note-actions .note-edit{background:var(--accent-soft)!important}
+.note-actions .note-delete{background:color-mix(in srgb,var(--danger) 7%,var(--surface))!important}
+/* Awards */
+.award-stat,.award-mini-row>div,.award-progress,.award-next{box-shadow:0 6px 18px rgba(0,0,0,.025)}
+.badge{min-height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.badge.unlocked{transform:translateY(-1px)}
+.badge.unlocked:active{transform:scale(.97)}
+/* Profile */
+.profile-hero{padding:17px;border-radius:21px}
+.profile-avatar{box-shadow:0 6px 18px rgba(0,0,0,.10)}
+.settings-card{box-shadow:0 6px 18px rgba(0,0,0,.025)}
+/* Better empty states */
+.note-empty{padding:18px 10px;border:1px dashed var(--line);border-radius:14px;background:var(--soft)}
+/* Prevent accidental horizontal overflow on tiny Android screens */
+.app-scroll{scrollbar-width:none}
+.app-scroll::-webkit-scrollbar{display:none}
+@media(max-width:380px){
+  .app-scroll{padding-left:14px;padding-right:14px}
+  .message{font-size:12px;padding-left:11px;padding-right:11px}
+  .checkin{padding-left:13px;padding-right:13px}
+  .mood-chip{width:40px;height:40px}
+  .badges-grid{gap:6px}
+}
 
 /* PWA update banner */
 .update-banner{
@@ -373,6 +430,22 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge.unlocked:hover{transform:translateY(-2px)}
 .share-row{margin-top:18px}
 
+
+/* HAYGER ULTRA V3 — premium dashboard layer */
+.home-insights{margin-top:14px;padding:15px;border:1px solid var(--line);border-radius:19px;background:var(--soft);box-shadow:0 8px 24px rgba(0,0,0,.03)}
+.insight-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
+.insight-head b{font-size:12px;font-weight:900;letter-spacing:.2px}.insight-head span{color:var(--muted);font-size:9px;font-weight:800}
+.insight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.insight-item{padding:11px 6px;border:1px solid var(--line);border-radius:13px;background:var(--surface);text-align:center}
+.insight-item b{display:block;font-family:var(--font-display);font-size:20px;font-weight:700;line-height:1}.insight-item span{display:block;margin-top:5px;color:var(--muted);font-size:7.5px;font-weight:850;letter-spacing:.5px}
+.momentum-row{display:flex;gap:6px;margin-top:11px}.momentum-dot{height:6px;flex:1;border-radius:999px;background:var(--soft2)}.momentum-dot.done{background:var(--accent)}.momentum-dot.today{box-shadow:0 0 0 2px var(--accent-soft);}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.quick-action{min-height:43px;border:1px solid var(--line);border-radius:13px;background:var(--surface);color:var(--text);font-size:10px;font-weight:900;transition:.15s}.quick-action:active{transform:scale(.98)}
+.insight-note{margin-top:10px;padding:10px 11px;border-radius:12px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:700;line-height:1.4}
+.smart-card{margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
+.smart-title{font-size:10px;font-weight:900;letter-spacing:.7px;text-transform:uppercase}.smart-copy{margin-top:5px;color:var(--muted);font-size:11px;line-height:1.45}
+.mood-insight{margin-top:10px;padding:13px 14px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
+.mood-insight-top{display:flex;justify-content:space-between;gap:8px;align-items:center}.mood-insight-top b{font-size:10px;font-weight:900}.mood-insight-top span{color:var(--muted);font-size:9px;font-weight:750}.mood-bars{display:grid;gap:7px;margin-top:10px}.mood-bar{display:grid;grid-template-columns:22px 1fr 22px;gap:7px;align-items:center}.mood-bar span{font-size:12px;text-align:center}.mood-bar i{height:6px;border-radius:999px;background:var(--soft2);overflow:hidden}.mood-bar i::after{content:"";display:block;height:100%;width:var(--w);background:var(--accent);border-radius:inherit}.mood-bar em{font-style:normal;color:var(--muted);font-size:8px;font-weight:850;text-align:right}
+.install-card{margin-top:10px;padding:14px;border:1px solid var(--accent);border-radius:17px;background:var(--accent-soft)}.install-card b{display:block;font-size:11px}.install-card span{display:block;margin-top:4px;color:var(--muted);font-size:10px;line-height:1.4}.install-card button{margin-top:9px;width:100%;height:42px;border:0;border-radius:12px;background:var(--primary);color:var(--primaryText);font-size:10px;font-weight:900}
+@media(max-width:360px){.insight-grid{gap:5px}.insight-item{padding:10px 4px}.quick-actions{gap:6px}}
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
 </style>
 
@@ -758,7 +831,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     render();
   }
 
-  document.getElementById("themeButton").addEventListener("click",cycleTheme);
+  let deferredInstallPrompt=null;
+window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredInstallPrompt=e;});
+window.addEventListener("appinstalled",()=>{deferredInstallPrompt=null;showToast("✓ HAYGER installed.");});
+
+document.getElementById("themeButton").addEventListener("click",cycleTheme);
 
   function setup(){
     document.body.classList.remove("has-tabbar");
@@ -940,7 +1017,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
-    const checkinRate=Math.min(100,Math.round((s.total/day)*100));
+    const validCheckins=Object.keys(checkins()).filter(k=>{const d=parseDate(k);return d&&d>=start&&d<=today()&&checkins()[k]}).length;
+    const checkinRate=Math.min(100,Math.round((validCheckins/day)*100));
     const g=goal(), gp=challengeProgress(day);
     const noteMap=notes();
     const q=noteSearchQuery.trim().toLowerCase();
@@ -984,6 +1062,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         </div>
         <input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}">
       </div>
+
+      ${(()=>{const mi=moodInsights();const max=Math.max(1,...Object.values(mi.counts));return `<div class="mood-insight"><div class="mood-insight-top"><b>MOOD INSIGHTS</b><span>${mi.total?`${mi.total} mood check-ins`:"No mood data yet"}</span></div><div class="mood-bars">${MOODS.map(m=>`<div class="mood-bar"><span>${m}</span><i style="--w:${Math.round((mi.counts[m]/max)*100)}%"></i><em>${mi.counts[m]}</em></div>`).join("")}</div></div>`})()}
+
+      <div class="smart-card"><div class="smart-title">Consistency insight</div><div class="smart-copy">${checkinRate>=90?"Excellent consistency. Your habit is becoming very stable.":checkinRate>=70?"Good consistency. A little more regularity will strengthen your streak.":"Your biggest opportunity is consistency — aim to check in every day, even on low-energy days."}</div></div>
 
       <div class="notes" style="margin-top:10px">
         <div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div>
@@ -1131,9 +1213,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
+      app:"HAYGER",version:2,exportedAt:new Date().toISOString(),
       startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
-      goal:goal(),reminder:reminder(),theme:theme()
+      goal:goal(),reminder:reminder(),theme:theme(),
+      profile:readJSON("hayger_profile_v2",{}),profileName:get("hayger_profile_name_v1")||null
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1147,7 +1230,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     reader.onload=()=>{
       try{
         const d=JSON.parse(reader.result);
-        if(d.app!=="HAYGER" || !d.version) throw new Error("Invalid backup");
+        if(d.app!=="HAYGER" || ![1,2].includes(Number(d.version))) throw new Error("Invalid backup");
         if(d.startDate){
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
@@ -1159,6 +1242,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
+        if(d.profile&&typeof d.profile==="object"){writeJSON("hayger_profile_v2",d.profile);if(d.profile.name)set("hayger_profile_name_v1",String(d.profile.name).slice(0,40));}
+        else if(d.profileName) set("hayger_profile_name_v1",String(d.profileName).slice(0,40));
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1166,36 +1251,63 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     reader.readAsText(file);
   }
 
+  function profileDisplayName(){
+    try{const p=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}");return (p.name||localStorage.getItem("hayger_profile_name_v1")||"").trim()}catch{return localStorage.getItem("hayger_profile_name_v1")||""}
+  }
+  function weeklyMomentum(){
+    const d=checkins(), out=[];
+    for(let i=6;i>=0;i--){const dt=new Date(today());dt.setDate(dt.getDate()-i);out.push(!!d[toInputDate(dt)]);}
+    return out;
+  }
+  function moodInsights(){
+    const counts=Object.fromEntries(MOODS.map(m=>[m,0]));
+    Object.values(checkins()).forEach(x=>{if(x&&x.mood&&counts[x.mood]!==undefined)counts[x.mood]++;});
+    const total=Object.values(counts).reduce((a,b)=>a+b,0);
+    return {counts,total};
+  }
+  function homeInsightText(day,s){
+    if(s.current>=7)return `You're on a ${s.current}-day streak. Protect the momentum — one day at a time.`;
+    if(s.current>=3)return `Nice momentum. ${s.current} days in a row is building a real habit.`;
+    if(s.total===0)return `Today is the only day you need to win. Start with one check-in.`;
+    return `Day ${day} is yours. Small consistent actions are what make the streak.`;
+  }
+
   function renderHome(start,current,day,data,key,checked){
-    const next=milestoneFor(day), remaining=Math.max(0,next-day);
-    const g=goal();
+    const next=milestoneFor(day), remaining=Math.max(0,next-day), g=goal(), s=streakStats();
     const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
-    const r=88, c=2*Math.PI*r;
-    const offset=c*(1-pct/100);
+    const name=profileDisplayName();
+    const rate=Math.min(100,Math.round((s.total/day)*100));
+    const momentum=weeklyMomentum();
+    const momentumHTML=momentum.map((x,i)=>`<span class="momentum-dot${x?" done":""}${i===6?" today":""}"></span>`).join("");
     return `<div class="container">
       <div class="hero-panel">
-        <div class="ring-wrap">
-          <svg class="ring-svg" viewBox="0 0 200 200">
-            <circle class="ring-track" cx="100" cy="100" r="${r}"></circle>
-            <circle class="ring-fill" cx="100" cy="100" r="${r}" style="stroke-dasharray:${c};stroke-dashoffset:${offset}"></circle>
-          </svg>
-          <div class="ring-center">
-            <div class="ring-label">DAY</div>
-            <div class="ring-number">${day}</div>
+        <div class="day-box">
+          <div class="day-box-top"><span class="day-box-label">CURRENT PROGRESS</span><span class="day-box-status">ONE DAY AT A TIME</span></div>
+          <div class="day-box-main">
+            <div class="day-box-number">${day}</div>
+            <div class="day-box-copy"><strong>DAY ${day}</strong><span>${g?`Your ${g}-day goal is in progress.`:`Your journey is moving forward, one day at a time.`}</span></div>
           </div>
+          <div class="day-box-progress"><div class="day-box-progress-fill" style="width:${pct}%"></div></div>
+          <div class="day-box-bottom"><span>Journey progress</span><b>${pct}%</b></div>
         </div>
         <div class="hero-date">${formatDate(current)}</div>
         <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
       </div>
-      <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
+      <p class="message">${name?`Welcome back, <strong>${escapeHTML(name)}</strong> · `:""}Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
       <div class="checkin">
         <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
         <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
-        ${checked?`<div class="mood-hint">How are you feeling today?</div>
-        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
+        ${checked?`<div class="mood-hint">How are you feeling today?</div><div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
-      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${Math.min(day,g)} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+      <div class="home-insights">
+        <div class="insight-head"><b>Your momentum</b><span>LAST 7 DAYS</span></div>
+        <div class="insight-grid"><div class="insight-item"><b>${s.current}</b><span>CURRENT STREAK</span></div><div class="insight-item"><b>${s.best}</b><span>BEST STREAK</span></div><div class="insight-item"><b>${rate}%</b><span>CONSISTENCY</span></div></div>
+        <div class="momentum-row" aria-label="Last seven days activity">${momentumHTML}</div>
+        <div class="insight-note">${homeInsightText(day,s)}</div>
+      </div>
+      <div class="quick-actions"><button class="quick-action" id="homeHistory" type="button">VIEW HISTORY</button><button class="quick-action" id="homeStats" type="button">VIEW INSIGHTS</button></div>
     </div>`;
   }
 
@@ -1239,6 +1351,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           render();
         });
       });
+    }
+
+    if(phaseView==="home"){
+      document.getElementById("homeHistory")?.addEventListener("click",()=>{phaseView="calendar";render()});
+      document.getElementById("homeStats")?.addEventListener("click",()=>{phaseView="stats";render()});
     }
 
     if(phaseView==="profile"){
@@ -1330,6 +1447,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="profile"){
+      document.getElementById("installApp")?.addEventListener("click",async()=>{if(!deferredInstallPrompt)return;deferredInstallPrompt.prompt();try{await deferredInstallPrompt.userChoice}catch{}deferredInstallPrompt=null;render()});
       const enabled=document.getElementById("reminderEnabled");
       const time=document.getElementById("reminderTime");
       const saveReminder=async()=>{
@@ -1353,7 +1471,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1"].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1482,7 +1600,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
 
   document.getElementById("cancel").addEventListener("click",closeModal);
-  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);closeModal();render()});
+  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);remove("hayger_profile_v2");remove("hayger_profile_name_v1");closeModal();render()});
   modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();}});
 
@@ -1550,24 +1668,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
-<script id="hayger-note-actions-js">
-(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
-function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
-function write(x){localStorage.setItem(key(),JSON.stringify(x))}
-window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
-window.addEventListener("load",()=>{
- document.querySelectorAll("[data-note-index]").forEach((el)=>{
-   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
-   if(el.querySelector(".note-actions"))return;
-   const box=document.createElement("div");box.className="note-actions";
-   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
-   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
-   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
-   el.appendChild(box);
- });
-});
-})();
-</script>
+
 
 
 

@@ -1,11 +1,4 @@
-HAYGER ULTRA FINAL POLISH V2
+HAYGER — Day Box update
 
-Highlights:
-- Fixed Home spacing between the quote/status message and check-in card.
-- Added subtle breathing/pulse animation to the green status dot.
-- Refined Notes Edit/Delete action UI to match HAYGER styling.
-- Polished Awards cards, badge interactions and progress presentation.
-- Removed duplicate profile gender option.
-- Bumped service-worker cache version for a reliable PWA refresh.
-
-Replace the repository files with all files from this folder/ZIP.
+Home hero ring replaced with a compact premium Day/Progress box. All existing features and data storage remain unchanged.
+Service-worker cache bumped for the UI update.
