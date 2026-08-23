@@ -115,7 +115,7 @@ body.has-tabbar .app-tabbar{display:flex}
 .tab-btn.active svg{stroke:var(--accent)}
 .tab-btn:active{transform:scale(.93)}
 
-.ring-wrap{position:relative;width:212px;height:212px;margin:6px auto 0}
+.ring-wrap{position:relative;width:224px;height:224px;margin:6px auto 24px;overflow:visible}
 .ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ring-track{fill:none;stroke:var(--soft2);stroke-width:6}
 .ring-fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.22,.9,.3,1)}
@@ -252,7 +252,7 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .note-item b{font-size:10px}.note-item p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.4;white-space:pre-wrap}
 .reminder-status{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.4}
 
-@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}}
+@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}.hero-streak{width:min(164px,calc(100vw - 48px));font-size:9px;padding:6px 10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 /* PWA update banner */
@@ -416,7 +416,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 /* HAYGER requirement polish */
 .brand{color:var(--text);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 22%,transparent)}
 .brand-sub{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent)}
-.hero-streak{margin:7px auto 0;padding:6px 12px;display:table;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
+.hero-streak{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);margin:0;padding:7px 13px;width:min(208px,calc(100vw - 72px));box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent);z-index:3}
 .activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px;touch-action:pan-y;user-select:none}
 .heat-cell{width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:5px;background:var(--soft2);padding:0;transition:transform .12s,background .2s,border-color .2s}
 .heat-cell.checked{background:var(--accent);border-color:var(--accent)}
@@ -842,6 +842,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const ms=24*60*60*1000;
     return Math.max(1,Math.round((today()-start)/ms)+1);
   }
+  function dayNumberForDate(date,start){
+    const a=new Date(start);a.setHours(0,0,0,0);
+    const b=new Date(date);b.setHours(0,0,0,0);
+    return Math.max(1,Math.round((b-a)/86400000)+1);
+  }
 
   function profileData(){return readJSON(PROFILE_KEY,{} )||{} }
   function statusForDate(dt,start,data){
@@ -955,6 +960,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       phaseView=btn.dataset.view;
+      if(phaseView==="calendar") activityPage=null;
+      if(phaseView==="stats") selectedWeekKey=null;
       app.scrollTop=0;
       render();
     });
@@ -992,7 +999,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     </div>`;
   }
 
-  let activityPage=0;
+  let activityPage=null;
   let activityTouchStartX=null;
   function activityPageCount(start){
     if(!start) return 0;
@@ -1000,10 +1007,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function activityDays(page=0,limit=50){
     const start=parseDate(get(START_KEY)); if(!start) return [];
-    const data=checkins(), out=[], base=Math.max(0,page)*limit;
-    for(let i=0;i<limit;i++){
-      const d=new Date(start);d.setDate(d.getDate()+base+i);
-      if(d<start) continue;
+    const total=dayCount(start);
+    const safePage=Math.max(0,Number(page)||0);
+    const firstIndex=Math.max(0,total-((safePage+1)*limit));
+    const count=Math.min(limit,total-firstIndex);
+    const data=checkins(), out=[];
+    for(let i=0;i<count;i++){
+      const d=new Date(start);d.setDate(d.getDate()+firstIndex+i);
       out.push({date:d,status:statusForDate(d,start,data)});
     }
     return out;
@@ -1012,16 +1022,19 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function activityPagerMarkup(){
     const start=parseDate(get(START_KEY));
     const maxActivityPage=Math.max(0,activityPageCount(start)-1);
+    if(activityPage===null || !Number.isFinite(activityPage)) activityPage=maxActivityPage;
     activityPage=Math.min(Math.max(0,activityPage),maxActivityPage);
     const activity=activityDays(activityPage,50);
     const heatCells=activity.map(c=>`<button class="heat-cell ${c.status}" data-date="${toInputDate(c.date)}" title="${formatDate(c.date)} — ${c.status}" type="button"></button>`).join("");
     const pageStart=activity[0]?.date, pageEnd=activity[activity.length-1]?.date;
+    const startIndex=pageStart?dayNumberForDate(pageStart,start):1;
+    const endIndex=pageEnd?dayNumberForDate(pageEnd,start):0;
     const rangeText=pageStart&&pageEnd?`${pageStart.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})} – ${pageEnd.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}`:"No activity yet";
     return `<div class="activity-content">
-      <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Previous 50 days" ${activityPage<=0?"disabled":""}>‹</button><div class="activity-range">DAYS ${activityPage*50+1}–${Math.min((activityPage+1)*50,dayCount(start))}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Next 50 days" ${activityPage>=maxActivityPage?"disabled":""}>›</button></div>
+      <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Older 50 days" ${activityPage>=maxActivityPage?"disabled":""}>‹</button><div class="activity-range">DAYS ${startIndex}–${endIndex}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Newer 50 days" ${activityPage<=0?"disabled":""}>›</button></div>
       <div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
       <div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div>
-      <div class="activity-swipe-hint">Swipe left or right to move through 50-day pages</div>
+      <div class="activity-swipe-hint">Swipe left for older days · right for newer days</div>
     </div>`;
   }
 
@@ -1087,8 +1100,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function wireActivityInteractions(){
     const prev=document.getElementById('activityPrev'), next=document.getElementById('activityNext');
-    prev?.addEventListener('click',()=>updateActivityPager(-1));
-    next?.addEventListener('click',()=>updateActivityPager(1));
+    prev?.addEventListener('click',()=>updateActivityPager(1));
+    next?.addEventListener('click',()=>updateActivityPager(-1));
     const pager=document.getElementById('activityPager'), grid=pager?.querySelector('.activity-grid');
     if(grid){
       let sx=null,sy=null;
@@ -1172,13 +1185,25 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const strip=host.querySelector('.week-strip');
     const card=host.querySelector(`.week-card[data-week="${key}"]`);
     if(strip && card){
-      const target=card.offsetLeft - Math.max(0,(strip.clientWidth-card.offsetWidth)/2);
-      strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
+      const left=card.offsetLeft, right=left+card.offsetWidth;
+      const visibleLeft=strip.scrollLeft, visibleRight=visibleLeft+strip.clientWidth;
+      const comfortablyVisible=left>=visibleLeft+6 && right<=visibleRight-6;
+      if(!comfortablyVisible){
+        const target=left-Math.max(0,(strip.clientWidth-card.offsetWidth)/2);
+        strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
+      }
     }
   }
 
   function wireStatsWeekInteractions(){
-    document.querySelectorAll('#weeklyActivityContent [data-week]').forEach(btn=>btn.onclick=()=>selectWeek(btn.dataset.week));
+    const host=document.getElementById('weeklyActivityContent');
+    const buttons=[...(host?.querySelectorAll('[data-week]')||[])];
+    buttons.forEach(btn=>btn.onclick=()=>selectWeek(btn.dataset.week));
+    if(host && selectedWeekKey){
+      const strip=host.querySelector('.week-strip');
+      const card=host.querySelector(`.week-card[data-week="${selectedWeekKey}"]`);
+      if(strip && card) requestAnimationFrame(()=>card.scrollIntoView({behavior:'auto',block:'nearest',inline:'center'}));
+    }
   }
 
   function renderStats(){
@@ -1286,7 +1311,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
           localStorage.setItem(START_KEY,d.startDate);
-          activityPage=Math.max(0,activityPageCount(s)-1);
+          activityPage=null;
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
@@ -1306,7 +1331,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
     const g=goal();
     const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
-    const r=88, c=2*Math.PI*r;
+    const r=92, c=2*Math.PI*r;
     const offset=c*(1-pct/100);
     return `<div class="container">
       <div class="hero-panel">
@@ -1319,8 +1344,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
             <div class="ring-label">DAY</div>
             <div class="ring-number">${day}</div>
           </div>
+          <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
         </div>
-        <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
         <div class="hero-date">${formatDate(current)}</div>
         <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
       </div>
