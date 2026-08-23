@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-final-v3-smooth-history-about";
+const CACHE_NAME = "hayger-final-v1-requirements";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

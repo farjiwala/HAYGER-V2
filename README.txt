@@ -1,10 +1,13 @@
-HAYGER — FINAL V3 POLISH
+HAYGER ULTRA FINAL POLISH V2
 
-Fixes in this build:
-- Smooth, partial updates for 50-day activity paging instead of rerendering the whole page.
-- Smooth calendar month swipe/navigation without full-page blink.
-- Weekly Activity week selection updates only the weekly section and keeps the selected week.
-- About is now a compact Profile row; full About details open in a modal.
-- Existing light/dark theme polish and all previous HAYGER features are preserved.
+Highlights:
+- Fixed Home spacing between the quote/status message and check-in card.
+- Added subtle breathing/pulse animation to the green status dot.
+- Refined Notes Edit/Delete action UI to match HAYGER styling.
+- Polished Awards cards, badge interactions and progress presentation.
+- Removed duplicate profile gender option.
+- Bumped service-worker cache version for a reliable PWA refresh.
 
-Contact in About currently uses a placeholder email until the developer supplies the real address.
+Replace the repository files with all files from this folder/ZIP.
+
+Final requirements implemented: Home hero streak + brand highlight; 50-day history with Checked/Missed/Upcoming states; tappable weekly Stats; note search/menu/edit/delete; simplified Awards with highlighted badge states and image sharing; profile photo edit/remove; reminder and PIN toggle switches; profile data included in backup/restore.
