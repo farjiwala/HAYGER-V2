@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<title>HAYGER — Ultra</title>
+<title>HAYGER — One Day at a Time</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -433,6 +433,75 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .custom-fields{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}.custom-field-row{display:grid;grid-template-columns:1fr 1fr 34px;gap:7px;margin-top:7px}.custom-field-row input{height:40px!important}.remove-field{border:1px solid color-mix(in srgb,var(--danger) 25%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--danger) 7%,var(--surface));color:var(--danger);font-weight:900}.add-field{width:100%;margin-top:8px;min-height:38px;border:1px dashed var(--line);border-radius:11px;background:var(--soft);color:var(--text);font-size:9px;font-weight:900}
 .profile-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--accent-soft);font-size:8px;font-weight:850;color:var(--text)}
 @media(max-width:360px){.dashboard-strip{gap:6px}.dashboard-card{padding:10px 8px}.dashboard-card b{font-size:18px}}
+
+
+/* HAYGER V3 — complete visual system overhaul */
+:root{
+  --bg:#f4f3ee;--surface:#fffdf8;--soft:#ecebe4;--soft2:#deded4;
+  --text:#171916;--muted:#777b73;--line:#deded5;--danger:#c64b46;
+  --primary:#171916;--primaryText:#fffdf8;--accent:#b7d33a;--accent-soft:rgba(183,211,58,.18);
+  --shadow:0 18px 55px rgba(22,25,20,.08);
+  --font-display:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+[data-theme=dark]{
+  --bg:#0e100d;--surface:#171a15;--soft:#20241d;--soft2:#2b3027;
+  --text:#f4f5ed;--muted:#9a9f94;--line:#30352c;--danger:#ff7c72;
+  --primary:#f4f5ed;--primaryText:#11130f;--accent:#c4e34a;--accent-soft:rgba(196,227,74,.15);
+  --shadow:0 24px 70px rgba(0,0,0,.42);
+}
+body{background:var(--bg);letter-spacing:-.01em}
+.app-header{padding:18px 18px 14px;border-bottom:0;background:var(--bg)}
+.app-header-inner{max-width:500px}
+.brand{font-family:Inter,sans-serif;font-size:20px;font-weight:900;letter-spacing:-.8px}
+.brand-sub{font-size:8px;letter-spacing:2.2px;color:var(--muted)}
+.theme-button{width:42px;height:42px;border-radius:15px;background:var(--surface);border-color:var(--line);box-shadow:0 6px 20px rgba(0,0,0,.04)}
+.app-scroll{padding:14px 18px 28px}
+.container{max-width:500px}
+.app-tabbar{padding:8px 10px calc(9px + env(safe-area-inset-bottom));background:rgba(255,253,248,.88);border-top:1px solid rgba(0,0,0,.06);box-shadow:0 -12px 35px rgba(0,0,0,.06)}
+[data-theme=dark] .app-tabbar{background:rgba(23,26,21,.92);border-top-color:var(--line)}
+.tab-btn{padding:7px 2px;border-radius:16px;font-size:8px;gap:4px}
+.tab-btn.active{background:var(--text);color:var(--primaryText)}
+.tab-btn.active svg{stroke:var(--accent)}
+.tab-btn svg{width:19px;height:19px}
+.section-title{font-family:Inter,sans-serif;font-size:28px;font-weight:900;letter-spacing:-1px;margin:4px 0 16px}
+.home-topline{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;padding:4px 2px 14px}
+.eyebrow{display:block;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:1.8px;text-transform:uppercase}
+.home-topline h1{margin:3px 0 0;font-size:32px;line-height:1;font-weight:900;letter-spacing:-1.6px}
+.home-topline h1 span{color:var(--accent)}
+.today-pill{display:flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);font-size:7px;font-weight:900;letter-spacing:.6px;white-space:nowrap}
+.today-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.hero-v3{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:218px;padding:24px;border-radius:30px;background:var(--primary);color:var(--primaryText);overflow:hidden;box-shadow:var(--shadow)}
+.hero-v3:before{content:"";position:absolute;width:180px;height:180px;border-radius:50%;right:-70px;top:-70px;background:var(--accent);opacity:.16}
+.hero-v3-copy{position:relative;z-index:1;max-width:54%}
+.hero-v3-copy .eyebrow{color:var(--accent)}
+.hero-v3-copy h2{margin:8px 0 8px;font-size:46px;line-height:.95;font-weight:900;letter-spacing:-2.6px}
+.hero-v3-copy p{margin:0;color:color-mix(in srgb,var(--primaryText) 68%,transparent);font-size:12px;line-height:1.5}
+.hero-v3-ring{position:relative;width:132px;height:132px;flex:0 0 132px;z-index:1}
+.hero-v3-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.v3-ring-track,.v3-ring-fill{fill:none;stroke-width:7}
+.v3-ring-track{stroke:rgba(255,255,255,.12)}
+.v3-ring-fill{stroke:var(--accent);stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(196,227,74,.22));transition:stroke-dashoffset .7s cubic-bezier(.2,.8,.2,1)}
+.hero-v3-ring>div{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.hero-v3-ring b{font-size:27px;letter-spacing:-1px}.hero-v3-ring span{font-size:6px;letter-spacing:1.2px;opacity:.55;font-weight:900;margin-top:3px}
+.today-card-v3{margin-top:12px;padding:18px;border:1px solid var(--line);border-radius:24px;background:var(--surface);box-shadow:0 10px 35px rgba(0,0,0,.045)}
+.today-card-head{display:flex;justify-content:space-between;gap:10px}.today-card-head h3{margin:6px 0 0;font-size:19px;letter-spacing:-.6px}.today-status-icon{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:var(--accent-soft);color:var(--text);font-size:17px;font-weight:900}
+.today-card-v3>p{margin:8px 0 13px;color:var(--muted);font-size:11px;line-height:1.45}
+.checkin-v3{width:100%;min-height:52px;border:0;border-radius:15px;background:var(--primary);color:var(--primaryText);font-size:10px;font-weight:900;letter-spacing:.8px;transition:transform .15s,box-shadow .2s}
+.checkin-v3:active{transform:scale(.985)}.checkin-v3.done{background:var(--accent);color:#182008}
+.mood-v3{margin-top:12px;padding-top:12px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}.mood-v3>span{font-size:9px;color:var(--muted);font-weight:800}.mood-v3>div{display:flex;gap:4px}.mood-v3 .mood-chip{width:31px;height:31px;border-radius:10px;font-size:14px}
+.metric-row-v3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}.metric-row-v3>div{padding:13px 9px;border:1px solid var(--line);border-radius:18px;background:var(--surface);text-align:left}.metric-row-v3 b{display:block;font-size:23px;letter-spacing:-1px}.metric-row-v3 span{display:block;margin-top:3px;color:var(--muted);font-size:7px;font-weight:900;letter-spacing:.9px}
+.next-card-v3{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;padding:16px;border-radius:20px;background:var(--soft)}.next-card-v3 h3{margin:4px 0 2px;font-size:16px}.next-card-v3 p{margin:0;color:var(--muted);font-size:9px}.milestone-bubble{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:var(--primary);color:var(--primaryText);font-size:15px;font-weight:900}
+.goal-v3{margin-top:10px;padding:14px 15px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}.goal-v3-head{display:flex;justify-content:space-between;font-size:8px;font-weight:900;letter-spacing:1px}.goal-v3-head b{font-size:9px;letter-spacing:0}.goal-v3-track{height:8px;margin-top:9px;border-radius:999px;background:var(--soft2);overflow:hidden}.goal-v3-track i{display:block;height:100%;border-radius:inherit;background:var(--accent)}
+.quick-v3{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}.quick-v3 button{position:relative;text-align:left;min-height:73px;padding:13px;border:1px solid var(--line);border-radius:19px;background:var(--surface);color:var(--text);transition:.15s}.quick-v3 button:active{transform:scale(.985)}.quick-v3 span{display:block;font-size:12px;font-weight:900}.quick-v3 small{display:block;margin-top:5px;color:var(--muted);font-size:8px}.quick-v3 b{position:absolute;right:12px;top:11px;color:var(--accent);font-size:16px}
+/* History */
+.history-alert{border-radius:20px!important;padding:15px!important}.cal-summary{border-radius:20px!important;background:var(--surface)!important}.heatmap-card{border-radius:20px!important;background:var(--surface)!important}.calendar{gap:7px}.cal-day{border-radius:14px;aspect-ratio:1;background:var(--surface);box-shadow:0 2px 7px rgba(0,0,0,.025)}.cal-day.done{border-radius:14px;background:var(--accent);color:#182008}.cal-day.today{box-shadow:0 0 0 2px var(--text),0 4px 10px rgba(0,0,0,.08)}.cal-day.missed{border-radius:14px}.missed-item{border-radius:16px!important;background:var(--surface)!important}
+/* Awards */
+.award-hero{border-radius:28px!important;background:var(--primary)!important;color:var(--primaryText);box-shadow:var(--shadow)}.award-stat{border-radius:18px;background:var(--surface)}.award-progress{border-radius:20px}.badge{border-radius:18px!important;min-height:104px;display:flex;flex-direction:column;justify-content:center}.badges-grid{gap:9px}.badge.unlocked{background:var(--surface);box-shadow:0 8px 22px rgba(0,0,0,.05)}
+/* Profile */
+.profile-hero{padding:20px!important;border-radius:28px!important;background:var(--primary)!important;color:var(--primaryText);box-shadow:var(--shadow);align-items:flex-start}.profile-avatar{width:72px;height:72px;flex-basis:72px;border-radius:22px;background:var(--accent);color:#182008;font-size:28px}.profile-main h2{font-size:23px}.profile-main span{color:color-mix(in srgb,var(--primaryText) 62%,transparent)}.profile-kicker{color:var(--accent)!important}.profile-handle{color:var(--accent)!important}.profile-status{background:rgba(255,255,255,.08)!important;color:var(--primaryText)!important;border:1px solid rgba(255,255,255,.08)}.profile-tag{background:rgba(255,255,255,.07);border-color:rgba(255,255,255,.12);color:var(--primaryText)!important}.settings-card,.notes,.goal-card{border-radius:22px!important;background:var(--surface)}.profile-form input,.profile-form select,.profile-form textarea{border-radius:13px}.small-button{border-radius:12px}
+/* Stats */
+.chart-card,.insight-card{border-radius:22px!important;background:var(--surface)!important}.stat{border-radius:18px;background:var(--surface)}.insight-item{border-radius:15px}
+@media(max-width:390px){.hero-v3{padding:20px;min-height:198px}.hero-v3-copy h2{font-size:40px}.hero-v3-ring{width:112px;height:112px;flex-basis:112px}.hero-v3-ring b{font-size:23px}.home-topline h1{font-size:28px}.today-pill{font-size:6px}.metric-row-v3>div{padding:11px 8px}}
 
 </style>
 
@@ -1243,34 +1312,32 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
     const g=goal();
     const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
-    const r=88, c=2*Math.PI*r;
-    const offset=c*(1-pct/100);
-    return `<div class="container">
-      <div class="hero-panel">
-        <div class="ring-wrap">
-          <svg class="ring-svg" viewBox="0 0 200 200">
-            <circle class="ring-track" cx="100" cy="100" r="${r}"></circle>
-            <circle class="ring-fill" cx="100" cy="100" r="${r}" style="stroke-dasharray:${c};stroke-dashoffset:${offset}"></circle>
-          </svg>
-          <div class="ring-center">
-            <div class="ring-label">DAY</div>
-            <div class="ring-number">${day}</div>
-          </div>
-        </div>
-        <div class="hero-date">${formatDate(current)}</div>
-        <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
+    const r=86, c=2*Math.PI*r, offset=c*(1-pct/100);
+    const profile=readProfile();
+    const firstName=(profile.name||"").trim().split(/\s+/)[0]||"there";
+    const hour=new Date().getHours();
+    const greeting=hour<12?"Good morning":hour<18?"Good afternoon":"Good evening";
+    const s=streakStats();
+    const status=checked?"COMPLETED TODAY":"READY FOR TODAY";
+    const statusText=checked?"You showed up. That's the win.":"A small action today keeps your momentum alive.";
+    return `<div class="container home-v3">
+      <div class="home-topline"><div><span class="eyebrow">${greeting}</span><h1>${escapeHTML(firstName)}<span>.</span></h1></div><div class="today-pill"><span class="today-dot"></span>${status}</div></div>
+      <section class="hero-v3">
+        <div class="hero-v3-copy"><span class="eyebrow">YOUR JOURNEY</span><h2>Day ${day}</h2><p>${escapeHTML(motivational(day))}</p></div>
+        <div class="hero-v3-ring"><svg viewBox="0 0 190 190"><circle class="v3-ring-track" cx="95" cy="95" r="${r}"></circle><circle class="v3-ring-fill" cx="95" cy="95" r="${r}" style="stroke-dasharray:${c};stroke-dashoffset:${offset}"></circle></svg><div><b>${pct}%</b><span>PROGRESS</span></div></div>
+      </section>
+      <section class="today-card-v3">
+        <div class="today-card-head"><div><span class="eyebrow">TODAY · ${current.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</span><h3>${checked?"You made it count.":"Will you show up today?"}</h3></div><div class="today-status-icon">${checked?"✓":"→"}</div></div>
+        <p>${statusText}</p>
+        <button id="checkinButton" class="checkin-v3 ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN":"CHECK IN FOR TODAY"}</button>
+        ${checked?`<div class="mood-v3"><span>How do you feel?</span><div>${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button">${m}</button>`).join("")}</div></div>`:""}
+      </section>
+      <div class="metric-row-v3">
+        <div><b>${s.current}</b><span>STREAK</span></div><div><b>${s.best}</b><span>BEST</span></div><div><b>${s.total}</b><span>CHECK-INS</span></div>
       </div>
-      <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
-      <div class="checkin">
-        <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
-        <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
-        ${checked?`<div class="mood-hint">How are you feeling today?</div>
-        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
-      </div>
-      <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
-      ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
-      <div class="dashboard-strip"><div class="dashboard-card"><b>${streakStats().current}</b><span>CURRENT STREAK</span></div><div class="dashboard-card"><b>${streakStats().best}</b><span>BEST STREAK</span></div><div class="dashboard-card"><b>${streakStats().total}</b><span>TOTAL CHECK-INS</span></div></div>
-      <div class="quick-actions"><button class="quick-action" data-quick="history" type="button">VIEW HISTORY</button><button class="quick-action" data-quick="stats" type="button">SEE INSIGHTS</button></div>
+      <section class="next-card-v3"><div><span class="eyebrow">NEXT MILESTONE</span><h3>${remaining===0?`Day ${day} reached 🎉`:`Day ${next}`}</h3><p>${remaining===0?"Keep the momentum going.":`${remaining} ${remaining===1?"day":"days"} to go`}</p></div><div class="milestone-bubble">${remaining===0?"✓":""}${remaining?next:"✓"}</div></section>
+      ${g?`<section class="goal-v3"><div class="goal-v3-head"><span>YOUR GOAL</span><b>${day} / ${g}</b></div><div class="goal-v3-track"><i style="width:${challengeProgress(day)}%"></i></div></section>`:""}
+      <div class="quick-v3"><button data-quick="history" type="button"><span>History</span><small>See every day</small><b>↗</b></button><button data-quick="stats" type="button"><span>Insights</span><small>Know your pattern</small><b>↗</b></button></div>
     </div>`;
   }
 
