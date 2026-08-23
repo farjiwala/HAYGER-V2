@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#eef0ee">
+<meta name="theme-color" content="#f7f5ef">
 <meta name="description" content="HAYGER — one day at a time. Goals, streaks, history and daily progress.">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -19,11 +19,11 @@
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{
-  --bg:#eef0ee;--surface:#ffffff;--soft:#e6e9e6;--soft2:#dde1dd;
-  --text:#14161a;--muted:#6c716f;--line:#dbdfdb;--danger:#c23b3b;
-  --primary:#14161a;--primaryText:#fff;
-  --accent:#b9791f;--accent-soft:rgba(185,121,31,.13);
-  --shadow:0 20px 60px rgba(20,22,26,.10);
+  --bg:#f7f5ef;--surface:#fffdf8;--soft:#efede6;--soft2:#e4e0d6;
+  --text:#17181b;--muted:#73736f;--line:#d9d5ca;--danger:#bd4a45;
+  --primary:#17181b;--primaryText:#fffdf8;
+  --accent:#b77920;--accent-soft:rgba(183,121,32,.14);
+  --shadow:0 20px 60px rgba(49,42,28,.10);
   --xl:32px;--lg:21px;--md:15px;
   --font-display:'Fraunces',Georgia,serif;
   --font-body:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
@@ -35,6 +35,30 @@
   --accent:#e3a94a;--accent-soft:rgba(227,169,74,.16);
   --shadow:0 26px 74px rgba(0,0,0,.46);
 }
+/* Light theme polish: keep HAYGER warm, premium and high-contrast instead of simply inverting dark UI. */
+:root:not([data-theme=dark]) .app-tabbar{background:rgba(255,253,248,.92)}
+:root:not([data-theme=dark]) .theme-button{box-shadow:0 5px 18px rgba(60,50,30,.07)}
+:root:not([data-theme=dark]) .message,
+:root:not([data-theme=dark]) .goal-card,
+:root:not([data-theme=dark]) .settings-card,
+:root:not([data-theme=dark]) .heatmap-card{box-shadow:0 8px 24px rgba(60,50,30,.055)}
+
+.activity-pager{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:-2px 0 9px}
+.activity-range{min-width:0;text-align:center;font-size:9px;font-weight:850;letter-spacing:.35px;color:var(--muted)}
+.activity-nav{width:30px;height:30px;flex:0 0 30px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);font-size:17px;font-weight:800;line-height:1}
+.activity-nav:disabled{opacity:.3;cursor:default}
+.activity-grid{touch-action:pan-y;user-select:none}
+.activity-swipe-hint{margin-top:6px;text-align:center;color:var(--muted);font-size:7px;font-weight:750;letter-spacing:.15px;opacity:.72}
+.activity-grid.swiping{cursor:grabbing}
+.about-card{padding:15px;border:1px solid var(--line);border-radius:17px;background:var(--soft);box-shadow:0 8px 22px rgba(0,0,0,.025)}
+.about-brand{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.about-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:var(--primary);color:var(--primaryText);font-family:var(--font-display);font-size:19px;font-weight:800}
+.about-title{font-family:var(--font-display);font-size:18px;font-weight:700}
+.about-sub{margin-top:2px;color:var(--muted);font-size:9px;font-weight:800;letter-spacing:1.2px}
+.about-copy{color:var(--muted);font-size:11px;line-height:1.55}
+.about-meta{display:grid;gap:7px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:10px}
+.about-meta b{color:var(--text)}
+.about-note{margin-top:10px;color:var(--muted);font-size:8px;line-height:1.45}
 html,body{margin:0;height:100%}
 body{
   height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;
@@ -379,7 +403,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .brand{color:var(--text);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 22%,transparent)}
 .brand-sub{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent)}
 .hero-streak{margin-top:8px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
-.activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px}
+.activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px;touch-action:pan-y;user-select:none}
 .heat-cell{width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:5px;background:var(--soft2);padding:0;transition:transform .12s,background .2s,border-color .2s}
 .heat-cell.checked{background:var(--accent);border-color:var(--accent)}
 .heat-cell.missed{background:color-mix(in srgb,var(--danger) 78%,var(--surface));border-color:var(--danger)}
@@ -838,7 +862,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const t=theme();
     const actual=t==="system"?systemTheme():t;
     document.documentElement.dataset.theme=actual;
-    document.querySelector('meta[name="theme-color"]').content=actual==="dark"?"#0b0c10":"#eef0ee";
+    document.querySelector('meta[name="theme-color"]').content=actual==="dark"?"#0b0c10":"#f7f5ef";
     const tb=document.getElementById("themeButton");
     if(tb) tb.innerHTML=themeIcon();
   }
@@ -954,12 +978,18 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     </div>`;
   }
 
-  function activityDays(limit=50){
+  let activityPage=0;
+  let activityTouchStartX=null;
+  function activityPageCount(start){
+    if(!start) return 0;
+    return Math.max(1,Math.ceil(dayCount(start)/50));
+  }
+  function activityDays(page=0,limit=50){
     const start=parseDate(get(START_KEY)); if(!start) return [];
-    const data=checkins(), out=[];
+    const data=checkins(), out=[], base=Math.max(0,page)*limit;
     for(let i=0;i<limit;i++){
-      const d=new Date(start);d.setDate(d.getDate()+i);
-      if(d>today()) break;
+      const d=new Date(start);d.setDate(d.getDate()+base+i);
+      if(d<start) continue;
       out.push({date:d,status:statusForDate(d,start,data)});
     }
     return out;
@@ -979,13 +1009,23 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const entry=data[key],badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
       cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)} — ${status}">${d}${badge}</button>`;
     }
-    const activity=activityDays(50);
+    const maxActivityPage=Math.max(0,activityPageCount(start)-1);
+    activityPage=Math.min(Math.max(0,activityPage),maxActivityPage);
+    const activity=activityDays(activityPage,50);
     const heatCells=activity.map(c=>`<button class="heat-cell ${c.status}" data-date="${toInputDate(c.date)}" title="${formatDate(c.date)} — ${c.status}" type="button"></button>`).join("");
+    const pageStart=activity[0]?.date, pageEnd=activity[activity.length-1]?.date;
+    const rangeText=pageStart&&pageEnd?`${pageStart.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})} – ${pageEnd.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}`:"No activity yet";
     const s=streakStats();
     return `<div class="container">
       <h2 class="section-title">History</h2>
       <div class="cal-summary"><div class="cal-summary-item"><b>${s.current}</b><span>Current streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${s.best}</b><span>Best streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${monthElapsed?Math.round((monthDone/monthElapsed)*100):0}%</b><span>This month</span></div></div>
-      <div class="heatmap-card"><div class="heatmap-title"><b>ACTIVITY</b><span>50 DAYS</span></div><div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div><div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div></div>
+      <div class="heatmap-card" id="activityPager">
+        <div class="heatmap-title"><b>ACTIVITY</b><span>50 DAYS</span></div>
+        <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Previous 50 days" ${activityPage<=0?"disabled":""}>‹</button><div class="activity-range">DAYS ${activityPage*50+1}–${activityPage*50+50}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Next 50 days" ${activityPage>=maxActivityPage?"disabled":""}>›</button></div>
+        <div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
+        <div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div>
+        <div class="activity-swipe-hint">Swipe left or right to move through 50-day pages</div>
+      </div>
       <div class="calendar-head"><button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button><div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div><button class="cal-today-btn" id="jumpToday" type="button">TODAY</button><button class="cal-nav" id="nextMonth" type="button" aria-label="Next month">›</button></div>
       <div class="calendar-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
       <div class="calendar">${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}${cells}</div>
@@ -1036,7 +1076,14 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, profile, check-ins, notes and settings.</span></div><button id="exportData" class="small-button" type="button">EXPORT</button></div><div class="setting-row"><div class="setting-copy"><b>Restore a backup</b><span>Import a HAYGER JSON backup from this device.</span></div><button id="importData" class="small-button" type="button">IMPORT</button><input id="importFile" class="file-input" type="file" accept="application/json,.json"></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Appearance</b><span>Current theme: ${escapeHTML(theme())}</span></div><button id="cycleThemeMore" class="small-button" type="button">CHANGE</button></div><div class="setting-row"><div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div><label class="switch"><input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}><span></span></label></div></div>
       ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px"><div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div id="pinSetupError" class="pin-error"></div><div class="goal-controls" style="margin-top:6px"><button id="pinSetupCancel" class="small-button" type="button">CANCEL</button><button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button></div></div>`:""}
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div><button id="resetAll" class="danger-button" type="button">RESET HAYGER</button></div></div></div>`;
+      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div><button id="resetAll" class="danger-button" type="button">RESET HAYGER</button></div></div>
+      <h3 class="profile-settings-heading">ABOUT</h3>
+      <div class="about-card">
+        <div class="about-brand"><div class="about-mark">H</div><div><div class="about-title">HAYGER</div><div class="about-sub">ONE DAY AT A TIME</div></div></div>
+        <div class="about-copy">HAYGER is a private, device-first daily journey app built to help you show up one day at a time, track your progress, reflect on your days and celebrate meaningful milestones.</div>
+        <div class="about-meta"><div><b>Developer</b><br>HAYGER Team</div><div><b>Version</b><br>1.0</div><div><b>Contact</b><br>Developer contact details can be added here.</div></div>
+        <div class="about-note">Your HAYGER data stays on this device unless you choose to export or share it. No account is required.</div>
+      </div></div>`;
   }
 
   function phasePanel(){
@@ -1096,6 +1143,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
           localStorage.setItem(START_KEY,d.startDate);
+          activityPage=Math.max(0,activityPageCount(s)-1);
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
@@ -1219,6 +1267,18 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="calendar"){
+      document.getElementById("activityPrev")?.addEventListener("click",()=>{if(activityPage>0){activityPage--;render()}});
+      document.getElementById("activityNext")?.addEventListener("click",()=>{if(activityPage<activityPageCount(parseDate(get(START_KEY)))-1){activityPage++;render()}});
+      const pager=document.getElementById("activityPager");
+      const grid=pager?.querySelector(".activity-grid");
+      grid?.addEventListener("touchstart",e=>{activityTouchStartX=e.touches?.[0]?.clientX??null;grid.classList.remove("swiping")},{passive:true});
+      grid?.addEventListener("touchmove",e=>{if(activityTouchStartX!==null){const dx=(e.touches?.[0]?.clientX??activityTouchStartX)-activityTouchStartX;if(Math.abs(dx)>10)grid.classList.add("swiping")}},{passive:true});
+      grid?.addEventListener("touchend",e=>{
+        if(activityTouchStartX===null)return;
+        const endX=e.changedTouches?.[0]?.clientX??activityTouchStartX,dx=endX-activityTouchStartX;activityTouchStartX=null;grid.classList.remove("swiping");
+        const max=activityPageCount(parseDate(get(START_KEY)))-1;
+        if(Math.abs(dx)>45){if(dx<0&&activityPage<max)activityPage++;if(dx>0&&activityPage>0)activityPage--;render()}
+      },{passive:true});
       document.getElementById("prevMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render()};
       document.getElementById("nextMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render()};
       document.getElementById("jumpToday").onclick=()=>{

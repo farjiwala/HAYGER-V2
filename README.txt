@@ -1,13 +1,11 @@
-HAYGER ULTRA FINAL POLISH V2
+HAYGER FINAL POLISH V3
 
-Highlights:
-- Fixed Home spacing between the quote/status message and check-in card.
-- Added subtle breathing/pulse animation to the green status dot.
-- Refined Notes Edit/Delete action UI to match HAYGER styling.
-- Polished Awards cards, badge interactions and progress presentation.
-- Removed duplicate profile gender option.
-- Bumped service-worker cache version for a reliable PWA refresh.
+Updates in this build:
+- Premium light theme palette and component refinements while preserving the existing dark theme.
+- History Activity now works in swipeable 50-day pages with previous/next controls.
+- Each 50-day page is anchored to the HAYGER start date and never shows dates before the start date.
+- Checked, Missed and Upcoming states remain synchronized with the calendar/check-in history.
+- Added an About section at the end of Profile settings with app description, developer, version and contact placeholder.
+- Service-worker cache version bumped so the updated PWA shell can refresh correctly.
 
-Replace the repository files with all files from this folder/ZIP.
-
-Final requirements implemented: Home hero streak + brand highlight; 50-day history with Checked/Missed/Upcoming states; tappable weekly Stats; note search/menu/edit/delete; simplified Awards with highlighted badge states and image sharing; profile photo edit/remove; reminder and PIN toggle switches; profile data included in backup/restore.
+Note: Developer/contact values were not supplied in the requirements, so the About section uses HAYGER Team and a clearly marked contact placeholder.
