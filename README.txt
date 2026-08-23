@@ -1,11 +1,10 @@
-HAYGER FINAL POLISH V3
+HAYGER — FINAL V3 POLISH
 
-Updates in this build:
-- Premium light theme palette and component refinements while preserving the existing dark theme.
-- History Activity now works in swipeable 50-day pages with previous/next controls.
-- Each 50-day page is anchored to the HAYGER start date and never shows dates before the start date.
-- Checked, Missed and Upcoming states remain synchronized with the calendar/check-in history.
-- Added an About section at the end of Profile settings with app description, developer, version and contact placeholder.
-- Service-worker cache version bumped so the updated PWA shell can refresh correctly.
+Fixes in this build:
+- Smooth, partial updates for 50-day activity paging instead of rerendering the whole page.
+- Smooth calendar month swipe/navigation without full-page blink.
+- Weekly Activity week selection updates only the weekly section and keeps the selected week.
+- About is now a compact Profile row; full About details open in a modal.
+- Existing light/dark theme polish and all previous HAYGER features are preserved.
 
-Note: Developer/contact values were not supplied in the requirements, so the About section uses HAYGER Team and a clearly marked contact placeholder.
+Contact in About currently uses a placeholder email until the developer supplies the real address.

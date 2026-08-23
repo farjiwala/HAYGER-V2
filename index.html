@@ -50,6 +50,16 @@
 .activity-grid{touch-action:pan-y;user-select:none}
 .activity-swipe-hint{margin-top:6px;text-align:center;color:var(--muted);font-size:7px;font-weight:750;letter-spacing:.15px;opacity:.72}
 .activity-grid.swiping{cursor:grabbing}
+
+.activity-content,.calendar-dynamic,.weekly-activity-content{will-change:transform,opacity}
+.partial-slide-left{animation:partialSlideLeft .22s cubic-bezier(.22,.8,.25,1) both}
+.partial-slide-right{animation:partialSlideRight .22s cubic-bezier(.22,.8,.25,1) both}
+.partial-refresh{animation:partialRefresh .18s ease both}
+@keyframes partialSlideLeft{from{opacity:.35;transform:translateX(18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes partialSlideRight{from{opacity:.35;transform:translateX(-18px)}to{opacity:1;transform:translateX(0)}}
+@keyframes partialRefresh{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
+.calendar-dynamic{touch-action:pan-y;overflow:hidden}
+.week-strip{scroll-behavior:smooth}
 .about-card{padding:15px;border:1px solid var(--line);border-radius:17px;background:var(--soft);box-shadow:0 8px 22px rgba(0,0,0,.025)}
 .about-brand{display:flex;align-items:center;gap:11px;margin-bottom:12px}
 .about-mark{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;background:var(--primary);color:var(--primaryText);font-family:var(--font-display);font-size:19px;font-weight:800}
@@ -59,6 +69,10 @@
 .about-meta{display:grid;gap:7px;margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:10px}
 .about-meta b{color:var(--text)}
 .about-note{margin-top:10px;color:var(--muted);font-size:8px;line-height:1.45}
+
+.about-row{padding:0;overflow:hidden}.about-open{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px;border:0;background:transparent;color:var(--text);text-align:left}.about-chevron{font-size:24px;color:var(--muted);line-height:1}.about-overlay{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;padding:18px;background:rgba(8,9,12,.52);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:aboutIn .18s ease both}.about-sheet{width:min(460px,100%);max-height:82vh;overflow:auto;border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:0 28px 90px rgba(0,0,0,.28);padding:18px;animation:aboutSheetIn .22s cubic-bezier(.22,.8,.25,1) both}.about-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.about-close{width:34px;height:34px;border:1px solid var(--line);border-radius:11px;background:var(--soft);color:var(--text);font-size:17px}.about-sheet-copy{margin-top:14px;color:var(--muted);font-size:11px;line-height:1.6}.about-sheet-meta{display:grid;gap:10px;margin-top:15px;padding-top:13px;border-top:1px solid var(--line);font-size:10px}.about-sheet-meta b{color:var(--text)}.about-link{color:var(--accent);text-decoration:none}
+@keyframes aboutIn{from{opacity:0}to{opacity:1}}
+@keyframes aboutSheetIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
 html,body{margin:0;height:100%}
 body{
   height:100vh;height:100dvh;overflow:hidden;overscroll-behavior:none;
@@ -82,7 +96,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .theme-button svg{width:17px;height:17px}
 .app-scroll{flex:1 1 auto;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:20px 20px 26px}
 body.has-tabbar .app-scroll{padding-bottom:calc(90px + env(safe-area-inset-bottom))}
-.container{width:100%;max-width:460px;margin:0 auto;animation:enter .35s ease both}
+.container{width:100%;max-width:460px;margin:0 auto}
 @keyframes enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .app-tabbar{
   position:fixed;left:0;right:0;bottom:0;z-index:40;display:none;
@@ -995,41 +1009,121 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     return out;
   }
 
-  function renderCalendar(){
-    const y=calendarCursor.getFullYear(), m=calendarCursor.getMonth();
-    const first=new Date(y,m,1), last=new Date(y,m+1,0);
-    const offset=(first.getDay()+6)%7; let cells="";
-    for(let i=0;i<offset;i++) cells+=`<button class="cal-day empty" aria-hidden="true"></button>`;
-    const data=checkins(), start=parseDate(get(START_KEY)), t=toInputDate(today());
-    let monthDone=0,monthElapsed=0;
-    for(let d=1;d<=last.getDate();d++){
-      const dt=new Date(y,m,d),key=toInputDate(dt),status=statusForDate(dt,start,data);
-      if(status!=="before"&&status!=="upcoming"){monthElapsed++;if(status==="checked")monthDone++}
-      const cls=` ${status}`+(key===t?" today":"");
-      const entry=data[key],badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
-      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)} — ${status}">${d}${badge}</button>`;
-    }
+  function activityPagerMarkup(){
+    const start=parseDate(get(START_KEY));
     const maxActivityPage=Math.max(0,activityPageCount(start)-1);
     activityPage=Math.min(Math.max(0,activityPage),maxActivityPage);
     const activity=activityDays(activityPage,50);
     const heatCells=activity.map(c=>`<button class="heat-cell ${c.status}" data-date="${toInputDate(c.date)}" title="${formatDate(c.date)} — ${c.status}" type="button"></button>`).join("");
     const pageStart=activity[0]?.date, pageEnd=activity[activity.length-1]?.date;
     const rangeText=pageStart&&pageEnd?`${pageStart.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})} – ${pageEnd.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}`:"No activity yet";
-    const s=streakStats();
+    return `<div class="activity-content">
+      <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Previous 50 days" ${activityPage<=0?"disabled":""}>‹</button><div class="activity-range">DAYS ${activityPage*50+1}–${Math.min((activityPage+1)*50,dayCount(start))}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Next 50 days" ${activityPage>=maxActivityPage?"disabled":""}>›</button></div>
+      <div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
+      <div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div>
+      <div class="activity-swipe-hint">Swipe left or right to move through 50-day pages</div>
+    </div>`;
+  }
+
+  function calendarMarkup(){
+    const y=calendarCursor.getFullYear(), m=calendarCursor.getMonth();
+    const first=new Date(y,m,1), last=new Date(y,m+1,0);
+    const offset=(first.getDay()+6)%7; let cells="";
+    for(let i=0;i<offset;i++) cells+=`<button class="cal-day empty" aria-hidden="true"></button>`;
+    const data=checkins(), start=parseDate(get(START_KEY)), t=toInputDate(today());
+    for(let d=1;d<=last.getDate();d++){
+      const dt=new Date(y,m,d),key=toInputDate(dt),status=statusForDate(dt,start,data);
+      const cls=` ${status}`+(key===t?" today":"");
+      const entry=data[key],badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
+      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)} — ${status}">${d}${badge}</button>`;
+    }
+    return `<div class="calendar-head"><button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button><div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div><button class="cal-today-btn" id="jumpToday" type="button">TODAY</button><button class="cal-nav" id="nextMonth" type="button" aria-label="Next month">›</button></div>
+      <div class="calendar-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
+      <div class="calendar">${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}${cells}</div>`;
+  }
+
+  function renderCalendar(){
+    const s=streakStats(), start=parseDate(get(START_KEY));
+    const data=checkins(), y=calendarCursor.getFullYear(), m=calendarCursor.getMonth(), last=new Date(y,m+1,0);
+    let monthDone=0,monthElapsed=0;
+    for(let d=1;d<=last.getDate();d++){
+      const status=statusForDate(new Date(y,m,d),start,data);
+      if(status!=="before"&&status!=="upcoming"){monthElapsed++;if(status==="checked")monthDone++}
+    }
     return `<div class="container">
       <h2 class="section-title">History</h2>
       <div class="cal-summary"><div class="cal-summary-item"><b>${s.current}</b><span>Current streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${s.best}</b><span>Best streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${monthElapsed?Math.round((monthDone/monthElapsed)*100):0}%</b><span>This month</span></div></div>
       <div class="heatmap-card" id="activityPager">
         <div class="heatmap-title"><b>ACTIVITY</b><span>50 DAYS</span></div>
-        <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Previous 50 days" ${activityPage<=0?"disabled":""}>‹</button><div class="activity-range">DAYS ${activityPage*50+1}–${activityPage*50+50}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Next 50 days" ${activityPage>=maxActivityPage?"disabled":""}>›</button></div>
-        <div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
-        <div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div>
-        <div class="activity-swipe-hint">Swipe left or right to move through 50-day pages</div>
+        ${activityPagerMarkup()}
       </div>
-      <div class="calendar-head"><button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button><div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div><button class="cal-today-btn" id="jumpToday" type="button">TODAY</button><button class="cal-nav" id="nextMonth" type="button" aria-label="Next month">›</button></div>
-      <div class="calendar-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
-      <div class="calendar">${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}${cells}</div>
+      <div id="calendarDynamic" class="calendar-dynamic">${calendarMarkup()}</div>
     </div>`;
+  }
+
+  function updateActivityPager(delta=0){
+    const start=parseDate(get(START_KEY)), max=Math.max(0,activityPageCount(start)-1);
+    const next=Math.min(max,Math.max(0,activityPage+delta));
+    if(next===activityPage)return;
+    activityPage=next;
+    const host=document.querySelector('#activityPager .activity-content');
+    if(!host)return;
+    const direction=delta>0?'partial-slide-left':'partial-slide-right';
+    host.outerHTML=activityPagerMarkup();
+    const fresh=document.querySelector('#activityPager .activity-content');
+    fresh?.classList.add(direction);
+    wireActivityInteractions();
+  }
+
+  function updateCalendarDynamic(direction=0){
+    const host=document.getElementById('calendarDynamic');
+    if(!host)return;
+    host.innerHTML=calendarMarkup();
+    host.classList.remove('partial-slide-left','partial-slide-right','partial-refresh');
+    void host.offsetWidth;
+    host.classList.add(direction>0?'partial-slide-left':direction<0?'partial-slide-right':'partial-refresh');
+    wireCalendarInteractions();
+  }
+
+  function wireActivityInteractions(){
+    const prev=document.getElementById('activityPrev'), next=document.getElementById('activityNext');
+    prev?.addEventListener('click',()=>updateActivityPager(-1));
+    next?.addEventListener('click',()=>updateActivityPager(1));
+    const pager=document.getElementById('activityPager'), grid=pager?.querySelector('.activity-grid');
+    if(grid){
+      let sx=null,sy=null;
+      grid.addEventListener('touchstart',e=>{sx=e.touches?.[0]?.clientX??null;sy=e.touches?.[0]?.clientY??null},{passive:true});
+      grid.addEventListener('touchend',e=>{
+        if(sx===null||sy===null)return;
+        const ex=e.changedTouches?.[0]?.clientX??sx, ey=e.changedTouches?.[0]?.clientY??sy;
+        const dx=ex-sx,dy=ey-sy;sx=sy=null;
+        if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy))updateActivityPager(dx<0?1:-1);
+      },{passive:true});
+    }
+    document.querySelectorAll('#activityPager .heat-cell[data-date]').forEach(btn=>btn.addEventListener('click',()=>openDayDetail(btn.dataset.date)));
+  }
+
+  function wireCalendarInteractions(){
+    document.querySelectorAll('#calendarDynamic .cal-day[data-date]').forEach(btn=>btn.addEventListener('click',()=>openDayDetail(btn.dataset.date)));
+    document.getElementById('prevMonth')?.addEventListener('click',()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);updateCalendarDynamic(-1)});
+    document.getElementById('nextMonth')?.addEventListener('click',()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);updateCalendarDynamic(1)});
+    document.getElementById('jumpToday')?.addEventListener('click',()=>{calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);updateCalendarDynamic(0)});
+    const cd=document.getElementById('calendarDynamic');
+    if(cd){
+      let sx=null,sy=null;
+      cd.addEventListener('touchstart',e=>{sx=e.touches?.[0]?.clientX??null;sy=e.touches?.[0]?.clientY??null},{passive:true});
+      cd.addEventListener('touchend',e=>{
+        if(sx===null||sy===null)return;
+        const ex=e.changedTouches?.[0]?.clientX??sx,ey=e.changedTouches?.[0]?.clientY??sy;
+        const dx=ex-sx,dy=ey-sy;sx=sy=null;
+        if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){calendarCursor.setMonth(calendarCursor.getMonth()+(dx<0?1:-1));updateCalendarDynamic(dx<0?1:-1)}
+      },{passive:true});
+    }
+  }
+
+  function wireHistoryInteractions(){
+    wireActivityInteractions();
+    wireCalendarInteractions();
   }
 
   let selectedWeekKey=null;
@@ -1043,6 +1137,31 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       return {key:toInputDate(ws),start:ws,end:new Date(new Date(ws).setDate(ws.getDate()+6)),days,checked,missed,upcoming};
     });
   }
+  function weeklyActivityMarkup(){
+    const start=parseDate(get(START_KEY));
+    const allWeeks=weekData(start);
+    if(!selectedWeekKey||!allWeeks.some(w=>w.key===selectedWeekKey)) selectedWeekKey=allWeeks[allWeeks.length-1]?.key;
+    const selected=allWeeks.find(w=>w.key===selectedWeekKey)||allWeeks[allWeeks.length-1];
+    const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
+    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    return `<div class="week-strip">${weekCards}</div>${detail}`;
+  }
+
+  function selectWeek(key){
+    selectedWeekKey=key;
+    const host=document.getElementById('weeklyActivityContent');
+    if(!host)return;
+    host.innerHTML=weeklyActivityMarkup();
+    host.classList.remove('partial-refresh');void host.offsetWidth;host.classList.add('partial-refresh');
+    wireStatsWeekInteractions();
+    const selected=host.querySelector('.week-card.selected');
+    selected?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+
+  function wireStatsWeekInteractions(){
+    document.querySelectorAll('#weeklyActivityContent [data-week]').forEach(btn=>btn.addEventListener('click',()=>selectWeek(btn.dataset.week)));
+  }
+
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
     const checkinRate=Math.min(100,Math.round((s.total/day)*100)); const g=goal(),gp=challengeProgress(day);
@@ -1058,11 +1177,21 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     return `<div class="container"><h2 class="section-title">Stats</h2>
       <div class="stats-grid"><div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div><div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div><div class="stat"><b>${s.total}</b><span>CHECK-INS</span></div></div>
       <div class="stats-grid" style="margin-top:8px"><div class="stat"><b>${day}</b><span>DAY</span></div><div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div><div class="stat"><b>${g||"—"}</b><span>GOAL</span></div></div>
-      <div class="chart-card" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>TAP A WEEK TO VIEW</span></div><div class="week-strip">${weekCards}</div>${detail}</div>
+      <div class="chart-card" id="weeklyActivityCard" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>TAP A WEEK TO VIEW</span></div><div id="weeklyActivityContent" class="weekly-activity-content">${weeklyActivityMarkup()}</div></div>
       <div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Challenge goal</div><div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div></div><div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div><div class="goal-controls"><select id="goalSelect" class="select-input"><option value="7" ${g===7?"selected":""}>7 days</option><option value="30" ${g===30?"selected":""}>30 days</option><option value="50" ${g===50?"selected":""}>50 days</option><option value="100" ${g===100?"selected":""}>100 days</option><option value="365" ${g===365?"selected":""}>365 days</option><option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option></select><button id="saveGoal" class="small-button" type="button">SET GOAL</button></div><input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}"></div>
       <div class="notes" style="margin-top:10px"><div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div><textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea><button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button><div class="note-meta">Notes stay on this device.</div></div>
       ${noteToolbar}${searchBox}${notesMenuOpen?`<div class="notes-menu"><div class="notes-menu-title">SAVED NOTES · ${Object.keys(noteMap).length}</div>${noteList}</div>`:""}${noteSearchOpen&&!notesMenuOpen?noteList:""}
     </div>`;
+  }
+
+  function openAbout(){
+    document.getElementById('aboutOverlay')?.remove();
+    const overlay=document.createElement('div');
+    overlay.id='aboutOverlay';overlay.className='about-overlay';overlay.innerHTML=`<section class="about-sheet" role="dialog" aria-modal="true" aria-labelledby="aboutTitle"><div class="about-sheet-head"><div><div class="about-title" id="aboutTitle">About</div><div class="about-sub">ONE DAY AT A TIME</div></div><button class="about-close" id="aboutClose" type="button" aria-label="Close about">×</button></div><div class="about-sheet-copy">HAYGER is a private, device-first daily journey app built to help you show up one day at a time, track your progress, reflect on your days and celebrate meaningful milestones.</div><div class="about-sheet-meta"><div><b>Developer</b><br>Sohel Alchi</div><div><b>Version</b><br>1.0</div><div><b>Contact</b><br><a class="about-link" href="mailto:your-email@example.com">githuband27@gmail.com</a></div><div><b>Data</b><br>Your HAYGER data stays on this device unless you choose to export or share it. No account is required.</div></div></section>`;
+    document.body.appendChild(overlay);
+    const close=()=>overlay.remove();
+    document.getElementById('aboutClose')?.addEventListener('click',close);
+    overlay.addEventListener('click',e=>{if(e.target===overlay)close()});
   }
 
   function renderMore(){
@@ -1078,12 +1207,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px"><div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div id="pinSetupError" class="pin-error"></div><div class="goal-controls" style="margin-top:6px"><button id="pinSetupCancel" class="small-button" type="button">CANCEL</button><button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button></div></div>`:""}
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div><button id="resetAll" class="danger-button" type="button">RESET HAYGER</button></div></div>
       <h3 class="profile-settings-heading">ABOUT</h3>
-      <div class="about-card">
-        <div class="about-brand"><div class="about-mark">H</div><div><div class="about-title">HAYGER</div><div class="about-sub">ONE DAY AT A TIME</div></div></div>
-        <div class="about-copy">HAYGER is a private, device-first daily journey app built to help you show up one day at a time, track your progress, reflect on your days and celebrate meaningful milestones.</div>
-        <div class="about-meta"><div><b>Developer</b><br>Sohel Alchi</div><div><b>Version</b><br>1.0</div><div><b>Contact</b><br>mailto:githuband27@gmail.com</div></div>
-        <div class="about-note">Your HAYGER data stays on this device unless you choose to export or share it. No account is required.</div>
-      </div></div>`;
+      <div class="settings-card about-row"><button id="openAbout" class="about-open" type="button"><div class="setting-copy"><b>About HAYGER</b><span>App information, developer, version and contact</span></div><span class="about-chevron">›</span></button></div></div>`;
   }
 
   function phasePanel(){
@@ -1267,30 +1391,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="calendar"){
-      document.getElementById("activityPrev")?.addEventListener("click",()=>{if(activityPage>0){activityPage--;render()}});
-      document.getElementById("activityNext")?.addEventListener("click",()=>{if(activityPage<activityPageCount(parseDate(get(START_KEY)))-1){activityPage++;render()}});
-      const pager=document.getElementById("activityPager");
-      const grid=pager?.querySelector(".activity-grid");
-      grid?.addEventListener("touchstart",e=>{activityTouchStartX=e.touches?.[0]?.clientX??null;grid.classList.remove("swiping")},{passive:true});
-      grid?.addEventListener("touchmove",e=>{if(activityTouchStartX!==null){const dx=(e.touches?.[0]?.clientX??activityTouchStartX)-activityTouchStartX;if(Math.abs(dx)>10)grid.classList.add("swiping")}},{passive:true});
-      grid?.addEventListener("touchend",e=>{
-        if(activityTouchStartX===null)return;
-        const endX=e.changedTouches?.[0]?.clientX??activityTouchStartX,dx=endX-activityTouchStartX;activityTouchStartX=null;grid.classList.remove("swiping");
-        const max=activityPageCount(parseDate(get(START_KEY)))-1;
-        if(Math.abs(dx)>45){if(dx<0&&activityPage<max)activityPage++;if(dx>0&&activityPage>0)activityPage--;render()}
-      },{passive:true});
-      document.getElementById("prevMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render()};
-      document.getElementById("nextMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render()};
-      document.getElementById("jumpToday").onclick=()=>{
-        calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);render();
-      };
-      document.querySelectorAll(".cal-day[data-date], .heat-cell[data-date]").forEach(btn=>{
-        btn.addEventListener("click",()=>openDayDetail(btn.dataset.date));
-      });
+      wireHistoryInteractions();
     }
 
     if(phaseView==="stats"){
-      document.querySelectorAll("[data-week]").forEach(btn=>btn.addEventListener("click",()=>{selectedWeekKey=btn.dataset.week;render()}));
+      wireStatsWeekInteractions();
 
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
@@ -1385,6 +1490,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           render();
         }
       });
+
+      document.getElementById("openAbout")?.addEventListener("click",openAbout);
 
       if(pinSetupOpen){
         const newBoxes=[...document.querySelectorAll(".pin-new")];
