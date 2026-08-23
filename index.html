@@ -115,7 +115,7 @@ body.has-tabbar .app-tabbar{display:flex}
 .tab-btn.active svg{stroke:var(--accent)}
 .tab-btn:active{transform:scale(.93)}
 
-.ring-wrap{position:relative;width:224px;height:224px;margin:6px auto 24px;overflow:visible}
+.ring-wrap{position:relative;width:198px;height:198px;margin:6px auto 0}
 .ring-svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ring-track{fill:none;stroke:var(--soft2);stroke-width:6}
 .ring-fill{fill:none;stroke:var(--accent);stroke-width:6;stroke-linecap:round;transition:stroke-dashoffset .7s cubic-bezier(.22,.9,.3,1)}
@@ -252,7 +252,7 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .note-item b{font-size:10px}.note-item p{margin:5px 0 0;color:var(--muted);font-size:10px;line-height:1.4;white-space:pre-wrap}
 .reminder-status{margin-top:8px;color:var(--muted);font-size:9px;line-height:1.4}
 
-@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}.hero-streak{width:min(164px,calc(100vw - 48px));font-size:9px;padding:6px 10px}}
+@media(max-width:360px){.app-header{padding-left:14px;padding-right:14px}.app-scroll{padding-left:14px;padding-right:14px}.ring-wrap{width:172px;height:172px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 /* PWA update banner */
@@ -416,7 +416,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 /* HAYGER requirement polish */
 .brand{color:var(--text);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 22%,transparent)}
 .brand-sub{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent)}
-.hero-streak{position:absolute;left:50%;bottom:-8px;transform:translateX(-50%);margin:0;padding:7px 13px;width:min(208px,calc(100vw - 72px));box-sizing:border-box;display:flex;align-items:center;justify-content:center;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent);z-index:3}
+.hero-streak{margin-top:8px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
 .activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px;touch-action:pan-y;user-select:none}
 .heat-cell{width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:5px;background:var(--soft2);padding:0;transition:transform .12s,background .2s,border-color .2s}
 .heat-cell.checked{background:var(--accent);border-color:var(--accent)}
@@ -842,11 +842,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const ms=24*60*60*1000;
     return Math.max(1,Math.round((today()-start)/ms)+1);
   }
-  function dayNumberForDate(date,start){
-    const a=new Date(start);a.setHours(0,0,0,0);
-    const b=new Date(date);b.setHours(0,0,0,0);
-    return Math.max(1,Math.round((b-a)/86400000)+1);
-  }
 
   function profileData(){return readJSON(PROFILE_KEY,{} )||{} }
   function statusForDate(dt,start,data){
@@ -960,8 +955,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       phaseView=btn.dataset.view;
-      if(phaseView==="calendar") activityPage=null;
-      if(phaseView==="stats") selectedWeekKey=null;
       app.scrollTop=0;
       render();
     });
@@ -999,7 +992,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     </div>`;
   }
 
-  let activityPage=null;
+  let activityPage=0;
   let activityTouchStartX=null;
   function activityPageCount(start){
     if(!start) return 0;
@@ -1007,13 +1000,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function activityDays(page=0,limit=50){
     const start=parseDate(get(START_KEY)); if(!start) return [];
-    const total=dayCount(start);
-    const safePage=Math.max(0,Number(page)||0);
-    const firstIndex=Math.max(0,total-((safePage+1)*limit));
-    const count=Math.min(limit,total-firstIndex);
-    const data=checkins(), out=[];
-    for(let i=0;i<count;i++){
-      const d=new Date(start);d.setDate(d.getDate()+firstIndex+i);
+    const data=checkins(), out=[], base=Math.max(0,page)*limit;
+    for(let i=0;i<limit;i++){
+      const d=new Date(start);d.setDate(d.getDate()+base+i);
+      if(d<start) continue;
       out.push({date:d,status:statusForDate(d,start,data)});
     }
     return out;
@@ -1022,19 +1012,16 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function activityPagerMarkup(){
     const start=parseDate(get(START_KEY));
     const maxActivityPage=Math.max(0,activityPageCount(start)-1);
-    if(activityPage===null || !Number.isFinite(activityPage)) activityPage=maxActivityPage;
     activityPage=Math.min(Math.max(0,activityPage),maxActivityPage);
     const activity=activityDays(activityPage,50);
     const heatCells=activity.map(c=>`<button class="heat-cell ${c.status}" data-date="${toInputDate(c.date)}" title="${formatDate(c.date)} — ${c.status}" type="button"></button>`).join("");
     const pageStart=activity[0]?.date, pageEnd=activity[activity.length-1]?.date;
-    const startIndex=pageStart?dayNumberForDate(pageStart,start):1;
-    const endIndex=pageEnd?dayNumberForDate(pageEnd,start):0;
     const rangeText=pageStart&&pageEnd?`${pageStart.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})} – ${pageEnd.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}`:"No activity yet";
     return `<div class="activity-content">
-      <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Older 50 days" ${activityPage>=maxActivityPage?"disabled":""}>‹</button><div class="activity-range">DAYS ${startIndex}–${endIndex}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Newer 50 days" ${activityPage<=0?"disabled":""}>›</button></div>
+      <div class="activity-pager"><button class="activity-nav" id="activityPrev" type="button" aria-label="Previous 50 days" ${activityPage<=0?"disabled":""}>‹</button><div class="activity-range">DAYS ${activityPage*50+1}–${Math.min((activityPage+1)*50,dayCount(start))}<br><span>${rangeText}</span></div><button class="activity-nav" id="activityNext" type="button" aria-label="Next 50 days" ${activityPage>=maxActivityPage?"disabled":""}>›</button></div>
       <div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
       <div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div>
-      <div class="activity-swipe-hint">Swipe left for older days · right for newer days</div>
+      <div class="activity-swipe-hint">Swipe left or right to move through 50-day pages</div>
     </div>`;
   }
 
@@ -1100,8 +1087,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function wireActivityInteractions(){
     const prev=document.getElementById('activityPrev'), next=document.getElementById('activityNext');
-    prev?.addEventListener('click',()=>updateActivityPager(1));
-    next?.addEventListener('click',()=>updateActivityPager(-1));
+    prev?.addEventListener('click',()=>updateActivityPager(-1));
+    next?.addEventListener('click',()=>updateActivityPager(1));
     const pager=document.getElementById('activityPager'), grid=pager?.querySelector('.activity-grid');
     if(grid){
       let sx=null,sy=null;
@@ -1156,54 +1143,23 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     if(!selectedWeekKey||!allWeeks.some(w=>w.key===selectedWeekKey)) selectedWeekKey=allWeeks[allWeeks.length-1]?.key;
     const selected=allWeeks.find(w=>w.key===selectedWeekKey)||allWeeks[allWeeks.length-1];
     const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail" id="selectedWeekDetail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
     return `<div class="week-strip">${weekCards}</div>${detail}`;
   }
 
   function selectWeek(key){
+    selectedWeekKey=key;
     const host=document.getElementById('weeklyActivityContent');
     if(!host)return;
-    const cards=host.querySelectorAll('.week-card[data-week]');
-    if(!cards.length)return;
-    const start=parseDate(get(START_KEY));
-    const allWeeks=weekData(start);
-    const selected=allWeeks.find(w=>w.key===key);
-    if(!selected)return;
-    selectedWeekKey=key;
-
-    // Update only the selected card state. Do not rebuild the whole Stats page
-    // or replace the week strip, which used to make the carousel jump to week 1.
-    cards.forEach(card=>card.classList.toggle('selected',card.dataset.week===key));
-
-    const detail=host.querySelector('#selectedWeekDetail');
-    if(detail){
-      const rate=Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100);
-      detail.innerHTML=`<div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${rate}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div>`;
-    }
-
-    // Keep the chosen week visible without resetting the horizontal strip.
-    const strip=host.querySelector('.week-strip');
-    const card=host.querySelector(`.week-card[data-week="${key}"]`);
-    if(strip && card){
-      const left=card.offsetLeft, right=left+card.offsetWidth;
-      const visibleLeft=strip.scrollLeft, visibleRight=visibleLeft+strip.clientWidth;
-      const comfortablyVisible=left>=visibleLeft+6 && right<=visibleRight-6;
-      if(!comfortablyVisible){
-        const target=left-Math.max(0,(strip.clientWidth-card.offsetWidth)/2);
-        strip.scrollTo({left:Math.max(0,target),behavior:'smooth'});
-      }
-    }
+    host.innerHTML=weeklyActivityMarkup();
+    host.classList.remove('partial-refresh');void host.offsetWidth;host.classList.add('partial-refresh');
+    wireStatsWeekInteractions();
+    const selected=host.querySelector('.week-card.selected');
+    selected?.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
   }
 
   function wireStatsWeekInteractions(){
-    const host=document.getElementById('weeklyActivityContent');
-    const buttons=[...(host?.querySelectorAll('[data-week]')||[])];
-    buttons.forEach(btn=>btn.onclick=()=>selectWeek(btn.dataset.week));
-    if(host && selectedWeekKey){
-      const strip=host.querySelector('.week-strip');
-      const card=host.querySelector(`.week-card[data-week="${selectedWeekKey}"]`);
-      if(strip && card) requestAnimationFrame(()=>card.scrollIntoView({behavior:'auto',block:'nearest',inline:'center'}));
-    }
+    document.querySelectorAll('#weeklyActivityContent [data-week]').forEach(btn=>btn.addEventListener('click',()=>selectWeek(btn.dataset.week)));
   }
 
   function renderStats(){
@@ -1214,7 +1170,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const noteMap=notes(),q=noteSearchQuery.trim().toLowerCase();
     const filtered=Object.keys(noteMap).sort().reverse().filter(k=>!q||noteMap[k].toLowerCase().includes(q)).slice(0,50);
     const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail" id="selectedWeekDetail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
     const noteToolbar=`<div class="notes-toolbar"><div class="notes-toolbar-title">YOUR NOTES</div><div class="notes-toolbar-actions"><button id="noteSearchBtn" class="icon-button" type="button" aria-label="Search notes">⌕</button><button id="noteMoreBtn" class="icon-button" type="button" aria-label="More notes">⋮</button></div></div>`;
     const searchBox=noteSearchOpen?`<input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">`:"";
     const noteList=filtered.length?`<div class="note-list">${filtered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${q?"No notes match your search.":"No saved notes yet."}</div>`;
@@ -1311,7 +1267,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           const s=parseDate(d.startDate);
           if(!s || s>today()) throw new Error("Invalid start date");
           localStorage.setItem(START_KEY,d.startDate);
-          activityPage=null;
+          activityPage=Math.max(0,activityPageCount(s)-1);
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
@@ -1331,7 +1287,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const next=milestoneFor(day), remaining=Math.max(0,next-day);
     const g=goal();
     const pct=g?challengeProgress(day):Math.min(100,Math.round((day/milestoneFor(day))*100));
-    const r=92, c=2*Math.PI*r;
+    const r=88, c=2*Math.PI*r;
     const offset=c*(1-pct/100);
     return `<div class="container">
       <div class="hero-panel">
@@ -1343,8 +1299,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <div class="ring-center">
             <div class="ring-label">DAY</div>
             <div class="ring-number">${day}</div>
+            <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
           </div>
-          <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
         </div>
         <div class="hero-date">${formatDate(current)}</div>
         <div class="hero-tag"><span class="streak-dot"></span>One day at a time</div>
