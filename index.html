@@ -373,40 +373,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge.unlocked:hover{transform:translateY(-2px)}
 .share-row{margin-top:18px}
 
-
-/* HAYGER V4 — conservative UX upgrades (preserve original visual language) */
-.profile-avatar-wrap{position:relative;flex:0 0 56px}
-.profile-avatar-wrap .profile-avatar{width:56px;height:56px}
-.profile-edit-chip{position:absolute;right:-5px;bottom:-5px;width:22px;height:22px;border:2px solid var(--soft);border-radius:50%;background:var(--primary);color:var(--primaryText);display:grid;place-items:center;font-size:10px;font-weight:900}
-.profile-bio{margin-top:5px;color:var(--muted);font-size:10px;line-height:1.45}
-.profile-extra-list{display:grid;gap:7px;margin-top:9px}
-.profile-extra-row{display:grid;grid-template-columns:1fr auto;gap:7px;align-items:center}
-.profile-extra-row input{height:40px!important}
-.profile-extra-remove{width:40px;height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--danger);font-weight:900}
-.profile-add-row{display:grid;grid-template-columns:1fr auto;gap:7px;margin-top:9px}
-.profile-add-row input{height:40px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);padding:0 10px;outline:none;font:inherit;font-size:11px}
-.profile-add-row button{min-width:78px}
-.history-legend{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 12px}
-.history-legend span{display:inline-flex;align-items:center;gap:5px;color:var(--muted);font-size:8px;font-weight:850}
-.legend-dot{width:8px;height:8px;border-radius:50%;background:var(--soft2);border:1px solid var(--line)}
-.legend-dot.done{background:var(--accent);border-color:var(--accent)}
-.legend-dot.missed{background:color-mix(in srgb,var(--danger) 15%,var(--surface));border-color:var(--danger)}
-.legend-dot.today{background:var(--surface);box-shadow:0 0 0 1.5px var(--text)}
-.cal-day.missed{background:color-mix(in srgb,var(--danger) 10%,var(--surface));border-color:color-mix(in srgb,var(--danger) 42%,var(--line));color:var(--danger)}
-.cal-day.missed:after{content:"";position:absolute;bottom:3px;width:4px;height:4px;border-radius:50%;background:var(--danger)}
-.heat-cell.missed{background:color-mix(in srgb,var(--danger) 24%,var(--surface));border:1px solid color-mix(in srgb,var(--danger) 25%,var(--line))}
-.missed-card{margin-top:12px;padding:13px;border:1px solid var(--line);border-radius:16px;background:var(--soft)}
-.missed-card-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.missed-card-head b{font-size:10px;font-weight:900;letter-spacing:.5px}
-.missed-card-head span{color:var(--muted);font-size:9px;font-weight:800}
-.missed-list{display:grid;gap:6px;margin-top:9px}
-.missed-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;border:1px solid var(--line);border-radius:11px;background:var(--surface);font-size:10px}
-.missed-item span{color:var(--muted);font-size:9px}
-.award-consistency{margin-top:10px;padding:13px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}
-.award-consistency-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.award-consistency-top b{font-size:11px}.award-consistency-top span{font-family:var(--font-display);font-size:20px}
-.award-consistency small{display:block;margin-top:5px;color:var(--muted);font-size:9px;line-height:1.4}
-
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
 </style>
 
@@ -533,25 +499,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function completedDays(){
     return Object.keys(checkins()).filter(k=>checkins()[k]).sort();
-  }
-  function missedDays(from,to=today()){
-    const start=from instanceof Date?new Date(from):parseDate(from);
-    const end=to instanceof Date?new Date(to):parseDate(to);
-    if(!start||!end||start>end) return [];
-    const data=checkins(), out=[];
-    for(let d=new Date(start);d<=end;d.setDate(d.getDate()+1)){
-      const key=toInputDate(d);
-      if(!data[key]) out.push(key);
-    }
-    return out;
-  }
-  function consistencyStats(){
-    const start=parseDate(get(START_KEY));
-    if(!start||start>today()) return {elapsed:0,done:0,missed:0,rate:0};
-    const elapsed=dayCount(start);
-    const done=streakStats().total;
-    const missed=Math.max(0,elapsed-done);
-    return {elapsed,done,missed,rate:elapsed?Math.round(done/elapsed*100):0};
   }
   function streakStats(){
     const days=completedDays();
@@ -720,11 +667,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const dm=document.getElementById("dayModal");
     document.getElementById("dayModalTitle").textContent=formatDate(dt);
     const rows=[];
-    const start=parseDate(get(START_KEY));
-    const isFuture=dt>today();
-    const isBeforeStart=start&&dt<start;
-    const status=entry?"✓ Checked in":isFuture?"Upcoming":isBeforeStart?"Before HAYGER":"✕ Missed";
-    rows.push(`<div class="day-detail-row"><div class="day-detail-label">Status</div><div class="day-detail-value">${status}</div></div>`);
+    rows.push(`<div class="day-detail-row"><div class="day-detail-label">Status</div><div class="day-detail-value">${entry?"✓ Checked in":"Not checked in"}</div></div>`);
     if(entry&&entry.mood) rows.push(`<div class="day-detail-row"><div class="day-detail-label">Mood</div><div class="day-detail-mood">${entry.mood}</div></div>`);
     if(note) rows.push(`<div class="day-detail-row"><div class="day-detail-label">Note</div><div class="day-detail-value">${escapeHTML(note)}</div></div>`);
     document.getElementById("dayModalBody").innerHTML=rows.join("");
@@ -887,12 +830,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
 
   function renderAwards(){
-    const start=parseDate(get(START_KEY)), day=dayCount(start), stats=streakStats(), best=stats.best;
+    const start=parseDate(get(START_KEY)), day=dayCount(start), best=streakStats().best;
     const b=unlockedBadges(day,best);
     const total=b.journey.length+b.streak.length;
     const unlocked=b.journey.filter(x=>x.unlocked).length+b.streak.filter(x=>x.unlocked).length;
     const pct=total?Math.round(unlocked/total*100):0;
-    const cs=consistencyStats();
     const all=[...b.journey,...b.streak].filter(x=>!x.unlocked);
     const next=all[0];
     const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}">
@@ -905,20 +847,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="award-stat"><b>${unlocked}</b><span>BADGES UNLOCKED</span></div>
         <div class="award-stat"><b>${pct}%</b><span>ACHIEVEMENT COMPLETE</span></div>
       </div>
-      <div class="award-consistency">
-        <div class="award-consistency-top"><b>Consistency score</b><span>${cs.rate}%</span></div>
-        <div class="progress-track"><div class="progress-fill" style="width:${cs.rate}%"></div></div>
-        <small>${cs.done} checked-in day${cs.done===1?"":"s"} · ${cs.missed} missed day${cs.missed===1?"":"s"} since you started.</small>
-      </div>
       <div class="award-mini-row">
-        <div><span>CURRENT STREAK</span><b>${stats.current} day${stats.current===1?"":"s"}</b></div>
+        <div><span>CURRENT STREAK</span><b>${streakStats().current} day${streakStats().current===1?"":"s"}</b></div>
         <div><span>BEST STREAK</span><b>${best} day${best===1?"":"s"}</b></div>
       </div>
       <div class="award-progress">
         <div class="award-progress-top"><b>Your achievement journey</b><span>${unlocked} / ${total}</span></div>
         <div class="award-progress-track"><div class="award-progress-fill" style="width:${pct}%"></div></div>
       </div>
-      ${next?`<div class="award-next"><b>Next achievement · ${next.label}</b><span>${next.day?`Reach ${next.day} days to unlock this badge.`:"Keep building your consistency."}</span></div>`:`<div class="award-next"><b>🏆 All achievements unlocked</b><span>You completed every HAYGER badge currently available.</span></div>`}
+      ${next?`<div class="award-next"><b>Next achievement · ${next.label}</b><span>Keep going — your next badge is waiting for you.</span></div>`:`<div class="award-next"><b>🏆 All achievements unlocked</b><span>You completed every HAYGER badge currently available.</span></div>`}
       <div class="badge-section" style="margin-top:16px">
         <div class="badge-section-title">Journey badges</div>
         ${grid(b.journey)}
@@ -935,17 +872,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function heatmapWeeks(weeks){
     const data=checkins();
-    const startDateForHistory=parseDate(get(START_KEY));
     const out=[];
     for(let w=weeks-1;w>=0;w--){
       const monday=weeksAgoMonday(w);
       const col=[];
       for(let i=0;i<7;i++){
         const d=new Date(monday);d.setDate(d.getDate()+i);
-        const key=toInputDate(d);
-        const future=d>today();
-        const started=!startDateForHistory || d>=startDateForHistory;
-        col.push({date:d,future,done:!!data[key],missed:!future&&started&&!data[key]});
+        col.push({date:d,future:d>today(),done:!!data[toInputDate(d)]});
       }
       out.push(col);
     }
@@ -958,23 +891,21 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const offset=(first.getDay()+6)%7;
     let cells="";
     for(let i=0;i<offset;i++) cells+=`<button class="cal-day empty" aria-hidden="true"></button>`;
-    const data=checkins(), t=toInputDate(today()), startDateForHistory=parseDate(get(START_KEY));
-    let monthDone=0, monthMissed=0, monthElapsed=0;
+    const data=checkins(), t=toInputDate(today());
+    let monthDone=0, monthElapsed=0;
     for(let d=1;d<=last.getDate();d++){
       const dt=new Date(y,m,d), key=toInputDate(dt);
       const entry=data[key];
       const isFuture=dt>today();
-      const isBeforeStart=!!(startDateForHistory&&dt<startDateForHistory);
-      const isMissed=!isFuture&&!isBeforeStart&&!entry;
-      if(!isFuture&&!isBeforeStart){monthElapsed++; if(entry) monthDone++; else monthMissed++;}
-      const cls=(entry?" done":isMissed?" missed":"")+(key===t?" today":"");
+      if(!isFuture){monthElapsed++; if(entry) monthDone++;}
+      const cls=(entry?" done":"")+(key===t?" today":"");
       const badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
       cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}">${d}${badge}</button>`;
     }
 
     const heat=heatmapWeeks(10);
     const heatCells=heat.map(col=>col.map(c=>
-      `<div class="heat-cell${c.future?" future":c.done?" done":c.missed?" missed":""}" title="${c.future?"":toInputDate(c.date)}"></div>`
+      `<div class="heat-cell${c.future?" future":c.done?" done":""}" title="${c.future?"":toInputDate(c.date)}"></div>`
     ).join("")).join("");
 
     const s=streakStats();
@@ -994,11 +925,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="heatmap-grid">${heatCells}</div>
       </div>
 
-      <div class="history-legend">
-        <span><i class="legend-dot done"></i> Checked in</span>
-        <span><i class="legend-dot missed"></i> Missed</span>
-        <span><i class="legend-dot today"></i> Today</span>
-      </div>
       <div class="calendar-head">
         <button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button>
         <div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div>
@@ -1008,10 +934,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       <div class="calendar">
         ${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}
         ${cells}
-      </div>
-      <div class="missed-card">
-        <div class="missed-card-head"><b>MISSED DAYS THIS MONTH</b><span>${monthMissed}</span></div>
-        ${monthMissed?`<div class="missed-list">${missedDays(new Date(y,m,1),new Date(y,m,last.getDate())).filter(k=>{const d=parseDate(k);return d.getMonth()===m&&d.getFullYear()===y;}).slice(-5).reverse().map(k=>`<button class="missed-item" data-date="${k}" type="button"><b>${formatDate(parseDate(k))}</b><span>Not checked in</span></button>`).join("")}</div>`:`<div style="margin-top:8px;color:var(--muted);font-size:9px;line-height:1.4">No missed days this month. Keep the streak alive.</div>`}
       </div>
     </div>`;
   }
@@ -1081,15 +1003,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
     const savedName=profile.name||localStorage.getItem("hayger_profile_name_v1")||"";
     const initial=escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
-    const extras=Array.isArray(profile.extras)?profile.extras:[];
     return `<div class="container">
       <div class="profile-hero">
-        <div class="profile-avatar-wrap"><div class="profile-avatar">${initial}</div><div class="profile-edit-chip">✎</div></div>
+        <div class="profile-avatar">${initial}</div>
         <div class="profile-main">
           <div class="profile-kicker">YOUR PROFILE</div>
           <h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2>
-          <span>${profile.city?escapeHTML(profile.city)+" · ":""}${profile.username?"@"+escapeHTML(profile.username):"Personalize your HAYGER experience"}</span>
-          ${profile.bio?`<div class="profile-bio">${escapeHTML(profile.bio)}</div>`:""}
+          <span>Personalize your HAYGER experience</span>
         </div>
       </div>
 
@@ -1097,27 +1017,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <div class="setting-title">PROFILE DETAILS</div>
         <div class="profile-form">
           <label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label>
-          <label><span>USERNAME</span><input id="profileUsername" maxlength="30" value="${escapeHTML(profile.username||"")}" placeholder="username"></label>
           <label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label>
-          <label><span>PRONOUNS</span><input id="profilePronouns" maxlength="20" value="${escapeHTML(profile.pronouns||"")}" placeholder="e.g. he/him"></label>
           <label><span>GENDER</span><select id="profileGender">
             <option value="">Prefer not to say</option>
             <option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option>
             <option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option>
             <option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option>
           </select></label>
-          <label><span>CITY</span><input id="profileCity" maxlength="40" value="${escapeHTML(profile.city||"")}" placeholder="Your city"></label>
-          <label style="grid-column:1/-1"><span>BIO / ABOUT YOU</span><input id="profileBio" maxlength="160" value="${escapeHTML(profile.bio||"")}" placeholder="Write anything you want about yourself"></label>
         </div>
         <button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button>
-      </div>
-
-      <div class="settings-card" style="margin-top:10px">
-        <div class="setting-title">CUSTOM PROFILE FIELDS</div>
-        <div class="profile-extra-list">
-          ${extras.map((x,i)=>`<div class="profile-extra-row"><input class="profile-extra-value" data-extra-index="${i}" maxlength="120" value="${escapeHTML(x.value||"")}" placeholder="${escapeHTML(x.label||"Custom field")}"><button class="profile-extra-remove" data-extra-remove="${i}" type="button" aria-label="Remove field">×</button></div>`).join("")}
-        </div>
-        <div class="profile-add-row"><input id="newProfileField" maxlength="30" placeholder="Add a field, e.g. Hobby, Job, Favourite quote"><button id="addProfileField" class="small-button" type="button">ADD FIELD</button></div>
       </div>
 
       <h3 class="profile-settings-heading">SETTINGS</h3>
@@ -1143,7 +1051,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-row">
-          <div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, check-ins, notes, profile and settings.</span></div>
+          <div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, check-ins, notes and settings.</span></div>
           <button id="exportData" class="small-button" type="button">EXPORT</button>
         </div>
         <div class="setting-row">
@@ -1165,18 +1073,28 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px">
         <div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div>
-        <div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
         <div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div>
-        <div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
         <div id="pinSetupError" class="pin-error"></div>
-        <div class="goal-controls"><button id="pinSetupCancel" class="small-button" type="button">CANCEL</button><button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button></div>
+        <div class="goal-controls" style="margin-top:6px">
+          <button id="pinSetupCancel" class="small-button" type="button">CANCEL</button>
+          <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
+        </div>
       </div>`:""}
-
       <div class="settings-card" style="margin-top:10px">
-        <button id="resetAll" class="danger-button" type="button">RESET ALL HAYGER DATA</button>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
+          <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
+        </div>
       </div>
     </div>`;
   }
+
   function phasePanel(){
     if(phaseView==="calendar") return renderCalendar();
     if(phaseView==="stats") return renderStats();
@@ -1215,7 +1133,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const payload={
       app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
       startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
-      profile:readJSON("hayger_profile_v2",{}),goal:goal(),reminder:reminder(),theme:theme()
+      goal:goal(),reminder:reminder(),theme:theme()
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1237,7 +1155,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
-        if(d.profile&&typeof d.profile==="object") writeJSON("hayger_profile_v2",d.profile);
         if(Number(d.goal)>0) localStorage.setItem(GOAL_KEY,String(Number(d.goal)));
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
@@ -1330,35 +1247,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         const age=(document.getElementById("profileAge")?.value||"").trim();
         const gender=document.getElementById("profileGender")?.value||"";
         if(!name){showToast("Please enter your name.");return}
-        let oldProfile={};try{oldProfile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
-        const extras=Array.isArray(oldProfile.extras)?oldProfile.extras:[];
-        document.querySelectorAll(".profile-extra-value").forEach((el,i)=>{if(extras[i]) extras[i].value=(el.value||"").trim()});
-        const data={...oldProfile,name,age,gender,username:(document.getElementById("profileUsername")?.value||"").trim(),pronouns:(document.getElementById("profilePronouns")?.value||"").trim(),city:(document.getElementById("profileCity")?.value||"").trim(),bio:(document.getElementById("profileBio")?.value||"").trim(),extras,updatedAt:new Date().toISOString()};
+        const data={name,age,gender,updatedAt:new Date().toISOString()};
         localStorage.setItem("hayger_profile_v2",JSON.stringify(data));
         localStorage.setItem("hayger_profile_name_v1",name);
         showToast("✓ Profile saved.");
         render();
       });
 
-      document.getElementById("addProfileField")?.addEventListener("click",()=>{
-        const input=document.getElementById("newProfileField");
-        const label=(input?.value||"").trim();
-        if(!label){showToast("Enter a field name first.");return}
-        let profile={};try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
-        profile.extras=Array.isArray(profile.extras)?profile.extras:[];
-        profile.extras.push({label,value:""});
-        localStorage.setItem("hayger_profile_v2",JSON.stringify(profile));
-        render();
-        setTimeout(()=>document.querySelector(".profile-extra-value:last-of-type")?.focus(),50);
-      });
-      document.querySelectorAll("[data-extra-remove]").forEach(btn=>btn.addEventListener("click",()=>{
-        let profile={};try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
-        const extras=Array.isArray(profile.extras)?profile.extras:[];
-        extras.splice(Number(btn.dataset.extraRemove),1);
-        profile.extras=extras;
-        localStorage.setItem("hayger_profile_v2",JSON.stringify(profile));
-        render();
-      }));
       document.getElementById("changeDate")?.addEventListener("click",openModal);
     }
 
@@ -1368,7 +1263,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("jumpToday").onclick=()=>{
         calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);render();
       };
-      document.querySelectorAll(".cal-day[data-date], .missed-item[data-date]").forEach(btn=>{
+      document.querySelectorAll(".cal-day[data-date]").forEach(btn=>{
         btn.addEventListener("click",()=>openDayDetail(btn.dataset.date));
       });
     }
