@@ -51,7 +51,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .app-shell{display:flex;flex-direction:column;height:100%}
 .app-header{flex:0 0 auto;padding:max(16px,env(safe-area-inset-top)) 20px 13px;border-bottom:1px solid var(--line)}
 .app-header-inner{display:flex;align-items:center;justify-content:space-between;max-width:460px;margin:0 auto;width:100%}
-.brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1}
+.brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1;display:inline-block;padding:9px 16px 8px;border:1.5px solid var(--accent);border-radius:14px;background:linear-gradient(135deg,var(--accent-soft),transparent)}
 .brand-sub{margin-top:5px;color:var(--muted);font-size:9px;font-weight:750;letter-spacing:1.6px}
 .theme-button{
   width:40px;height:40px;padding:0;display:grid;place-items:center;flex:0 0 auto;
@@ -158,6 +158,10 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .checkin-button{margin-top:9px;width:100%;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;transition:.15s}
 .checkin-button:active{transform:scale(.985)}
 .checkin-button.done{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#1c1204;border-color:transparent;box-shadow:0 8px 18px -8px rgba(185,121,31,.55)}
+.checkin-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
+.checkin-split .checkin-button{margin-top:0}
+.feeling-btn{background:var(--surface);border:1px solid var(--accent);color:var(--accent)}
+.feeling-btn.done{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#1c1204;border-color:transparent;box-shadow:0 8px 18px -8px rgba(185,121,31,.55)}
 .milestone{margin-top:14px;text-align:center;color:var(--muted);font-size:10.5px;font-weight:750}
 .milestone strong{color:var(--accent)}
 
@@ -832,6 +836,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   let editingNoteKey=null;
   let unlocked=sessionStorage.getItem("hayger_unlocked")==="1";
   let pinSetupOpen=false;
+  let moodPickerOpen=false;
 
   const TABS=[
     {id:"home",label:"HOME",icon:'<svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg>'},
@@ -845,6 +850,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       phaseView=btn.dataset.view;
+      moodPickerOpen=false;
       app.scrollTop=0;
       render();
     });
@@ -1222,10 +1228,19 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
       <div class="checkin">
-        <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
-        <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
-        ${checked?`<div class="mood-hint">How are you feeling today?</div>
-        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
+        <div class="checkin-text">${(()=>{
+          if(!checked) return "Take a second to check in for today.";
+          const mood=data[key]&&data[key].mood;
+          if(mood) return `Today's check-in is complete.`;
+          if(moodPickerOpen) return "How are you feeling today? Pick one — you can't change it later.";
+          return "Today's check-in is complete.";
+        })()}</div>
+        ${checked?`<div class="checkin-split">
+          <button id="checkinButton" class="checkin-button done" type="button">✓ CHECKED IN</button>
+          <button id="feelingButton" class="checkin-button feeling-btn${data[key]&&data[key].mood?" done":""}" type="button">${data[key]&&data[key].mood?`${data[key].mood} MOOD SET`:"FEELING"}</button>
+        </div>`:`<button id="checkinButton" class="checkin-button" type="button">YES, I DID</button>`}
+        ${checked&&moodPickerOpen&&!(data[key]&&data[key].mood)?`<div class="mood-row">${MOODS.map(m=>`<button class="mood-chip" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
+        ${checked&&!moodPickerOpen&&data[key]&&data[key].mood?`<div class="mood-hint">You felt ${data[key].mood} today · locked in until tomorrow.</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
@@ -1263,13 +1278,29 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
       });
 
+      document.getElementById("feelingButton")?.addEventListener("click",()=>{
+        const d=checkins();
+        if(d[key]&&d[key].mood){
+          showToast(`You already set today's mood: ${d[key].mood}`);
+          return;
+        }
+        moodPickerOpen=!moodPickerOpen;
+        render();
+      });
+
       document.querySelectorAll(".mood-chip").forEach(btn=>{
         btn.addEventListener("click",()=>{
           const d=checkins();
           if(!d[key]) return;
-          d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
+          if(d[key].mood){
+            showToast(`Mood already set for today.`);
+            return;
+          }
+          d[key].mood=btn.dataset.mood;
           writeJSON(CHECKINS_KEY,d);
+          moodPickerOpen=false;
           render();
+          showToast(`✓ Mood saved: ${btn.dataset.mood}`);
         });
       });
     }
