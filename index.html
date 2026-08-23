@@ -422,6 +422,18 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge-status{margin-top:4px;font-size:7px;color:var(--muted);font-weight:800}
 .badge.unlocked .badge-status{color:var(--accent)}
 
+
+/* HAYGER v9 — dashboard, insights, custom profile fields */
+.dashboard-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.dashboard-card{padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--surface);box-shadow:0 7px 22px rgba(0,0,0,.035)}
+.dashboard-card b{display:block;font-family:var(--font-display);font-size:20px;line-height:1}.dashboard-card span{display:block;margin-top:5px;color:var(--muted);font-size:7.5px;font-weight:900;letter-spacing:.7px}
+.quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.quick-action{min-height:42px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:9px;font-weight:900;letter-spacing:.3px}
+.insight-card{margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:17px;background:linear-gradient(135deg,var(--soft),var(--surface))}.insight-head{display:flex;justify-content:space-between;align-items:center;gap:8px}.insight-head b{font-size:10px}.insight-head span{font-size:8px;color:var(--muted);font-weight:850}.insight-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.insight-item{padding:10px;border-radius:13px;background:var(--surface);border:1px solid var(--line)}.insight-item b{display:block;font-size:13px}.insight-item span{display:block;margin-top:4px;color:var(--muted);font-size:8px;line-height:1.35}
+.mood-bars{display:grid;gap:7px;margin-top:10px}.mood-bar{display:grid;grid-template-columns:24px 1fr 25px;align-items:center;gap:7px;font-size:9px;font-weight:900}.mood-track{height:7px;border-radius:99px;background:var(--soft2);overflow:hidden}.mood-fill{height:100%;border-radius:99px;background:var(--accent)}
+.custom-fields{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}.custom-field-row{display:grid;grid-template-columns:1fr 1fr 34px;gap:7px;margin-top:7px}.custom-field-row input{height:40px!important}.remove-field{border:1px solid color-mix(in srgb,var(--danger) 25%,var(--line));border-radius:11px;background:color-mix(in srgb,var(--danger) 7%,var(--surface));color:var(--danger);font-weight:900}.add-field{width:100%;margin-top:8px;min-height:38px;border:1px dashed var(--line);border-radius:11px;background:var(--soft);color:var(--text);font-size:9px;font-weight:900}
+.profile-status{margin-top:8px;padding:8px 10px;border-radius:10px;background:var(--accent-soft);font-size:8px;font-weight:850;color:var(--text)}
+@media(max-width:360px){.dashboard-strip{gap:6px}.dashboard-card{padding:10px 8px}.dashboard-card b{font-size:18px}}
+
 </style>
 
 
@@ -1054,6 +1066,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         <input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}">
       </div>
 
+      ${(()=>{
+        const all=checkins(), keys=Object.keys(all).sort(), moods={"😀":0,"🙂":0,"😐":0,"😕":0,"😫":0};
+        keys.forEach(k=>{if(all[k].mood&&moods[all[k].mood]!==undefined)moods[all[k].mood]++});
+        const topMood=Object.entries(moods).sort((a,b)=>b[1]-a[1])[0];
+        const missed=Math.max(0,day-s.total), consistency=day?Math.round(s.total/day*100):0;
+        const strongest=s.best>=7?"Strong consistency":s.best>=3?"Good momentum":"Build your first 3-day streak";
+        return `<div class="insight-card"><div class="insight-head"><b>PERSONAL INSIGHTS</b><span>LIVE FROM YOUR HISTORY</span></div><div class="insight-grid"><div class="insight-item"><b>${consistency}%</b><span>Consistency across ${day} challenge days</span></div><div class="insight-item"><b>${missed}</b><span>Missed days you can learn from</span></div><div class="insight-item"><b>${strongest}</b><span>Based on your best streak</span></div><div class="insight-item"><b>${topMood[1]?topMood[0]:"—"}</b><span>Most logged mood${topMood[1]?` · ${topMood[1]} time${topMood[1]===1?"":"s"}`:""}</span></div></div><div class="mood-bars">${Object.entries(moods).map(([m,n])=>`<div class="mood-bar"><span>${m}</span><div class="mood-track"><div class="mood-fill" style="width:${topMood[1]?Math.round(n/Math.max(1,topMood[1])*100):0}%"></div></div><span>${n}</span></div>`).join("")}</div></div>`;
+      })()}
+
       <div class="notes" style="margin-top:10px">
         <div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div>
         <textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea>
@@ -1089,7 +1110,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <div class="profile-kicker">YOUR PROFILE</div>
           <h2>${savedName?escapeHTML(savedName):"Create your profile"}</h2>
           <div class="profile-identity">${profile.username?`<span class="profile-handle">@${escapeHTML(profile.username)}</span>`:""}${profile.pronouns?`<span>· ${escapeHTML(profile.pronouns)}</span>`:""}</div>
-          ${profile.bio?`<span class="profile-bio">${escapeHTML(profile.bio)}</span>`:`<span class="profile-bio">Add anything you want about yourself.</span>`}
+          ${profile.bio?`<span class="profile-bio">${escapeHTML(profile.bio)}</span>`:`<span class="profile-bio">Add anything you want about yourself.</span>`}${profile.status?`<div class="profile-status">${escapeHTML(profile.status)}</div>`:""}
           <div class="profile-tags">${tags.map(x=>`<span class="profile-tag">${escapeHTML(x)}</span>`).join("")}</div>
         </div>
       </div>
@@ -1111,6 +1132,12 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <label><span>CITY / LOCATION</span><input id="profileCity" maxlength="40" value="${escapeHTML(profile.city||"")}" placeholder="Optional"></label>
           <label><span>WEBSITE</span><input id="profileWebsite" maxlength="120" type="url" value="${escapeHTML(profile.website||"")}" placeholder="https://..."></label>
           <label class="full"><span>BIO / ABOUT YOU</span><textarea id="profileBio" maxlength="300" placeholder="Write whatever you want about yourself...">${escapeHTML(profile.bio||"")}</textarea></label>
+          <label class="full"><span>STATUS / CURRENT VIBE</span><input id="profileStatus" maxlength="80" value="${escapeHTML(profile.status||"")}" placeholder="e.g. Building discipline • Feeling great • Busy today"></label>
+        </div>
+        <div class="custom-fields">
+          <div class="setting-title">CUSTOM PROFILE FIELDS</div>
+          <div id="customFields">${(profile.customFields||[]).map((f,i)=>`<div class="custom-field-row"><input class="custom-label" data-index="${i}" maxlength="30" value="${escapeHTML(f.label||"")}" placeholder="Field name"><input class="custom-value" data-index="${i}" maxlength="80" value="${escapeHTML(f.value||"")}" placeholder="Your answer"><button class="remove-field" data-remove-field="${i}" type="button">×</button></div>`).join("")}</div>
+          <button id="addCustomField" class="add-field" type="button">+ ADD ANYTHING YOU WANT</button>
         </div>
         <div class="profile-photo-row">
           <button id="profileRemovePhoto" class="small-button" type="button">REMOVE PHOTO</button>
@@ -1242,6 +1269,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+      <div class="dashboard-strip"><div class="dashboard-card"><b>${streakStats().current}</b><span>CURRENT STREAK</span></div><div class="dashboard-card"><b>${streakStats().best}</b><span>BEST STREAK</span></div><div class="dashboard-card"><b>${streakStats().total}</b><span>TOTAL CHECK-INS</span></div></div>
+      <div class="quick-actions"><button class="quick-action" data-quick="history" type="button">VIEW HISTORY</button><button class="quick-action" data-quick="stats" type="button">SEE INSIGHTS</button></div>
     </div>`;
   }
 
@@ -1260,6 +1289,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     else app.innerHTML=phasePanel();
 
     if(phaseView==="home"){
+      document.querySelectorAll("[data-quick]").forEach(btn=>btn.addEventListener("click",()=>{phaseView=btn.dataset.quick==="history"?"calendar":"stats";render()}));
       document.getElementById("checkinButton").addEventListener("click",()=>{
         const d=checkins();
         if(d[key]){
@@ -1288,6 +1318,12 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
 
     if(phaseView==="profile"){
+      document.getElementById("addCustomField")?.addEventListener("click",()=>{
+        const p=readProfile(); p.customFields=Array.isArray(p.customFields)?p.customFields:[]; p.customFields.push({label:"",value:""}); writeJSON(PROFILE_KEY,p); render(); setTimeout(()=>document.querySelectorAll(".custom-label")[p.customFields.length-1]?.focus(),40);
+      });
+      document.querySelectorAll("[data-remove-field]").forEach(btn=>btn.addEventListener("click",()=>{
+        const p=readProfile(); p.customFields=Array.isArray(p.customFields)?p.customFields:[]; p.customFields.splice(Number(btn.dataset.removeField),1); writeJSON(PROFILE_KEY,p); render();
+      }));
       document.getElementById("saveProfile")?.addEventListener("click",()=>{
         const current=readProfile();
         const name=(document.getElementById("profileName")?.value||"").trim();
@@ -1301,6 +1337,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           city:(document.getElementById("profileCity")?.value||"").trim(),
           website:(document.getElementById("profileWebsite")?.value||"").trim(),
           bio:(document.getElementById("profileBio")?.value||"").trim(),
+          status:(document.getElementById("profileStatus")?.value||"").trim(),
+          customFields:[...document.querySelectorAll(".custom-field-row")].map(row=>({label:(row.querySelector(".custom-label")?.value||"").trim(),value:(row.querySelector(".custom-value")?.value||"").trim()})).filter(x=>x.label||x.value),
           updatedAt:new Date().toISOString()
         };
         writeJSON(PROFILE_KEY,data);
