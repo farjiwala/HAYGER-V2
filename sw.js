@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-ultra-v11-day-box";
+const CACHE_NAME = "hayger-ultra-v8-profile-history-awards-v1";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
