@@ -51,7 +51,7 @@ button,input,textarea,select{font:inherit}button{cursor:pointer}
 .app-shell{display:flex;flex-direction:column;height:100%}
 .app-header{flex:0 0 auto;padding:max(16px,env(safe-area-inset-top)) 20px 13px;border-bottom:1px solid var(--line)}
 .app-header-inner{display:flex;align-items:center;justify-content:space-between;max-width:460px;margin:0 auto;width:100%}
-.brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1;display:inline-block;padding:9px 16px 8px;border:1.5px solid var(--accent);border-radius:14px;background:linear-gradient(135deg,var(--accent-soft),transparent)}
+.brand{font-family:var(--font-display);font-size:19px;font-weight:700;letter-spacing:1.5px;line-height:1}
 .brand-sub{margin-top:5px;color:var(--muted);font-size:9px;font-weight:750;letter-spacing:1.6px}
 .theme-button{
   width:40px;height:40px;padding:0;display:grid;place-items:center;flex:0 0 auto;
@@ -158,10 +158,6 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .checkin-button{margin-top:9px;width:100%;min-height:48px;border:1px solid var(--line);border-radius:13px;background:var(--soft);color:var(--text);font-size:12px;font-weight:900;transition:.15s}
 .checkin-button:active{transform:scale(.985)}
 .checkin-button.done{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#1c1204;border-color:transparent;box-shadow:0 8px 18px -8px rgba(185,121,31,.55)}
-.checkin-split{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}
-.checkin-split .checkin-button{margin-top:0}
-.feeling-btn{background:var(--surface);border:1px solid var(--accent);color:var(--accent)}
-.feeling-btn.done{background:linear-gradient(135deg,var(--accent2),var(--accent));color:#1c1204;border-color:transparent;box-shadow:0 8px 18px -8px rgba(185,121,31,.55)}
 .milestone{margin-top:14px;text-align:center;color:var(--muted);font-size:10.5px;font-weight:750}
 .milestone strong{color:var(--accent)}
 
@@ -192,6 +188,9 @@ body.has-tabbar .toast{bottom:max(88px,calc(70px + env(safe-area-inset-bottom)))
 .cal-day.done{background:linear-gradient(150deg,var(--accent2),var(--accent));color:#1c1204;border-color:var(--accent);box-shadow:0 4px 10px -3px rgba(185,121,31,.55)}
 .cal-day.today{box-shadow:0 0 0 2px var(--text)}
 .cal-day.empty{visibility:hidden;pointer-events:none}
+.cal-day.missed{background:var(--bg);border-color:var(--line);color:var(--muted)}
+.cal-day.missed:after{content:"";position:absolute;bottom:5px;width:3.5px;height:3.5px;border-radius:50%;background:var(--muted);opacity:.55}
+.cal-day.future-day{background:transparent;border-style:dashed;border-color:var(--line);color:var(--muted);opacity:.55}
 .cal-mood-badge{position:absolute;bottom:-4px;right:-4px;width:15px;height:15px;border-radius:50%;background:var(--surface);border:1.5px solid var(--bg);display:grid;place-items:center;font-size:9px;box-shadow:0 1px 4px rgba(0,0,0,.18)}
 .day-detail-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
 .day-detail-row:last-child{border-bottom:0}
@@ -324,7 +323,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .modal.danger h2{color:var(--danger)}
 
 .profile-hero{display:flex;align-items:center;gap:13px;padding:16px;border:1px solid var(--card-border);border-radius:19px;background:var(--soft);box-shadow:var(--card-shadow)}
-.profile-avatar{width:56px;height:56px;flex:0 0 56px;border-radius:18px;background:linear-gradient(150deg,var(--accent2),var(--accent));color:#1c1204;display:grid;place-items:center;font-family:var(--font-display);font-size:22px;font-weight:900;box-shadow:0 6px 16px -4px rgba(185,121,31,.5)}
+.profile-avatar{width:56px;height:56px;flex:0 0 56px;border-radius:18px;background:linear-gradient(150deg,var(--accent2),var(--accent));color:#1c1204;display:grid;place-items:center;font-family:var(--font-display);font-size:22px;font-weight:900;box-shadow:0 6px 16px -4px rgba(185,121,31,.5);background-size:cover;background-position:center}
+.profile-avatar-wrap{position:relative;flex:0 0 56px}
+.avatar-edit-btn{position:absolute;bottom:-5px;right:-5px;width:24px;height:24px;padding:0;border-radius:50%;background:var(--primary);color:var(--primaryText);border:2px solid var(--surface);display:grid;place-items:center}
+.avatar-edit-btn svg{width:12px;height:12px}
+.avatar-edit-btn:active{transform:scale(.9)}
+.avatar-remove-link{display:block;margin:9px 0 0 2px;background:none;border:0;color:var(--danger);font-size:10px;font-weight:800;text-decoration:underline;padding:4px 2px}
+.avatar-hint{margin:9px 0 0 2px;color:var(--muted);font-size:10px}
 .profile-main{min-width:0}.profile-kicker{font-size:9px;letter-spacing:1.5px;font-weight:900;color:var(--muted);margin-bottom:3px}.profile-main h2{margin:0;font-size:21px;line-height:1.1}.profile-main span{display:block;margin-top:4px;color:var(--muted);font-size:10px;font-weight:650}
 .profile-settings-heading{margin:18px 4px 8px;font-size:10px;letter-spacing:1.4px;color:var(--muted);font-weight:900}
 .setting-title{font-size:9px;letter-spacing:1.2px;font-weight:900;color:var(--muted);margin-bottom:10px}
@@ -518,6 +523,28 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function checkinKey(d){return toInputDate(d)}
   function escapeHTML(v){
     return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  }
+  function compressImageFile(file,maxSize){
+    return new Promise((resolve,reject)=>{
+      const reader=new FileReader();
+      reader.onload=()=>{
+        const img=new Image();
+        img.onload=()=>{
+          let w=img.width, h=img.height;
+          const side=Math.min(w,h);
+          const sx=(w-side)/2, sy=(h-side)/2;
+          const canvas=document.createElement("canvas");
+          canvas.width=maxSize;canvas.height=maxSize;
+          const ctx=canvas.getContext("2d");
+          ctx.drawImage(img,sx,sy,side,side,0,0,maxSize,maxSize);
+          resolve(canvas.toDataURL("image/jpeg",0.85));
+        };
+        img.onerror=reject;
+        img.src=reader.result;
+      };
+      reader.onerror=reject;
+      reader.readAsDataURL(file);
+    });
   }
   function challengeProgress(day){
     const g=goal();
@@ -836,7 +863,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   let editingNoteKey=null;
   let unlocked=sessionStorage.getItem("hayger_unlocked")==="1";
   let pinSetupOpen=false;
-  let moodPickerOpen=false;
 
   const TABS=[
     {id:"home",label:"HOME",icon:'<svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg>'},
@@ -850,7 +876,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   tabbarEl.querySelectorAll(".tab-btn").forEach(btn=>{
     btn.addEventListener("click",()=>{
       phaseView=btn.dataset.view;
-      moodPickerOpen=false;
       app.scrollTop=0;
       render();
     });
@@ -931,9 +956,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const entry=data[key];
       const isFuture=dt>today();
       if(!isFuture){monthElapsed++; if(entry) monthDone++;}
-      const cls=(entry?" done":"")+(key===t?" today":"");
+      const missed=!isFuture && !entry && key!==t;
+      const cls=(entry?" done":"")+(key===t?" today":"")+(missed?" missed":"")+(isFuture?" future-day":"");
       const badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
-      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}">${d}${badge}</button>`;
+      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}${missed?" — no check-in":""}">${d}${badge}</button>`;
     }
 
     const heat=heatmapWeeks(10);
@@ -1036,15 +1062,23 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
     const savedName=profile.name||localStorage.getItem("hayger_profile_name_v1")||"";
     const initial=escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
+    const photo=localStorage.getItem("hayger_profile_photo_v1")||"";
     return `<div class="container">
       <div class="profile-hero">
-        <div class="profile-avatar">${initial}</div>
+        <div class="profile-avatar-wrap">
+          <div class="profile-avatar"${photo?` style="background-image:url('${photo}')"`:""}>${photo?"":initial}</div>
+          <button id="avatarEditBtn" class="avatar-edit-btn" type="button" aria-label="Change photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.5" r="3.3"/></svg>
+          </button>
+          <input id="avatarFileInput" class="file-input" type="file" accept="image/*">
+        </div>
         <div class="profile-main">
           <div class="profile-kicker">YOUR PROFILE</div>
           <h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2>
           <span>Personalize your HAYGER experience</span>
         </div>
       </div>
+      ${photo?`<button id="removeAvatarBtn" class="avatar-remove-link" type="button">Remove photo</button>`:`<div class="avatar-hint">Tap the camera icon to add your own photo.</div>`}
 
       <div class="settings-card" style="margin-top:10px">
         <div class="setting-title">PROFILE DETAILS</div>
@@ -1228,19 +1262,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <p class="message">Started on <strong>${formatDate(start)}</strong> · “${motivational(day)}”</p>
       <div class="checkin">
-        <div class="checkin-text">${(()=>{
-          if(!checked) return "Take a second to check in for today.";
-          const mood=data[key]&&data[key].mood;
-          if(mood) return `Today's check-in is complete.`;
-          if(moodPickerOpen) return "How are you feeling today? Pick one — you can't change it later.";
-          return "Today's check-in is complete.";
-        })()}</div>
-        ${checked?`<div class="checkin-split">
-          <button id="checkinButton" class="checkin-button done" type="button">✓ CHECKED IN</button>
-          <button id="feelingButton" class="checkin-button feeling-btn${data[key]&&data[key].mood?" done":""}" type="button">${data[key]&&data[key].mood?`${data[key].mood} MOOD SET`:"FEELING"}</button>
-        </div>`:`<button id="checkinButton" class="checkin-button" type="button">YES, I DID</button>`}
-        ${checked&&moodPickerOpen&&!(data[key]&&data[key].mood)?`<div class="mood-row">${MOODS.map(m=>`<button class="mood-chip" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
-        ${checked&&!moodPickerOpen&&data[key]&&data[key].mood?`<div class="mood-hint">You felt ${data[key].mood} today · locked in until tomorrow.</div>`:""}
+        <div class="checkin-text">${checked?"Today's check-in is complete.":"Take a second to check in for today."}</div>
+        <button id="checkinButton" class="checkin-button ${checked?"done":""}" type="button">${checked?"✓ CHECKED IN TODAY":"YES, I DID"}</button>
+        ${checked?`<div class="mood-hint">How are you feeling today?</div>
+        <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
@@ -1278,29 +1303,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
       });
 
-      document.getElementById("feelingButton")?.addEventListener("click",()=>{
-        const d=checkins();
-        if(d[key]&&d[key].mood){
-          showToast(`You already set today's mood: ${d[key].mood}`);
-          return;
-        }
-        moodPickerOpen=!moodPickerOpen;
-        render();
-      });
-
       document.querySelectorAll(".mood-chip").forEach(btn=>{
         btn.addEventListener("click",()=>{
           const d=checkins();
           if(!d[key]) return;
-          if(d[key].mood){
-            showToast(`Mood already set for today.`);
-            return;
-          }
-          d[key].mood=btn.dataset.mood;
+          d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
           writeJSON(CHECKINS_KEY,d);
-          moodPickerOpen=false;
           render();
-          showToast(`✓ Mood saved: ${btn.dataset.mood}`);
         });
       });
     }
@@ -1315,6 +1324,28 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         localStorage.setItem("hayger_profile_v2",JSON.stringify(data));
         localStorage.setItem("hayger_profile_name_v1",name);
         showToast("✓ Profile saved.");
+        render();
+      });
+
+      document.getElementById("avatarEditBtn")?.addEventListener("click",()=>{
+        document.getElementById("avatarFileInput")?.click();
+      });
+      document.getElementById("avatarFileInput")?.addEventListener("change",async(e)=>{
+        const file=e.target.files&&e.target.files[0];
+        if(!file) return;
+        if(!file.type.startsWith("image/")){showToast("Please choose an image file.");return}
+        try{
+          const dataUrl=await compressImageFile(file,240);
+          localStorage.setItem("hayger_profile_photo_v1",dataUrl);
+          showToast("✓ Photo updated.");
+          render();
+        }catch{
+          showToast("Couldn't load that photo. Try another.");
+        }
+      });
+      document.getElementById("removeAvatarBtn")?.addEventListener("click",()=>{
+        localStorage.removeItem("hayger_profile_photo_v1");
+        showToast("Photo removed.");
         render();
       });
 
@@ -1417,7 +1448,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1","hayger_profile_photo_v1"].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1526,7 +1557,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,"hayger_profile_v2","hayger_profile_name_v1","hayger_profile_photo_v1"].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }

@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-ultra-v7-name-notes-profile-notes-v2-profile-bottom-v3-profile-bottom-v4-final-polish-v1-premium-ui-v1-checkin-split-v1";
+const CACHE_NAME = "hayger-ultra-v7-name-notes-profile-notes-v2-profile-bottom-v3-profile-bottom-v4-final-polish-v1-premium-ui-v1-checkin-revert-v1-history-avatar-v1";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{
