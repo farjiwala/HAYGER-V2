@@ -560,7 +560,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
     return {current,best,total:days.length};
   }
-  function checkinKey(d){return toInputDate(d)}
   function motivational(day){
     const m=["You don't need to win the year. Just win today.","Small steps still move you forward.","Keep showing up. That's the whole game.","Today counts. Make it yours.","Consistency gets stronger one day at a time.","You made it this far. Keep going."];
     return m[(day-1)%m.length];
@@ -1019,7 +1018,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       <div class="stats-grid"><div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div><div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div><div class="stat"><b>${s.total}</b><span>CHECK-INS</span></div></div>
       <div class="stats-grid" style="margin-top:8px"><div class="stat"><b>${day}</b><span>DAY</span></div><div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div><div class="stat"><b>${g||"—"}</b><span>GOAL</span></div></div>
       <div class="chart-card" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>TAP A WEEK TO VIEW</span></div><div class="week-strip">${weekCards}</div>${detail}</div>
-      <div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Challenge goal</div><div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div></div><div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div><div class="goal-controls"><select id="goalSelect" class="select-input"><option value="7" ${g===7?"selected":""}>7 days</option><option value="30" ${g===30?"selected":""}>30 days</option><option value="50" ${g===50?"selected":""}>50 days</option><option value="100" ${g===100?"selected":""}>100 days</option><option value="365" ${g===365?"selected":""}>365 days</option><option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option></select><button id="saveGoal" class="small-button" type="button">SET GOAL</button></div><input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}"></div>
+      <div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Challenge goal</div><div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div></div><div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div><div class="goal-controls"><select id="goalSelect" class="select-input"><option value="" ${g?"":"selected"} disabled>Choose a goal…</option><option value="7" ${g===7?"selected":""}>7 days</option><option value="30" ${g===30?"selected":""}>30 days</option><option value="50" ${g===50?"selected":""}>50 days</option><option value="100" ${g===100?"selected":""}>100 days</option><option value="365" ${g===365?"selected":""}>365 days</option><option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option></select><button id="saveGoal" class="small-button" type="button">SET GOAL</button></div><input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}"></div>
       <div class="notes" style="margin-top:10px"><div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div><textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea><button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button><div class="note-meta">Notes stay on this device.</div></div>
       ${noteToolbar}${searchBox}${notesMenuOpen?`<div class="notes-menu"><div class="notes-menu-title">SAVED NOTES · ${Object.keys(noteMap).length}</div>${noteList}</div>`:""}${noteSearchOpen&&!notesMenuOpen?noteList:""}
     </div>`;
@@ -1253,6 +1252,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const saveGoal=document.getElementById("saveGoal");
       if(saveGoal)saveGoal.onclick=()=>{
         let v;
+        if(goalSelect.value===""){showToast("Choose a goal first.");return}
         if(goalSelect.value==="custom"){
           v=Math.round(Number(goalCustom.value));
           if(!v||v<1){showToast("Enter a valid number of days.");return}
@@ -1506,26 +1506,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
-<script id="hayger-note-actions-js">
-(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
-function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
-function write(x){localStorage.setItem(key(),JSON.stringify(x))}
-window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
-window.addEventListener("load",()=>{
- document.querySelectorAll("[data-note-index]").forEach((el)=>{
-   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
-   if(el.querySelector(".note-actions"))return;
-   const box=document.createElement("div");box.className="note-actions";
-   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
-   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
-   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
-   el.appendChild(box);
- });
-});
-})();
-</script>
-
-
 
 </body>
 </html>
