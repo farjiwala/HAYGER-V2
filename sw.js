@@ -1,4 +1,4 @@
-const CACHE_NAME = "hayger-4-habit-coach";
+const CACHE_NAME = "hayger-5-0-original-ui-upgrade";
 const APP_SHELL=["./","./index.html","./manifest.json","./icon-192.png","./icon-512.png"];
 
 self.addEventListener("install",event=>{

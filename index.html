@@ -415,44 +415,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge.locked{opacity:.82;background:color-mix(in srgb,var(--accent) 5%,var(--soft));border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent)}.badge.locked .badge-icon{filter:grayscale(.15);opacity:.85}.badge-target{margin-top:3px;color:var(--accent);font-size:7px;font-weight:900}.badge-earned{margin-top:3px;color:#55bd7e;font-size:7px;font-weight:900}.badge.unlocked{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 12%,transparent)}
 @media(max-width:390px){.activity-grid{gap:5px}.week-card{min-width:82px}.week-days{gap:3px}}
 
-/* HAYGER 4.0 — Habit System + Coach + Analytics */
-.focus-card{margin-top:14px;padding:16px;border:1px solid var(--line);border-radius:20px;background:var(--surface);box-shadow:0 8px 22px rgba(0,0,0,.035)}
-.focus-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}
-.focus-title{font-family:var(--font-display);font-size:17px;font-weight:700}
-.focus-badge{padding:5px 8px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:8px;font-weight:900;letter-spacing:.6px}
-.focus-input{width:100%;min-height:48px;padding:12px 13px;border:1px solid var(--line);border-radius:13px;outline:none;background:var(--soft);color:var(--text);resize:vertical;font-size:12px;line-height:1.45;user-select:auto;-webkit-user-select:auto}
-.focus-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
-.focus-row{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:8px;align-items:end}
-.energy-row{display:flex;gap:6px;flex-wrap:wrap}
-.energy-chip{width:36px;height:36px;border:1px solid var(--line);border-radius:11px;background:var(--soft);color:var(--text);font-size:15px}
-.energy-chip.active{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 2px var(--accent-soft)}
-.focus-save{height:36px;padding:0 12px;border:0;border-radius:11px;background:var(--primary);color:var(--primaryText);font-size:9px;font-weight:900}
-.focus-meta{margin-top:9px;color:var(--muted);font-size:9px;line-height:1.4}
-.insight-card{margin-top:10px;padding:16px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(135deg,var(--surface),var(--soft))}
-.insight-kicker{color:var(--accent);font-size:8px;font-weight:900;letter-spacing:1px}
-.insight-title{margin-top:5px;font-family:var(--font-display);font-size:17px;font-weight:700}
-.insight-text{margin-top:6px;color:var(--muted);font-size:11px;line-height:1.5}
-.insight-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:11px}
-.insight-stat{padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.insight-stat b{display:block;font-family:var(--font-display);font-size:18px}
-.insight-stat span{display:block;margin-top:3px;color:var(--muted);font-size:7.5px;font-weight:850}
-.quick-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.quick-btn{min-height:43px;border:1px solid var(--line);border-radius:12px;background:var(--soft);color:var(--text);font-size:9px;font-weight:900}
-@media(max-width:360px){.focus-row{grid-template-columns:1fr}.focus-save{width:100%}}
-
-
-/* HAYGER 4.0 */
-.plan-card,.coach-card,.analytics-card{margin-top:10px;padding:16px;border:1px solid var(--line);border-radius:18px;background:var(--surface)}
-.plan-head,.coach-head,.analytics-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
-.plan-title,.coach-title,.analytics-title{font-family:var(--font-display);font-size:17px;font-weight:800}
-.kicker4{color:var(--accent);font-size:8px;font-weight:900;letter-spacing:1px}
-.habit-list{display:grid;gap:8px;margin-top:12px}.habit-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 11px;border:1px solid var(--line);border-radius:13px;background:var(--soft)}
-.habit-copy b{display:block;font-size:10px}.habit-copy span{display:block;margin-top:3px;color:var(--muted);font-size:8px}
-.habit-actions{display:flex;gap:5px}.habit-check,.habit-delete{border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--text);min-width:38px;height:34px;font-weight:900}.habit-check.done{background:var(--text);color:var(--surface)}
-.habit-add{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.habit-add input{min-width:0}.mission{padding:13px;border-radius:14px;background:var(--soft);border:1px solid var(--line);margin-top:10px}.mission b{display:block;font-size:11px}.mission p{margin:5px 0 0;color:var(--muted);font-size:9px;line-height:1.45}.mission-bar{height:7px;border-radius:99px;background:var(--line);overflow:hidden;margin-top:9px}.mission-bar i{display:block;height:100%;background:var(--text)}
-.coach-message{font-size:11px;line-height:1.55;margin-top:9px}.coach-list{display:grid;gap:7px;margin-top:10px}.coach-tip{padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:var(--soft);font-size:9px;line-height:1.45}.coach-tip b{display:block;font-size:9px;margin-bottom:3px}.analytics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-top:10px}.analytics-stat{padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}.analytics-stat b{display:block;font-family:var(--font-display);font-size:19px}.analytics-stat span{display:block;margin-top:3px;color:var(--muted);font-size:7px;font-weight:850}.bar-list{display:grid;gap:7px;margin-top:12px}.bar-item{display:grid;grid-template-columns:42px 1fr 28px;gap:7px;align-items:center;font-size:8px}.bar-track{height:8px;border-radius:99px;background:var(--line);overflow:hidden}.bar-track i{display:block;height:100%;background:var(--text)}
-.app-tabbar{overflow-x:auto;justify-content:flex-start}.app-tabbar .tab-btn{flex:0 0 76px}.week-mission-btn{margin-top:10px;width:100%}
-@media(max-width:360px){.app-tabbar .tab-btn{flex-basis:68px}.habit-add{grid-template-columns:1fr}.habit-add button{width:100%}}
+.habit-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.habit-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.habit-head b{display:block;font-size:10px;letter-spacing:.8px}.habit-head span{display:block;margin-top:3px;color:var(--muted);font-size:8px;font-weight:800}.habit-progress{height:7px;border-radius:9px;background:var(--soft2);overflow:hidden;margin:12px 0}.habit-progress>div{height:100%;background:var(--accent);border-radius:9px;transition:.25s}.habit-list{display:grid;gap:7px}.habit-row{width:100%;display:grid;grid-template-columns:28px 1fr 24px;align-items:center;gap:8px;text-align:left;border:1px solid var(--line);border-radius:13px;padding:10px;background:var(--soft);color:var(--text);font:inherit;font-size:9px;font-weight:850}.habit-row strong{justify-self:end;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--soft2);color:var(--muted)}.habit-row.done{border-color:var(--accent);background:var(--accent-soft)}.habit-row.done strong{background:var(--accent);color:#1b1306}.habit-icon{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;background:var(--surface);font-weight:900}.coach-line{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:8px;line-height:1.5;font-weight:700}.habit-manage-list{display:grid;gap:7px;margin:12px 0}.manage-row{display:grid;grid-template-columns:24px 1fr auto;gap:7px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:11px;background:var(--soft);font-size:9px}.danger-text{border:0;background:transparent;color:var(--danger);font-size:7px;font-weight:900}.insight-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}.insight-card b{font-size:10px}.insight-card p{margin:7px 0 0;color:var(--muted);font-size:9px;line-height:1.55;font-weight:700}
 </style>
 
 
@@ -529,14 +493,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   const START_KEY="hayger_start_date";
   const CHECKINS_KEY="hayger_checkins";
   const NOTES_KEY="hayger_notes";
-  const FOCUS_KEY="hayger_daily_focus_v1";
-  const HABITS_KEY="hayger_habits_v1";
-  const MISSION_KEY="hayger_weekly_mission_v1";
   const GOAL_KEY="hayger_goal";
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
   const PROFILE_KEY="hayger_profile_v2";
+  const HABITS_KEY="hayger_habits_v1";
+  const PLAN_KEY="hayger_plan_v1";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -570,61 +533,49 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function writeJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}}
   function checkins(){return readJSON(CHECKINS_KEY,{})}
   function notes(){return readJSON(NOTES_KEY,{})}
-  function dailyFocus(){return readJSON(FOCUS_KEY,{})||{}}
-  function focusForDate(key){return dailyFocus()[key]||{}}
-  function saveFocus(key,value){
-    const all=dailyFocus(); all[key]={...(all[key]||{}),...value,updatedAt:new Date().toISOString()};
-    return writeJSON(FOCUS_KEY,all);
-  }
-  function habits(){
-    const d=readJSON(HABITS_KEY,null);
-    if(Array.isArray(d)) return d;
-    const defaults=[{id:"walk",name:"Move for 10 minutes",created:toInputDate(today())},{id:"read",name:"Read for 10 minutes",created:toInputDate(today())},{id:"reset",name:"2-minute reset",created:toInputDate(today())}];
-    writeJSON(HABITS_KEY,defaults); return defaults;
-  }
-  function habitChecks(){return readJSON("hayger_habit_checks_v1",{})||{}}
-  function saveHabitChecks(v){writeJSON("hayger_habit_checks_v1",v)}
-  function getWeekMission(){
-    const wk=weekKey(today()), all=readJSON(MISSION_KEY,{})||{};
-    if(!all[wk]){const missions=[{type:"checkins",target:5,title:"5-day consistency",text:"Check in on five days this week."},{type:"habits",target:12,title:"Habit momentum",text:"Complete 12 habit actions this week."},{type:"focus",target:4,title:"Protect your focus",text:"Save Daily Focus on four days this week."},{type:"notes",target:3,title:"Reflect three times",text:"Write three short notes this week."}];let n=0;for(const c of wk)n=(n+c.charCodeAt(0))%missions.length;all[wk=wk] = {...missions[n],week:wk};writeJSON(MISSION_KEY,all)}
-    return all[wk];
-  }
-  function missionProgress(m){
-    const ws=weekStartForDate(today()), end=new Date(ws);end.setDate(end.getDate()+6);const c=checkins(), hc=habitChecks(), f=dailyFocus(), n=notes(); let v=0;
-    for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(d.getDate()+i);const k=toInputDate(d);if(m.type==="checkins"&&c[k])v++;if(m.type==="focus"&&f[k]&&(f[k].intention||f[k].energy))v++;if(m.type==="notes"&&n[k])v++;if(m.type==="habits")v+=Object.values(hc[k]||{}).filter(Boolean).length;}
-    return Math.min(m.target,v);
-  }
-  function habitStats(){
-    const hs=habits(), hc=habitChecks(), now=today(), start=new Date(now);start.setDate(start.getDate()-29);const out={};
-    hs.forEach(h=>out[h.id]={name:h.name,done:0,possible:0});
-    for(let d=new Date(start);d<=now;d.setDate(d.getDate()+1)){const k=toInputDate(d);hs.forEach(h=>{if(new Date(h.created)>d)return;out[h.id].possible++;if(hc[k]?.[h.id])out[h.id].done++})}
-    return out;
-  }
-  function analytics4(){
-    const c=checkins(), start=parseDate(get(START_KEY)), now=today(), days=Math.max(1,dayCount(start));let mood={"😊":0,"🙂":0,"😐":0,"😔":0,"😣":0}, energy=0,energyN=0;
-    Object.values(c).forEach(x=>{if(x.mood)mood[x.mood]=(mood[x.mood]||0)+1});
-    Object.values(dailyFocus()).forEach(x=>{if(x.energy){energy+=Number(x.energy);energyN++}});
-    const dow=[0,0,0,0,0,0,0];Object.keys(c).forEach(k=>{const d=parseDate(k);if(d)dow[d.getDay()]++});const names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];let bestI=dow.indexOf(Math.max(...dow));
-    const hs=habitStats();const possible=Object.values(hs).reduce((a,x)=>a+x.possible,0),done=Object.values(hs).reduce((a,x)=>a+x.done,0);
-    return {mood,avgEnergy:energyN?(energy/energyN).toFixed(1):"—",bestDay:names[bestI],habitRate:possible?Math.round(done/possible*100):0,consistency:Math.min(100,Math.round(Object.keys(c).length/days*100))};
-  }
-  function recentFocusCount(){
-    const all=dailyFocus(), keys=Object.keys(all);
-    return keys.filter(k=>all[k]&&((all[k].intention||"").trim()||all[k].energy)).length;
-  }
-  function smartInsight(day,s){
-    const rate=Math.min(100,Math.round((s.total/Math.max(1,day))*100));
-    if(s.current>=7) return {title:"You're building real momentum.",text:`A ${s.current}-day current streak is strong. Protect the routine by keeping today's action small and obvious.`,a:`${s.current} days`,al:"CURRENT STREAK",b:`${rate}%`,bl:"CHECK-IN RATE"};
-    if(rate>=80) return {title:"Your consistency is the signal.",text:"You are showing up on most days. Focus on reducing missed days rather than chasing perfect performance.",a:`${rate}%`,al:"CHECK-IN RATE",b:`${s.best}`,bl:"BEST STREAK"};
-    if(s.total>=3) return {title:"Turn effort into a routine.",text:"Your history has enough data to learn from. Set one clear intention each morning and close the day with a check-in.",a:`${s.total}`,al:"CHECK-INS",b:`${s.best}`,bl:"BEST STREAK"};
-    return {title:"Start simple. Build evidence.",text:"Use Daily Focus to choose one thing that matters today. Then check in when it is done.",a:`${s.total}`,al:"CHECK-INS",b:`${Math.max(0,s.current)}`,bl:"CURRENT STREAK"};
-  }
   function goal(){return Number(get(GOAL_KEY)||0)}
   function reminder(){return readJSON(REMINDER_KEY,{enabled:false,time:"20:00"})}
   function checkinKey(d){return toInputDate(d)}
   function escapeHTML(v){
     return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
+
+  function habits(){
+    const fallback=[
+      {id:"focus",name:"10 min focused work",icon:"◉",active:true},
+      {id:"move",name:"Move your body",icon:"↗",active:true},
+      {id:"water",name:"Drink enough water",icon:"≈",active:true}
+    ];
+    const h=readJSON(HABITS_KEY,null);
+    return Array.isArray(h)?h:fallback;
+  }
+  function habitLog(){return readJSON(PLAN_KEY,{});}
+  function saveHabits(v){writeJSON(HABITS_KEY,v)}
+  function todayHabitLog(){const m=habitLog(),k=toInputDate(today());return m[k]||{}}
+  function habitStats(){
+    const hs=habits().filter(h=>h.active!==false), log=habitLog(), days=Object.keys(log);
+    let done=0,total=0;
+    days.forEach(k=>{hs.forEach(h=>{total++;if(log[k]&&log[k][h.id])done++})});
+    const todayLog=todayHabitLog();
+    const todayDone=hs.filter(h=>todayLog[h.id]).length;
+    return {active:hs.length,done,todayDone,todayTotal:hs.length,rate:total?Math.round(done/total*100):0};
+  }
+  function coachMessage(day, checked){
+    const hs=habitStats();
+    if(!checked) return "Start with today's check-in. Momentum begins with one decision.";
+    if(hs.active && hs.todayDone===hs.todayTotal) return "Excellent. Your check-in and habits are complete — protect the streak.";
+    if(hs.todayDone>0) return `Good start. ${hs.todayTotal-hs.todayDone} habit${hs.todayTotal-hs.todayDone===1?"":"s"} left — keep the momentum small and easy.`;
+    return "Your check-in is done. Pick one tiny habit next; consistency beats intensity.";
+  }
+  function renderHabitCard(){
+    const hs=habits().filter(h=>h.active!==false), log=todayHabitLog(), done=hs.filter(h=>log[h.id]).length;
+    return `<div class="habit-card" style="margin-top:14px"><div class="habit-head"><div><b>TODAY'S MOMENTUM</b><span>${done}/${hs.length} habits complete</span></div><button id="addHabit" class="small-button" type="button">+ HABIT</button></div><div class="habit-progress"><div style="width:${hs.length?Math.round(done/hs.length*100):0}%"></div></div><div class="habit-list">${hs.map(h=>`<button class="habit-row ${log[h.id]?"done":""}" data-habit="${escapeHTML(h.id)}" type="button"><span class="habit-icon">${escapeHTML(h.icon||"•")}</span><span>${escapeHTML(h.name)}</span><strong>${log[h.id]?"✓":"+"}</strong></button>`).join("")}</div><div class="coach-line">${escapeHTML(coachMessage(dayCount(parseDate(get(START_KEY))),!!checkins()[toInputDate(today())]))}</div></div>`;
+  }
+  function habitManager(){
+    const hs=habits();
+    return `<div class="settings-card" style="margin-top:10px"><div class="setting-title">HABIT BUILDER</div><div class="setting-copy"><span>Create a few repeatable actions. HAYGER tracks them without changing your original journey.</span></div><div class="habit-manage-list">${hs.map(h=>`<div class="manage-row"><span>${escapeHTML(h.icon||"•")}</span><b>${escapeHTML(h.name)}</b><button class="danger-text" data-remove-habit="${escapeHTML(h.id)}" type="button">REMOVE</button></div>`).join("")}</div><button id="addHabitSettings" class="small-button" type="button">+ ADD HABIT</button></div>`;
+  }
+
   function challengeProgress(day){
     const g=goal();
     return g>0 ? Math.min(100,Math.round(day/g*100)) : 0;
@@ -999,8 +950,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     {id:"home",label:"HOME",icon:'<svg viewBox="0 0 24 24"><path d="M4 11.5 12 4l8 7.5"/><path d="M6 10v9a1 1 0 0 0 1 1h3v-6h4v6h3a1 1 0 0 0 1-1v-9"/></svg>'},
     {id:"calendar",label:"HISTORY",icon:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>'},
     {id:"stats",label:"STATS",icon:'<svg viewBox="0 0 24 24"><path d="M5 20V11M12 20V4M19 20v-7"/></svg>'},
-    {id:"plan",label:"PLAN",icon:'<svg viewBox="0 0 24 24"><path d="M5 4h14v16H5z"/><path d="m8 9 1.5 1.5L12 8M8 14l1.5 1.5L12 13M14 10h3M14 15h3"/></svg>'},
-    {id:"coach",label:"COACH",icon:'<svg viewBox="0 0 24 24"><path d="M4 5h16v11H8l-4 4z"/><path d="M8 9h8M8 12h5"/></svg>'},
     {id:"awards",label:"AWARDS",icon:'<svg viewBox="0 0 24 24"><path d="M12 3l2.5 5.6L21 9.5l-4.7 4 1.3 6.5L12 16.9l-5.6 3.1L7.7 13.5 3 9.5l6.5-.9L12 3z"/></svg>'},
     {id:"profile",label:"PROFILE",icon:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.7-4.1 3.1-6 7.5-6s6.8 1.9 7.5 6"/></svg>'}
   ];
@@ -1110,7 +1059,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     return `<div class="container"><h2 class="section-title">Stats</h2>
       <div class="stats-grid"><div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div><div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div><div class="stat"><b>${s.total}</b><span>CHECK-INS</span></div></div>
       <div class="stats-grid" style="margin-top:8px"><div class="stat"><b>${day}</b><span>DAY</span></div><div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div><div class="stat"><b>${g||"—"}</b><span>GOAL</span></div></div>
-      ${(()=>{const x=smartInsight(day,s);return `<div class="insight-card"><div class="insight-kicker">SMART INSIGHT</div><div class="insight-title">${x.title}</div><div class="insight-text">${x.text}</div><div class="insight-grid"><div class="insight-stat"><b>${x.a}</b><span>${x.al}</span></div><div class="insight-stat"><b>${x.b}</b><span>${x.bl}</span></div></div></div>`})()}
+      <div class="insight-card" style="margin-top:10px"><b>HAYGER INSIGHT</b><p>${escapeHTML(coachMessage(day,!!checkins()[toInputDate(today())]))} Habit completion: ${habitStats().rate}% overall. Today: ${habitStats().todayDone}/${habitStats().todayTotal || 0}.</p></div>
       <div class="chart-card" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>TAP A WEEK TO VIEW</span></div><div class="week-strip">${weekCards}</div>${detail}</div>
       <div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Challenge goal</div><div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div></div><div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div><div class="goal-controls"><select id="goalSelect" class="select-input"><option value="" ${g?"":"selected"} disabled>Choose a goal…</option><option value="7" ${g===7?"selected":""}>7 days</option><option value="30" ${g===30?"selected":""}>30 days</option><option value="50" ${g===50?"selected":""}>50 days</option><option value="100" ${g===100?"selected":""}>100 days</option><option value="365" ${g===365?"selected":""}>365 days</option><option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option></select><button id="saveGoal" class="small-button" type="button">SET GOAL</button></div><input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}"></div>
       <div class="notes" style="margin-top:10px"><div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div><textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea><button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button><div class="note-meta">Notes stay on this device.</div></div>
@@ -1118,37 +1067,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     </div>`;
   }
 
-
-  function renderPlan(){
-    const hs=habits(), hc=habitChecks(), k=toInputDate(today()), m=getWeekMission(), mp=missionProgress(m), stats=habitStats();
-    return `<div class="container"><h2 class="section-title">Plan</h2>
-      <div class="plan-card"><div class="plan-head"><div><div class="kicker4">TODAY</div><div class="plan-title">Your habits</div></div><span>${hs.filter(h=>hc[k]?.[h.id]).length}/${hs.length}</span></div>
-      <div class="habit-list">${hs.map(h=>{const done=!!hc[k]?.[h.id];const st=stats[h.id];return `<div class="habit-row"><div class="habit-copy"><b>${escapeHTML(h.name)}</b><span>30-day completion: ${st?Math.round(st.done/Math.max(1,st.possible)*100):0}%</span></div><div class="habit-actions"><button class="habit-check ${done?"done":""}" data-habit="${escapeHTML(h.id)}" type="button">${done?"✓":"○"}</button><button class="habit-delete" data-habit-delete="${escapeHTML(h.id)}" type="button" aria-label="Delete habit">×</button></div></div>`}).join("")}</div>
-      <div class="habit-add"><input id="newHabit" class="date-input" maxlength="50" placeholder="Add a small daily habit…"><button id="addHabit" class="small-button" type="button">ADD</button></div></div>
-      <div class="mission"><div class="kicker4">WEEKLY MISSION</div><b>${escapeHTML(m.title)}</b><p>${escapeHTML(m.text)}</p><div class="mission-bar"><i style="width:${Math.round(mp/m.target*100)}%"></i></div><div class="focus-meta">${mp} / ${m.target} complete</div></div>
-      <div class="analytics-card"><div class="analytics-head"><div><div class="kicker4">HABIT MOMENTUM</div><div class="analytics-title">Last 30 days</div></div></div><div class="analytics-grid">${Object.values(stats).slice(0,4).map(x=>`<div class="analytics-stat"><b>${x.possible?Math.round(x.done/x.possible*100):0}%</b><span>${escapeHTML(x.name.toUpperCase())}</span></div>`).join("")}</div></div>
-    </div>`;
-  }
-  function renderCoach(){
-    const s=streakStats(), a=analytics4(), m=getWeekMission(), mp=missionProgress(m), name=profileData().name||"there";const tips=[];
-    if(s.current===0)tips.push(["RESTART",`A clean restart is available today. One check-in is enough to rebuild momentum.`]);
-    else if(s.current<7)tips.push(["KEEP IT SMALL",`Protect your ${s.current}-day streak with the easiest version of your routine.`]);
-    else tips.push(["PROTECT THE STREAK",`You have ${s.current} days in a row. Reduce friction tonight so tomorrow is easy.`]);
-    if(a.consistency<60)tips.push(["CONSISTENCY",`Your check-in rate is ${a.consistency}%. Aim for one reliable daily action before adding more.`]);
-    if(a.habitRate<60)tips.push(["HABITS",`Your 30-day habit completion is ${a.habitRate}%. Shrink the habit until it feels almost too easy.`]);
-    if(a.avgEnergy!=="—"&&Number(a.avgEnergy)<=2)tips.push(["ENERGY",`Your logged energy averages ${a.avgEnergy}/5. On low-energy days, use the minimum viable version of your habit.`]);
-    if(mp<m.target)tips.push(["MISSION",`${m.target-mp} more action${m.target-mp===1?"":"s"} will complete this week's mission.`]);
-    return `<div class="container"><h2 class="section-title">Coach</h2><div class="coach-card"><div class="kicker4">HAYGER COACH</div><div class="coach-title">Good evening, ${escapeHTML(name)}.</div><div class="coach-message">Your job is not to be perfect. Your job is to make the next useful action obvious.</div><div class="coach-list">${tips.map(t=>`<div class="coach-tip"><b>${t[0]}</b>${t[1]}</div>`).join("")}</div></div>
-      <div class="analytics-card"><div class="analytics-head"><div><div class="kicker4">PERSONAL SIGNALS</div><div class="analytics-title">What your data says</div></div></div><div class="analytics-grid"><div class="analytics-stat"><b>${a.consistency}%</b><span>CONSISTENCY</span></div><div class="analytics-stat"><b>${a.avgEnergy}</b><span>AVG ENERGY / 5</span></div><div class="analytics-stat"><b>${a.habitRate}%</b><span>HABIT RATE</span></div><div class="analytics-stat"><b>${a.bestDay}</b><span>BEST DAY</span></div></div><div class="bar-list">${Object.entries(a.mood).map(([emo,n])=>`<div class="bar-item"><span>${emo}</span><div class="bar-track"><i style="width:${Math.min(100,n*20)}%"></i></div><b>${n}</b></div>`).join("")}</div></div>
-    </div>`;
-  }
   function renderMore(){
     const r=reminder(), profile=profileData();
     const savedName=profile.name||localStorage.getItem("hayger_profile_name_v1")||"";
     const avatar=profile.image?`<img src="${escapeHTML(profile.image)}" alt="Profile photo">`:escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
     return `<div class="container"><div class="profile-hero"><button id="profilePhotoButton" class="profile-avatar${profile.image?" has-image":""}" type="button" aria-label="Change profile photo">${avatar}</button><div class="profile-main"><div class="profile-kicker">YOUR PROFILE</div><h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2><span>Personalize your HAYGER experience</span><div class="profile-photo-actions"><button id="changeProfilePhoto" type="button">${profile.image?"EDIT PHOTO":"SET PROFILE PHOTO"}</button>${profile.image?`<button id="removeProfilePhoto" type="button">REMOVE</button>`:""}</div></div></div><input id="profileImageInput" class="file-input" type="file" accept="image/*">
       <div class="settings-card" style="margin-top:10px"><div class="setting-title">PROFILE DETAILS</div><div class="profile-form"><label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label><label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label><label><span>GENDER</span><select id="profileGender"><option value="">Prefer not to say</option><option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option><option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option><option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option></select></label></div><button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button></div>
-      <h3 class="profile-settings-heading">SETTINGS</h3><div class="settings-card"><div class="setting-row"><div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div><button id="changeDate" class="small-button" type="button">CHANGE</button></div></div>
+      <h3 class="profile-settings-heading">SETTINGS</h3>${habitManager()}<div class="settings-card"><div class="setting-row"><div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div><button id="changeDate" class="small-button" type="button">CHANGE</button></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Daily reminder</b><span>Optional reminder while HAYGER is open.</span></div><label class="switch"><input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}><span></span></label></div><div class="setting-row"><div class="setting-copy"><b>Reminder time</b><span>Notification permission may be required.</span></div><input id="reminderTime" class="time-input" type="time" value="${escapeHTML(r.time||"20:00")}"></div><div id="reminderStatus" class="reminder-status"></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, profile, check-ins, notes and settings.</span></div><button id="exportData" class="small-button" type="button">EXPORT</button></div><div class="setting-row"><div class="setting-copy"><b>Restore a backup</b><span>Import a HAYGER JSON backup from this device.</span></div><button id="importData" class="small-button" type="button">IMPORT</button><input id="importFile" class="file-input" type="file" accept="application/json,.json"></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Appearance</b><span>Current theme: ${escapeHTML(theme())}</span></div><button id="cycleThemeMore" class="small-button" type="button">CHANGE</button></div><div class="setting-row"><div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div><label class="switch"><input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}><span></span></label></div></div>
@@ -1192,9 +1117,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
+      app:"HAYGER",version:5,exportedAt:new Date().toISOString(),
       startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),profile:profileData(),
-      goal:goal(),reminder:reminder(),theme:theme(),dailyFocus:dailyFocus()
+      goal:goal(),reminder:reminder(),theme:theme(),habits:habits(),habitLog:habitLog()
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1216,12 +1141,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
-        writeJSON(FOCUS_KEY,d.dailyFocus&&typeof d.dailyFocus==="object"?d.dailyFocus:{});
         if(d.profile&&typeof d.profile==="object") writeJSON(PROFILE_KEY,d.profile);
         if(Number(d.goal)>0) localStorage.setItem(GOAL_KEY,String(Number(d.goal)));
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
+        if(Array.isArray(d.habits)) writeJSON(HABITS_KEY,d.habits);
+        if(d.habitLog&&typeof d.habitLog==="object") writeJSON(PLAN_KEY,d.habitLog);
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1258,18 +1184,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         ${checked?`<div class="mood-hint">How are you feeling today?</div>
         <div class="mood-row">${MOODS.map(m=>`<button class="mood-chip${data[key]&&data[key].mood===m?" active":""}" data-mood="${m}" type="button" aria-label="Mood ${m}">${m}</button>`).join("")}</div>`:""}
       </div>
-      <div class="focus-card">
-        <div class="focus-head"><div class="focus-title">Daily Focus</div><div class="focus-badge">2-MINUTE RESET</div></div>
-        <textarea id="focusIntention" class="focus-input" maxlength="180" placeholder="What matters most today?">${escapeHTML(focusForDate(key).intention||"")}</textarea>
-        <div class="focus-row">
-          <div><div class="field-label" style="margin-top:9px">ENERGY</div><div class="energy-row">${["😴","😐","🙂","💪","⚡"].map((e,i)=>`<button type="button" class="energy-chip${focusForDate(key).energy===String(i+1)?" active":""}" data-energy="${i+1}" aria-label="Energy ${i+1}">${e}</button>`).join("")}</div></div>
-          <button id="saveFocus" class="focus-save" type="button">SAVE FOCUS</button>
-        </div>
-        <div class="focus-meta">Private on this device · Your focus resets naturally each day.</div>
-      </div>
-      <div class="quick-row"><button id="quickNote" class="quick-btn" type="button">＋ ADD NOTE</button><button id="quickStats" class="quick-btn" type="button">VIEW INSIGHTS</button></div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+      ${renderHabitCard()}
     </div>`;
   }
 
@@ -1285,8 +1202,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const data=checkins(), key=checkinKey(current), checked=!!data[key];
 
     if(phaseView==="home") app.innerHTML=renderHome(start,current,day,data,key,checked);
-    else if(phaseView==="plan") app.innerHTML=renderPlan();
-    else if(phaseView==="coach") app.innerHTML=renderCoach();
     else app.innerHTML=phasePanel();
 
     if(phaseView==="home"){
@@ -1315,19 +1230,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           render();
         });
       });
-      const focus=focusForDate(key);
-      document.querySelectorAll(".energy-chip").forEach(btn=>btn.addEventListener("click",()=>{
-        saveFocus(key,{energy:btn.dataset.energy});
-        document.querySelectorAll(".energy-chip").forEach(x=>x.classList.toggle("active",x===btn));
-      }));
-      document.getElementById("saveFocus")?.addEventListener("click",()=>{
-        const intention=(document.getElementById("focusIntention")?.value||"").trim();
-        const energy=document.querySelector(".energy-chip.active")?.dataset.energy||focus.energy||"";
-        saveFocus(key,{intention,energy});
-        showToast(intention||energy?"✓ Daily focus saved.":"Focus cleared.");
-      });
-      document.getElementById("quickNote")?.addEventListener("click",()=>{phaseView="stats";noteSearchOpen=false;notesMenuOpen=false;editingNoteKey=null;render();setTimeout(()=>document.getElementById("dailyNote")?.focus(),80)});
-      document.getElementById("quickStats")?.addEventListener("click",()=>{phaseView="stats";render()});
     }
 
     if(phaseView==="profile"){
@@ -1343,6 +1245,15 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         showToast("✓ Profile saved.");
         render();
       });
+
+      document.getElementById("addHabitSettings")?.addEventListener("click",()=>{
+        const name=prompt("Name your new habit:","Read for 10 minutes"); if(!name||!name.trim()) return;
+        const hs=habits(); if(hs.length>=8){showToast("Keep up to 8 habits for a focused day.");return;}
+        hs.push({id:"h"+Date.now(),name:name.trim().slice(0,42),icon:"•",active:true}); saveHabits(hs); render();
+      });
+      document.querySelectorAll("[data-remove-habit]").forEach(btn=>btn.addEventListener("click",()=>{
+        const hs=habits().filter(h=>h.id!==btn.dataset.removeHabit); saveHabits(hs); render(); showToast("Habit removed.");
+      }));
 
       document.getElementById("changeDate")?.addEventListener("click",openModal);
       const imageInput=document.getElementById("profileImageInput");
@@ -1361,6 +1272,18 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       });
     }
 
+    if(phaseView==="home"){
+      document.querySelectorAll("[data-habit]").forEach(btn=>btn.addEventListener("click",()=>{
+        const id=btn.dataset.habit, map=habitLog(), key=toInputDate(today());
+        map[key]=map[key]||{}; map[key][id]=!map[key][id]; writeJSON(PLAN_KEY,map); render();
+      }));
+      document.getElementById("addHabit")?.addEventListener("click",()=>{
+        const name=prompt("Name your new habit:","Read for 10 minutes"); if(!name||!name.trim()) return;
+        const hs=habits(); if(hs.length>=8){showToast("Keep up to 8 habits for a focused day.");return;}
+        hs.push({id:"h"+Date.now(),name:name.trim().slice(0,42),icon:"•",active:true}); saveHabits(hs); render();
+      });
+    }
+
     if(phaseView==="calendar"){
       document.getElementById("prevMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()-1);render()};
       document.getElementById("nextMonth").onclick=()=>{calendarCursor.setMonth(calendarCursor.getMonth()+1);render()};
@@ -1370,13 +1293,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.querySelectorAll(".cal-day[data-date], .heat-cell[data-date]").forEach(btn=>{
         btn.addEventListener("click",()=>openDayDetail(btn.dataset.date));
       });
-    }
-
-
-    if(phaseView==="plan"){
-      document.querySelectorAll("[data-habit]").forEach(btn=>btn.addEventListener("click",()=>{const k=toInputDate(today()), all=habitChecks();all[k]=all[k]||{};all[k][btn.dataset.habit]=!all[k][btn.dataset.habit];saveHabitChecks(all);render()}));
-      document.querySelectorAll("[data-habit-delete]").forEach(btn=>btn.addEventListener("click",async()=>{const ok=await askConfirm("Delete this habit?","Its history will remain in your local data, but it will no longer appear in your plan.");if(ok){const next=habits().filter(h=>h.id!==btn.dataset.habitDelete);writeJSON(HABITS_KEY,next);render()}}));
-      document.getElementById("addHabit")?.addEventListener("click",()=>{const input=document.getElementById("newHabit"),name=(input?.value||"").trim();if(!name){showToast("Name your habit first.");return}const hs=habits();if(hs.length>=6){showToast("Keep your plan to 6 habits or fewer.");return}hs.push({id:"h_"+Date.now().toString(36),name,created:toInputDate(today())});writeJSON(HABITS_KEY,hs);render();showToast("✓ Habit added.")});
     }
 
     if(phaseView==="stats"){
@@ -1460,7 +1376,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,"hayger_habit_checks_v1",MISSION_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,PLAN_KEY].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1569,7 +1485,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,"hayger_habit_checks_v1",MISSION_KEY].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,PLAN_KEY].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }
@@ -1589,7 +1505,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
 
   document.getElementById("cancel").addEventListener("click",closeModal);
-  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);remove(FOCUS_KEY);closeModal();render()});
+  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);closeModal();render()});
   modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();}});
 

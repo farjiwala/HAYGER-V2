@@ -1,7 +1,7 @@
 {
   "name": "HAYGER \u2014 One Day At A Time",
   "short_name": "HAYGER",
-  "description": "HAYGER \u2014 habits, daily focus, weekly missions, coaching insights, streaks and progress.",
+  "description": "HAYGER \u2014 one day at a time. Goals, streaks, history, habits, momentum and daily progress.",
   "start_url": "./",
   "scope": "./",
   "id": "./",
@@ -31,6 +31,5 @@
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "version": "4.0.0"
+  ]
 }
