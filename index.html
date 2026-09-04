@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<title>HAYGER — Ultra</title>
+<title>HAYGER — One Day at a Time</title>
 
 <style>
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -282,7 +282,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .pin-dot{width:13px;height:13px;border-radius:50%;border:1.5px solid var(--muted);background:transparent;transition:.15s}
 .pin-dot.filled{background:var(--accent);border-color:var(--accent)}
 .pin-keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:270px;margin:0 auto}
-.pin-key{min-height:56px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--text);font-size:19px;font-weight:800}
+pin-key{min-height:56px;border:1px solid var(--line);border-radius:16px;background:var(--soft);color:var(--text);font-size:19px;font-weight:800}
 .pin-key:active{transform:scale(.94)}
 .pin-key.ghost{background:transparent;border-color:transparent;color:var(--muted);font-size:11px;font-weight:800}
 .pin-error{min-height:16px;margin-top:14px;color:var(--danger);font-size:11px;font-weight:700;text-align:center}
@@ -375,48 +375,26 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
 @media(max-width:360px){.note-actions button{min-width:64px!important;padding:0 8px!important}.awards-summary{gap:7px}}
 
-/* HAYGER requirement polish */
-.brand{color:var(--text);text-shadow:0 0 16px color-mix(in srgb,var(--accent) 22%,transparent)}
-.brand-sub{color:var(--accent);text-shadow:0 0 12px color-mix(in srgb,var(--accent) 18%,transparent)}
-.hero-streak{margin-top:8px;padding:6px 12px;border:1px solid var(--accent);border-radius:999px;background:var(--accent-soft);color:var(--text);font-size:10px;font-weight:900;letter-spacing:.1px;white-space:nowrap;box-shadow:0 0 18px color-mix(in srgb,var(--accent) 10%,transparent)}
-.activity-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;padding:2px 0 4px}
-.heat-cell{width:100%;height:auto;aspect-ratio:1;border:1px solid var(--line);border-radius:5px;background:var(--soft2);padding:0;transition:transform .12s,background .2s,border-color .2s}
-.heat-cell.checked{background:var(--accent);border-color:var(--accent)}
-.heat-cell.missed{background:color-mix(in srgb,var(--danger) 78%,var(--surface));border-color:var(--danger)}
-.heat-cell.upcoming{background:transparent;border:1px dashed var(--line);opacity:.65}
-.heat-cell:active{transform:scale(.9)}
-.activity-legend,.calendar-legend{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 9px;color:var(--muted);font-size:8px;font-weight:800}
-.activity-legend span,.calendar-legend span{display:inline-flex;align-items:center;gap:5px}
-.activity-legend i,.calendar-legend i{display:inline-block;width:8px;height:8px;border-radius:3px;background:var(--soft2)}
-.activity-legend i.checked,.calendar-legend i.checked{background:var(--accent)}
-.activity-legend i.missed,.calendar-legend i.missed{background:var(--danger)}
-.activity-legend i.upcoming,.calendar-legend i.upcoming{border:1px dashed var(--muted);background:transparent}
-.calendar-legend{margin:-2px 0 8px 2px}
-.cal-day.checked{background:var(--accent);color:#1c1204;border-color:var(--accent)}
-.cal-day.missed{background:color-mix(in srgb,var(--danger) 20%,var(--surface));color:var(--danger);border-color:color-mix(in srgb,var(--danger) 48%,var(--line))}
-.cal-day.upcoming{background:var(--surface);color:var(--muted);border-style:dashed}
-.cal-day.before{background:transparent;color:var(--muted);opacity:.22;border-color:transparent;pointer-events:none}
-.cal-day.today{box-shadow:0 0 0 2px var(--text),0 0 0 4px color-mix(in srgb,var(--accent) 30%,transparent)}
-.status-checked{color:#55bd7e!important}.status-missed{color:var(--danger)!important}.status-upcoming{color:var(--accent)!important}.status-before{color:var(--muted)!important}
-.week-strip{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
-.week-strip::-webkit-scrollbar{display:none}
-.week-card{position:relative;min-width:88px;height:92px;padding:10px;border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--text);text-align:left;overflow:hidden;transition:.16s}
-.week-card.selected{border-color:var(--accent);background:var(--accent-soft);box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 25%,transparent),0 8px 20px color-mix(in srgb,var(--accent) 8%,transparent)}
-.week-card span{display:block;color:var(--muted);font-size:8px;font-weight:900;letter-spacing:.4px}.week-card b{display:block;margin-top:7px;font-family:var(--font-display);font-size:20px}.week-card small{display:block;margin-top:3px;color:var(--muted);font-size:8px;font-weight:700}
-.week-mini{position:absolute;right:9px;bottom:9px;width:7px;height:30px;border-radius:5px;background:var(--soft2);display:flex;align-items:flex-end;overflow:hidden}.week-mini i{display:block;width:100%;background:var(--accent);border-radius:5px}
-.week-detail{margin-top:5px;padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--surface)}
-.week-detail-head{display:flex;align-items:center;justify-content:space-between;gap:8px}.week-detail-head b{font-size:10px}.week-detail-head strong{color:var(--accent);font-size:11px}
-.week-days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin-top:11px}.week-day{padding:7px 3px;border-radius:10px;background:var(--soft);text-align:center;border:1px solid var(--line)}.week-day span{display:block;color:var(--muted);font-size:7px;font-weight:800}.week-day b{display:block;margin:4px 0;font-size:11px}.week-day i{display:grid;place-items:center;width:18px;height:18px;margin:auto;border-radius:50%;font-style:normal;font-size:9px;font-weight:900}.week-day.checked i{background:var(--accent);color:#1c1204}.week-day.missed i{background:var(--danger);color:#fff}.week-day.upcoming i{border:1px dashed var(--muted);color:var(--muted)}
-.week-totals{display:flex;justify-content:space-between;gap:6px;margin-top:10px;color:var(--muted);font-size:8px;font-weight:800}.week-totals span:first-child{color:#55bd7e}.week-totals span:nth-child(2){color:var(--danger)}.week-totals span:nth-child(3){color:var(--muted)}
-.notes-toolbar{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding:10px 2px 0}.notes-toolbar-title{font-size:10px;font-weight:900;letter-spacing:.7px;color:var(--muted)}.notes-toolbar-actions{display:flex;gap:7px}.icon-button{width:38px;height:34px;border:1px solid var(--line);border-radius:10px;background:var(--soft);color:var(--text);font-size:21px;line-height:1;display:grid;place-items:center}.icon-button:active{transform:scale(.92)}
-.notes-menu{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:15px;background:var(--soft)}.notes-menu-title{font-size:9px;color:var(--muted);font-weight:900;letter-spacing:.8px}
-.profile-avatar{overflow:hidden;border:1px solid var(--line);position:relative}.profile-avatar.has-image{background:var(--surface)}.profile-avatar img{width:100%;height:100%;object-fit:cover;display:block}.profile-photo-actions{display:flex;gap:7px;margin-top:7px}.profile-photo-actions button{border:0;background:transparent;color:var(--accent);padding:0;font-size:8px;font-weight:900;letter-spacing:.3px}.profile-photo-actions button+button{color:var(--danger)}
-.switch{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;width:46px;height:26px}.switch input{position:absolute;opacity:0;width:0;height:0}.switch span{position:absolute;inset:0;border:1px solid var(--line);border-radius:999px;background:var(--soft2);transition:.2s}.switch span:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--text);transition:.2s;box-shadow:0 2px 5px rgba(0,0,0,.18)}.switch input:checked+span{background:var(--accent);border-color:var(--accent)}.switch input:checked+span:after{transform:translateX(20px);background:#1b1306}.switch input:focus-visible+span{box-shadow:0 0 0 3px var(--accent-soft)}
-.badge.locked{opacity:.82;background:color-mix(in srgb,var(--accent) 5%,var(--soft));border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent)}.badge.locked .badge-icon{filter:grayscale(.15);opacity:.85}.badge-target{margin-top:3px;color:var(--accent);font-size:7px;font-weight:900}.badge-earned{margin-top:3px;color:#55bd7e;font-size:7px;font-weight:900}.badge.unlocked{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 12%,transparent)}
-@media(max-width:390px){.activity-grid{gap:5px}.week-card{min-width:82px}.week-days{gap:3px}}
-
-.habit-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--surface);box-shadow:0 8px 24px rgba(0,0,0,.05)}
-.habit-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.habit-head b{display:block;font-size:10px;letter-spacing:.8px}.habit-head span{display:block;margin-top:3px;color:var(--muted);font-size:8px;font-weight:800}.habit-progress{height:7px;border-radius:9px;background:var(--soft2);overflow:hidden;margin:12px 0}.habit-progress>div{height:100%;background:var(--accent);border-radius:9px;transition:.25s}.habit-list{display:grid;gap:7px}.habit-row{width:100%;display:grid;grid-template-columns:28px 1fr 24px;align-items:center;gap:8px;text-align:left;border:1px solid var(--line);border-radius:13px;padding:10px;background:var(--soft);color:var(--text);font:inherit;font-size:9px;font-weight:850}.habit-row strong{justify-self:end;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--soft2);color:var(--muted)}.habit-row.done{border-color:var(--accent);background:var(--accent-soft)}.habit-row.done strong{background:var(--accent);color:#1b1306}.habit-icon{width:26px;height:26px;border-radius:9px;display:grid;place-items:center;background:var(--surface);font-weight:900}.coach-line{margin-top:11px;padding-top:10px;border-top:1px solid var(--line);color:var(--muted);font-size:8px;line-height:1.5;font-weight:700}.habit-manage-list{display:grid;gap:7px;margin:12px 0}.manage-row{display:grid;grid-template-columns:24px 1fr auto;gap:7px;align-items:center;padding:9px;border:1px solid var(--line);border-radius:11px;background:var(--soft);font-size:9px}.danger-text{border:0;background:transparent;color:var(--danger);font-size:7px;font-weight:900}.insight-card{padding:14px;border:1px solid var(--line);border-radius:17px;background:var(--soft)}.insight-card b{font-size:10px}.insight-card p{margin:7px 0 0;color:var(--muted);font-size:9px;line-height:1.55;font-weight:700}
+/* HAYGER V3 visual refresh */
+:root{--bg:#f5f5f0;--surface:#fffdf8;--soft:#ecece4;--soft2:#e2e3d9;--text:#18201b;--muted:#6d756c;--line:#dfe2d8;--accent:#9b6b32;--accent-soft:rgba(155,107,50,.12);--shadow:0 18px 50px rgba(24,32,27,.08)}
+body{background:radial-gradient(circle at 10% 0%,#fffdf7 0,#f5f5f0 42%,#eef0e9 100%);color:var(--text)}
+.app-shell{max-width:760px;margin:0 auto;min-height:100vh;background:transparent}
+.app-header{background:rgba(255,253,248,.78);backdrop-filter:blur(18px);border-bottom:1px solid rgba(223,226,216,.8)}
+.app-header-inner{padding:22px 20px 18px}
+.brand{letter-spacing:.18em;font-weight:900}
+.brand-sub{letter-spacing:.18em;color:var(--accent);font-size:10px}
+.app-scroll{padding:20px 16px 110px}
+.container{max-width:680px;margin:0 auto}
+.section-title{font-size:clamp(28px,7vw,42px);letter-spacing:-.04em;margin:4px 0 20px}
+.card,.setup,.award-next,.cal-summary,.history-card,.stat-card,.goal-card,.checkin-card{border:1px solid var(--line);box-shadow:var(--shadow);border-radius:24px;background:rgba(255,253,248,.88)}
+.button{border-radius:14px;min-height:46px;font-weight:800;letter-spacing:.04em}
+.button.primary{background:var(--text);box-shadow:0 8px 20px rgba(24,32,27,.16)}
+.button.secondary{background:var(--surface);border:1px solid var(--line)}
+.app-tabbar{background:rgba(255,253,248,.9);backdrop-filter:blur(18px);border-top:1px solid var(--line);box-shadow:0 -10px 35px rgba(24,32,27,.06)}
+.tab-btn{color:var(--muted);font-weight:700}.tab-btn.active{color:var(--accent)}
+.progress-ring{filter:drop-shadow(0 8px 18px rgba(155,107,50,.12))}
+input,textarea,select{border-radius:14px!important;border-color:var(--line)!important;background:var(--surface)!important}
+@media(max-width:520px){.app-header-inner{padding:18px 16px 14px}.app-scroll{padding:16px 12px 100px}.section-title{font-size:32px}.card,.setup,.award-next,.cal-summary,.history-card,.stat-card,.goal-card,.checkin-card{border-radius:20px}}
 </style>
 
 
@@ -497,9 +475,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   const REMINDER_KEY="hayger_reminder";
   const THEME_KEY="hayger_theme";
   const PIN_KEY="hayger_pin";
-  const PROFILE_KEY="hayger_profile_v2";
-  const HABITS_KEY="hayger_habits_v1";
-  const PLAN_KEY="hayger_plan_v1";
   const app=document.getElementById("app");
   const modal=document.getElementById("modal");
   const toast=document.getElementById("toast");
@@ -539,43 +514,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function escapeHTML(v){
     return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
   }
-
-  function habits(){
-    const fallback=[
-      {id:"focus",name:"10 min focused work",icon:"◉",active:true},
-      {id:"move",name:"Move your body",icon:"↗",active:true},
-      {id:"water",name:"Drink enough water",icon:"≈",active:true}
-    ];
-    const h=readJSON(HABITS_KEY,null);
-    return Array.isArray(h)?h:fallback;
-  }
-  function habitLog(){return readJSON(PLAN_KEY,{});}
-  function saveHabits(v){writeJSON(HABITS_KEY,v)}
-  function todayHabitLog(){const m=habitLog(),k=toInputDate(today());return m[k]||{}}
-  function habitStats(){
-    const hs=habits().filter(h=>h.active!==false), log=habitLog(), days=Object.keys(log);
-    let done=0,total=0;
-    days.forEach(k=>{hs.forEach(h=>{total++;if(log[k]&&log[k][h.id])done++})});
-    const todayLog=todayHabitLog();
-    const todayDone=hs.filter(h=>todayLog[h.id]).length;
-    return {active:hs.length,done,todayDone,todayTotal:hs.length,rate:total?Math.round(done/total*100):0};
-  }
-  function coachMessage(day, checked){
-    const hs=habitStats();
-    if(!checked) return "Start with today's check-in. Momentum begins with one decision.";
-    if(hs.active && hs.todayDone===hs.todayTotal) return "Excellent. Your check-in and habits are complete — protect the streak.";
-    if(hs.todayDone>0) return `Good start. ${hs.todayTotal-hs.todayDone} habit${hs.todayTotal-hs.todayDone===1?"":"s"} left — keep the momentum small and easy.`;
-    return "Your check-in is done. Pick one tiny habit next; consistency beats intensity.";
-  }
-  function renderHabitCard(){
-    const hs=habits().filter(h=>h.active!==false), log=todayHabitLog(), done=hs.filter(h=>log[h.id]).length;
-    return `<div class="habit-card" style="margin-top:14px"><div class="habit-head"><div><b>TODAY'S MOMENTUM</b><span>${done}/${hs.length} habits complete</span></div><button id="addHabit" class="small-button" type="button">+ HABIT</button></div><div class="habit-progress"><div style="width:${hs.length?Math.round(done/hs.length*100):0}%"></div></div><div class="habit-list">${hs.map(h=>`<button class="habit-row ${log[h.id]?"done":""}" data-habit="${escapeHTML(h.id)}" type="button"><span class="habit-icon">${escapeHTML(h.icon||"•")}</span><span>${escapeHTML(h.name)}</span><strong>${log[h.id]?"✓":"+"}</strong></button>`).join("")}</div><div class="coach-line">${escapeHTML(coachMessage(dayCount(parseDate(get(START_KEY))),!!checkins()[toInputDate(today())]))}</div></div>`;
-  }
-  function habitManager(){
-    const hs=habits();
-    return `<div class="settings-card" style="margin-top:10px"><div class="setting-title">HABIT BUILDER</div><div class="setting-copy"><span>Create a few repeatable actions. HAYGER tracks them without changing your original journey.</span></div><div class="habit-manage-list">${hs.map(h=>`<div class="manage-row"><span>${escapeHTML(h.icon||"•")}</span><b>${escapeHTML(h.name)}</b><button class="danger-text" data-remove-habit="${escapeHTML(h.id)}" type="button">REMOVE</button></div>`).join("")}</div><button id="addHabitSettings" class="small-button" type="button">+ ADD HABIT</button></div>`;
-  }
-
   function challengeProgress(day){
     const g=goal();
     return g>0 ? Math.min(100,Math.round(day/g*100)) : 0;
@@ -602,6 +540,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     }
     return {current,best,total:days.length};
   }
+  function checkinKey(d){return toInputDate(d)}
   function motivational(day){
     const m=["You don't need to win the year. Just win today.","Small steps still move you forward.","Keep showing up. That's the whole game.","Today counts. Make it yours.","Consistency gets stronger one day at a time.","You made it this far. Keep going."];
     return m[(day-1)%m.length];
@@ -703,7 +642,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const colors=["#101114","#6b7078","#55bd7e","#f5c451","#e08a6b"];
     const particles=Array.from({length:70},()=>({
       x:Math.random()*w, y:-20-Math.random()*h*0.3,
-      vx:(Math.random()-0.5)*2.4, vy:2+Math.random()*3,
+            vx:(Math.random()-0.5)*2.4, vy:2+Math.random()*3,
       size:4+Math.random()*5, rot:Math.random()*Math.PI,
       vr:(Math.random()-0.5)*0.3, color:colors[Math.floor(Math.random()*colors.length)]
     }));
@@ -730,47 +669,14 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const start=parseDate(get(START_KEY));
     const day=dayCount(start);
     const s=streakStats();
-    const profile=profileData();
-    const canvas=document.createElement("canvas");
-    const scale=2,w=900,h=1500; canvas.width=w*scale; canvas.height=h*scale;
-    const ctx=canvas.getContext("2d"); ctx.scale(scale,scale);
-    const bg=getComputedStyle(document.documentElement).getPropertyValue("--bg").trim()||"#0b0c10";
-    const surface=getComputedStyle(document.documentElement).getPropertyValue("--surface").trim()||"#15171c";
-    const text=getComputedStyle(document.documentElement).getPropertyValue("--text").trim()||"#f4f4f2";
-    const muted=getComputedStyle(document.documentElement).getPropertyValue("--muted").trim()||"#93979f";
-    const accent=getComputedStyle(document.documentElement).getPropertyValue("--accent").trim()||"#e3a94a";
-    const round=(x,y,ww,hh,r,fill,stroke)=>{ctx.beginPath();ctx.roundRect(x,y,ww,hh,r);if(fill){ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.stroke()}};
-    ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);
-    ctx.fillStyle=text;ctx.font='700 46px Georgia';ctx.fillText('HAYGER',60,82);
-    ctx.fillStyle=muted;ctx.font='800 18px Inter,Arial';ctx.letterSpacing='4px';ctx.fillText('ONE DAY AT A TIME',60,116);
-    if(profile.name){ctx.letterSpacing='0';ctx.fillStyle=text;ctx.font='700 24px Inter,Arial';ctx.fillText(profile.name,60,164)}
-    round(60,205,780,390,34,surface);
-    ctx.strokeStyle=accent;ctx.lineWidth=10;ctx.beginPath();ctx.arc(450,395,130,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,day/365));ctx.stroke();
-    ctx.fillStyle=muted;ctx.font='800 18px Inter,Arial';ctx.textAlign='center';ctx.fillText('DAY',450,350);
-    ctx.fillStyle=text;ctx.font='700 92px Georgia';ctx.fillText(String(day),450,440);
-    round(280,465,340,62,31,'rgba(227,169,74,.10)',accent);
-    ctx.fillStyle=accent;ctx.font='800 22px Inter,Arial';ctx.fillText('🔥  Current streak: '+s.current,450,505);
-    ctx.textAlign='left';
-    const rows=[['BEST STREAK',s.best+' day'+(s.best===1?'':'s')],['TOTAL CHECK-INS',String(s.total)],['CHECK-IN RATE',Math.min(100,Math.round((s.total/day)*100))+'%']];
-    rows.forEach((r,i)=>{const x=60+i*250;round(x,640,230,120,24,surface);ctx.fillStyle=muted;ctx.font='800 14px Inter,Arial';ctx.fillText(r[0],x+20,680);ctx.fillStyle=text;ctx.font='700 32px Georgia';ctx.fillText(r[1],x+20,725)});
-    round(60,800,780,250,30,surface);ctx.fillStyle=muted;ctx.font='800 16px Inter,Arial';ctx.fillText('JOURNEY',90,845);
-    ctx.fillStyle=text;ctx.font='700 30px Inter,Arial';ctx.fillText('One day at a time.',90,900);
-    ctx.fillStyle=muted;ctx.font='500 19px Inter,Arial';ctx.fillText('Started '+formatDate(start),90,940);
-    ctx.fillStyle=accent;ctx.font='800 18px Inter,Arial';ctx.fillText('Keep showing up. Every day counts.',90,990);
-    ctx.fillStyle=muted;ctx.font='500 16px Inter,Arial';ctx.fillText('Shared from HAYGER',60,1140);
-    ctx.fillStyle=accent;ctx.font='800 16px Inter,Arial';ctx.fillText(location.href,60,1180);
-    ctx.textAlign='left';
-    canvas.toBlob(async blob=>{
-      if(!blob){showToast("Couldn't create share image.");return}
-      const file=new File([blob],`hayger-progress-day-${day}.png`,{type:'image/png'});
-      const shareData={title:'HAYGER Progress',text:`HAYGER — Day ${day} · Current streak ${s.current}.\nOne day at a time.\n${location.href}`,files:[file]};
-      try{
-        if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){await navigator.share(shareData);return}
-        const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=file.name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
-        try{await navigator.clipboard?.writeText(`${shareData.text}`)}catch{}
-        showToast('✓ Progress image created. Link copied when supported.');
-      }catch{showToast("Share cancelled.")}
-    },'image/png');
+    const text=`HAYGER — Day ${day}\nCurrent streak: ${s.current} · Best streak: ${s.best}\nOne day at a time.`;
+    try{
+      if(navigator.share){await navigator.share({title:"HAYGER",text});return}
+      throw new Error("no-share");
+    }catch{
+      try{await navigator.clipboard.writeText(text);showToast("✓ Progress copied.")}
+      catch{showToast("Couldn't share progress.")}
+    }
   }
 
   // ---- Ultra: day detail modal (History tab) ----
@@ -782,10 +688,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const dm=document.getElementById("dayModal");
     document.getElementById("dayModalTitle").textContent=formatDate(dt);
     const rows=[];
-    const start=parseDate(get(START_KEY));
-    const status=statusForDate(dt,start,checkins());
-    const statusLabel=status==="checked"?"✓ Checked":status==="missed"?"✕ Missed":status==="upcoming"?"◌ Upcoming":"Before HAYGER";
-    rows.push(`<div class="day-detail-row"><div class="day-detail-label">Status</div><div class="day-detail-value status-${status}">${statusLabel}</div></div>`);
+    rows.push(`<div class="day-detail-row"><div class="day-detail-label">Status</div><div class="day-detail-value">${entry?"✓ Checked in":"Not checked in"}</div></div>`);
     if(entry&&entry.mood) rows.push(`<div class="day-detail-row"><div class="day-detail-label">Mood</div><div class="day-detail-mood">${entry.mood}</div></div>`);
     if(note) rows.push(`<div class="day-detail-row"><div class="day-detail-label">Note</div><div class="day-detail-value">${escapeHTML(note)}</div></div>`);
     document.getElementById("dayModalBody").innerHTML=rows.join("");
@@ -844,27 +747,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function dayCount(start){
     const ms=24*60*60*1000;
     return Math.max(1,Math.round((today()-start)/ms)+1);
-  }
-
-  function profileData(){return readJSON(PROFILE_KEY,{} )||{} }
-  function statusForDate(dt,start,data){
-    if(!dt||!start||dt<start) return "before";
-    if(dt>today()) return "upcoming";
-    return data[toInputDate(dt)] ? "checked" : (toInputDate(dt)===toInputDate(today()) ? "upcoming" : "missed");
-  }
-  function weekStartForDate(dt){
-    const d=new Date(dt);
-    const dow=(d.getDay()+6)%7;
-    d.setDate(d.getDate()-dow);
-    return d;
-  }
-  function weekKey(dt){return toInputDate(weekStartForDate(dt))}
-  function weeksSinceStart(start){
-    if(!start) return [];
-    const first=weekStartForDate(start), last=weekStartForDate(today());
-    const out=[]; let cur=new Date(first);
-    while(cur<=last){out.push(new Date(cur));cur.setDate(cur.getDate()+7)}
-    return out;
   }
 
   function systemTheme(){
@@ -974,34 +856,52 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     const total=b.journey.length+b.streak.length;
     const unlocked=b.journey.filter(x=>x.unlocked).length+b.streak.filter(x=>x.unlocked).length;
     const pct=total?Math.round(unlocked/total*100):0;
-    const next=[...b.journey,...b.streak].find(x=>!x.unlocked);
-    const grid=list=>`<div class="badges-grid">${list.map(x=>`<button class="badge${x.unlocked?" unlocked":" locked"}" data-badge-day="${x.day}" type="button" aria-label="${x.unlocked?"Unlocked":"Locked"} ${escapeHTML(x.label)}">
-      <div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div><div class="badge-label">${x.label}</div>${!x.unlocked?`<div class="badge-target">${x.day} days</div>`:`<div class="badge-earned">✓ EARNED</div>`}
-    </button>`).join("")}</div>`;
+    const all=[...b.journey,...b.streak].filter(x=>!x.unlocked);
+    const next=all[0];
+    const grid=list=>`<div class="badges-grid">${list.map(x=>`<div class="badge${x.unlocked?" unlocked":""}">
+      <div class="badge-icon">${x.unlocked?x.icon:"🔒"}</div>
+      <div class="badge-label">${x.label}</div>
+    </div>`).join("")}</div>`;
     return `<div class="container">
       <h2 class="section-title">Awards</h2>
       <div class="awards-summary">
         <div class="award-stat"><b>${unlocked}</b><span>BADGES UNLOCKED</span></div>
         <div class="award-stat"><b>${pct}%</b><span>ACHIEVEMENT COMPLETE</span></div>
       </div>
+      <div class="award-mini-row">
+        <div><span>CURRENT STREAK</span><b>${streakStats().current} day${streakStats().current===1?"":"s"}</b></div>
+        <div><span>BEST STREAK</span><b>${best} day${best===1?"":"s"}</b></div>
+      </div>
       <div class="award-progress">
         <div class="award-progress-top"><b>Your achievement journey</b><span>${unlocked} / ${total}</span></div>
         <div class="award-progress-track"><div class="award-progress-fill" style="width:${pct}%"></div></div>
       </div>
-      ${next?`<div class="award-next"><b>Next achievement · ${next.label}</b><span>${Math.max(0,next.day-day)} days to go — keep showing up. You've got this.</span></div>`:`<div class="award-next"><b>🏆 All achievements unlocked</b><span>You completed every HAYGER badge currently available.</span></div>`}
-      <div class="badge-section" style="margin-top:16px"><div class="badge-section-title">Journey badges</div>${grid(b.journey)}</div>
-      <div class="badge-section"><div class="badge-section-title">Streak badges</div>${grid(b.streak)}</div>
-      <div class="share-row"><button id="shareProgressBtn" class="button primary" type="button">SHARE PROGRESS</button><button id="exportAwards" class="button secondary" type="button">EXPORT BACKUP</button></div>
+      ${next?`<div class="award-next"><b>Next achievement · ${next.label}</b><span>Keep going — your next badge is waiting for you.</span></div>`:`<div class="award-next"><b>🏆 All achievements unlocked</b><span>You completed every HAYGER badge currently available.</span></div>`}
+      <div class="badge-section" style="margin-top:16px">
+        <div class="badge-section-title">Journey badges</div>
+        ${grid(b.journey)}
+      </div>
+      <div class="badge-section">
+        <div class="badge-section-title">Streak badges</div>
+        ${grid(b.streak)}
+      </div>
+      <div class="share-row">
+        <button id="shareProgressBtn" class="button secondary" type="button">SHARE PROGRESS</button>
+        <button id="exportAwards" class="button secondary" type="button">EXPORT BACKUP</button>
+      </div>
     </div>`;
   }
-
-  function activityDays(limit=50){
-    const start=parseDate(get(START_KEY)); if(!start) return [];
-    const data=checkins(), out=[];
-    for(let i=0;i<limit;i++){
-      const d=new Date(start);d.setDate(d.getDate()+i);
-      if(d>today()) break;
-      out.push({date:d,status:statusForDate(d,start,data)});
+  function heatmapWeeks(weeks){
+    const data=checkins();
+    const out=[];
+    for(let w=weeks-1;w>=0;w--){
+      const monday=weeksAgoMonday(w);
+      const col=[];
+      for(let i=0;i<7;i++){
+        const d=new Date(monday);d.setDate(d.getDate()+i);
+        col.push({date:d,future:d>today(),done:!!data[toInputDate(d)]});
+      }
+      out.push(col);
     }
     return out;
   }
@@ -1009,76 +909,211 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function renderCalendar(){
     const y=calendarCursor.getFullYear(), m=calendarCursor.getMonth();
     const first=new Date(y,m,1), last=new Date(y,m+1,0);
-    const offset=(first.getDay()+6)%7; let cells="";
+    const offset=(first.getDay()+6)%7;
+    let cells="";
     for(let i=0;i<offset;i++) cells+=`<button class="cal-day empty" aria-hidden="true"></button>`;
-    const data=checkins(), start=parseDate(get(START_KEY)), t=toInputDate(today());
-    let monthDone=0,monthElapsed=0;
+    const data=checkins(), t=toInputDate(today());
+    let monthDone=0, monthElapsed=0;
     for(let d=1;d<=last.getDate();d++){
-      const dt=new Date(y,m,d),key=toInputDate(dt),status=statusForDate(dt,start,data);
-      if(status!=="before"&&status!=="upcoming"){monthElapsed++;if(status==="checked")monthDone++}
-      const cls=` ${status}`+(key===t?" today":"");
-      const entry=data[key],badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
-      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)} — ${status}">${d}${badge}</button>`;
+      const dt=new Date(y,m,d), key=toInputDate(dt);
+      const entry=data[key];
+      const isFuture=dt>today();
+      if(!isFuture){monthElapsed++; if(entry) monthDone++;}
+      const cls=(entry?" done":"")+(key===t?" today":"");
+      const badge=entry&&entry.mood?`<span class="cal-mood-badge">${entry.mood}</span>`:"";
+      cells+=`<button class="cal-day${cls}" data-date="${key}" type="button" aria-label="${formatDate(dt)}">${d}${badge}</button>`;
     }
-    const activity=activityDays(50);
-    const heatCells=activity.map(c=>`<button class="heat-cell ${c.status}" data-date="${toInputDate(c.date)}" title="${formatDate(c.date)} — ${c.status}" type="button"></button>`).join("");
+
+    const heat=heatmapWeeks(10);
+    const heatCells=heat.map(col=>col.map(c=>
+      `<div class="heat-cell${c.future?" future":c.done?" done":""}" title="${c.future?"":toInputDate(c.date)}"></div>`
+    ).join("")).join("");
+
     const s=streakStats();
+
     return `<div class="container">
       <h2 class="section-title">History</h2>
-      <div class="cal-summary"><div class="cal-summary-item"><b>${s.current}</b><span>Current streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${s.best}</b><span>Best streak</span></div><div class="cal-summary-div"></div><div class="cal-summary-item"><b>${monthElapsed?Math.round((monthDone/monthElapsed)*100):0}%</b><span>This month</span></div></div>
-      <div class="heatmap-card"><div class="heatmap-title"><b>ACTIVITY</b><span>50 DAYS</span></div><div class="activity-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div><div class="activity-grid">${heatCells||`<div class="note-empty">Your activity will appear here after you start HAYGER.</div>`}</div></div>
-      <div class="calendar-head"><button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button><div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div><button class="cal-today-btn" id="jumpToday" type="button">TODAY</button><button class="cal-nav" id="nextMonth" type="button" aria-label="Next month">›</button></div>
-      <div class="calendar-legend"><span><i class="checked"></i>Checked</span><span><i class="missed"></i>Missed</span><span><i class="upcoming"></i>Upcoming</span></div>
-      <div class="calendar">${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}${cells}</div>
+      <div class="cal-summary">
+        <div class="cal-summary-item"><b>${s.current}</b><span>Current streak</span></div>
+        <div class="cal-summary-div"></div>
+        <div class="cal-summary-item"><b>${s.best}</b><span>Best streak</span></div>
+        <div class="cal-summary-div"></div>
+        <div class="cal-summary-item"><b>${monthElapsed?Math.round((monthDone/monthElapsed)*100):0}%</b><span>This month</span></div>
+      </div>
+
+      <div class="heatmap-card">
+        <div class="heatmap-title"><b>ACTIVITY</b><span>LAST 10 WEEKS</span></div>
+        <div class="heatmap-grid">${heatCells}</div>
+      </div>
+
+      <div class="calendar-head">
+        <button class="cal-nav" id="prevMonth" type="button" aria-label="Previous month">‹</button>
+        <div class="calendar-title">${calendarCursor.toLocaleDateString(undefined,{month:"long",year:"numeric"})}</div>
+        <button class="cal-today-btn" id="jumpToday" type="button">TODAY</button>
+        <button class="cal-nav" id="nextMonth" type="button" aria-label="Next month">›</button>
+      </div>
+      <div class="calendar">
+        ${["M","T","W","T","F","S","S"].map(x=>`<div class="cal-dow">${x}</div>`).join("")}
+        ${cells}
+      </div>
     </div>`;
   }
 
-  let selectedWeekKey=null;
-  let notesMenuOpen=false;
-  let noteSearchOpen=false;
-  function weekData(start){
-    const weeks=weeksSinceStart(start), data=checkins();
-    return weeks.map(ws=>{
-      const days=[]; let checked=0,missed=0,upcoming=0;
-      for(let i=0;i<7;i++){const d=new Date(ws);d.setDate(d.getDate()+i);const status=statusForDate(d,start,data);if(status==="checked")checked++;else if(status==="missed")missed++;else if(status==="upcoming")upcoming++;days.push({date:d,status})}
-      return {key:toInputDate(ws),start:ws,end:new Date(new Date(ws).setDate(ws.getDate()+6)),days,checked,missed,upcoming};
-    });
-  }
   function renderStats(){
     const s=streakStats(), start=parseDate(get(START_KEY)), day=dayCount(start);
-    const checkinRate=Math.min(100,Math.round((s.total/day)*100)); const g=goal(),gp=challengeProgress(day);
-    const allWeeks=weekData(start); if(!selectedWeekKey||!allWeeks.some(w=>w.key===selectedWeekKey)) selectedWeekKey=allWeeks[allWeeks.length-1]?.key;
-    const selected=allWeeks.find(w=>w.key===selectedWeekKey)||allWeeks[allWeeks.length-1];
-    const noteMap=notes(),q=noteSearchQuery.trim().toLowerCase();
-    const filtered=Object.keys(noteMap).sort().reverse().filter(k=>!q||noteMap[k].toLowerCase().includes(q)).slice(0,50);
-    const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
-    const noteToolbar=`<div class="notes-toolbar"><div class="notes-toolbar-title">YOUR NOTES</div><div class="notes-toolbar-actions"><button id="noteSearchBtn" class="icon-button" type="button" aria-label="Search notes">⌕</button><button id="noteMoreBtn" class="icon-button" type="button" aria-label="More notes">⋮</button></div></div>`;
-    const searchBox=noteSearchOpen?`<input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">`:"";
-    const noteList=filtered.length?`<div class="note-list">${filtered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${q?"No notes match your search.":"No saved notes yet."}</div>`;
-    return `<div class="container"><h2 class="section-title">Stats</h2>
-      <div class="stats-grid"><div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div><div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div><div class="stat"><b>${s.total}</b><span>CHECK-INS</span></div></div>
-      <div class="stats-grid" style="margin-top:8px"><div class="stat"><b>${day}</b><span>DAY</span></div><div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div><div class="stat"><b>${g||"—"}</b><span>GOAL</span></div></div>
-      <div class="insight-card" style="margin-top:10px"><b>HAYGER INSIGHT</b><p>${escapeHTML(coachMessage(day,!!checkins()[toInputDate(today())]))} Habit completion: ${habitStats().rate}% overall. Today: ${habitStats().todayDone}/${habitStats().todayTotal || 0}.</p></div>
-      <div class="chart-card" style="margin-top:10px"><div class="chart-title"><b>WEEKLY ACTIVITY</b><span>TAP A WEEK TO VIEW</span></div><div class="week-strip">${weekCards}</div>${detail}</div>
-      <div class="goal-card" style="margin-top:10px"><div class="goal-row"><div class="goal-title">Challenge goal</div><div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div></div><div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div><div class="goal-controls"><select id="goalSelect" class="select-input"><option value="" ${g?"":"selected"} disabled>Choose a goal…</option><option value="7" ${g===7?"selected":""}>7 days</option><option value="30" ${g===30?"selected":""}>30 days</option><option value="50" ${g===50?"selected":""}>50 days</option><option value="100" ${g===100?"selected":""}>100 days</option><option value="365" ${g===365?"selected":""}>365 days</option><option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option></select><button id="saveGoal" class="small-button" type="button">SET GOAL</button></div><input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}"></div>
-      <div class="notes" style="margin-top:10px"><div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div><textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea><button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button><div class="note-meta">Notes stay on this device.</div></div>
-      ${noteToolbar}${searchBox}${notesMenuOpen?`<div class="notes-menu"><div class="notes-menu-title">SAVED NOTES · ${Object.keys(noteMap).length}</div>${noteList}</div>`:""}${noteSearchOpen&&!notesMenuOpen?noteList:""}
+    const checkinRate=Math.min(100,Math.round((s.total/day)*100));
+    const g=goal(), gp=challengeProgress(day);
+    const noteMap=notes();
+    const q=noteSearchQuery.trim().toLowerCase();
+    const noteKeysFiltered=Object.keys(noteMap).sort().reverse()
+      .filter(k=>!q||noteMap[k].toLowerCase().includes(q))
+      .slice(0,20);
+    return `<div class="container">
+      <h2 class="section-title">Stats</h2>
+      <div class="stats-grid">
+        <div class="stat"><b>${s.current}</b><span>CURRENT STREAK</span></div>
+        <div class="stat"><b>${s.best}</b><span>BEST STREAK</span></div>
+        <div class="stat"><b>${s.total}</b><span>CHECK-INS</span></div>
+      </div>
+      <div class="stats-grid" style="margin-top:8px">
+        <div class="stat"><b>${day}</b><span>DAY</span></div>
+        <div class="stat"><b>${checkinRate}%</b><span>CHECK-IN RATE</span></div>
+        <div class="stat"><b>${g||"—"}</b><span>GOAL</span></div>
+      </div>
+
+      <div class="chart-card" style="margin-top:10px">
+        <div class="chart-title"><b>WEEKLY ACTIVITY</b><span>LAST 8 WEEKS</span></div>
+        <canvas id="weeklyChart"></canvas>
+      </div>
+
+      <div class="goal-card" style="margin-top:10px">
+        <div class="goal-row">
+          <div class="goal-title">Challenge goal</div>
+          <div class="goal-value">${g?`${day} / ${g} days`:"Not set"}</div>
+        </div>
+        <div class="progress-track"><div class="progress-fill" style="width:${gp}%"></div></div>
+        <div class="goal-controls">
+          <select id="goalSelect" class="select-input">
+            <option value="7" ${g===7?"selected":""}>7 days</option>
+            <option value="30" ${g===30?"selected":""}>30 days</option>
+            <option value="50" ${g===50?"selected":""}>50 days</option>
+            <option value="100" ${g===100?"selected":""}>100 days</option>
+            <option value="365" ${g===365?"selected":""}>365 days</option>
+            <option value="custom" ${![7,30,50,100,365,0].includes(g)?"selected":""}>Custom…</option>
+          </select>
+          <button id="saveGoal" class="small-button" type="button">SET GOAL</button>
+        </div>
+        <input id="goalCustom" class="date-input" style="margin-top:8px;height:44px;${![7,30,50,100,365,0].includes(g)?"":"display:none"}" type="number" min="1" max="9999" placeholder="Custom number of days" value="${![7,30,50,100,365,0].includes(g)?g:""}">
+      </div>
+
+      <div class="notes" style="margin-top:10px">
+        <div class="note-editor-head"><b>${editingNoteKey?`Editing note · ${formatDate(parseDate(editingNoteKey))}`:"Today's note"}</b>${editingNoteKey?`<button id="cancelNoteEdit" class="note-cancel" type="button">CANCEL</button>`:""}</div>
+        <textarea id="dailyNote" maxlength="500" placeholder="Write a note for today...">${escapeHTML(noteMap[editingNoteKey||toInputDate(today())]||"")}</textarea>
+        <button class="save-note" id="saveNote" type="button">${editingNoteKey?"UPDATE NOTE":"SAVE TODAY'S NOTE"}</button>
+        <div class="note-meta">Notes stay on this device.</div>
+      </div>
+
+      <input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">
+      ${noteKeysFiltered.length?`<div class="note-list">${noteKeysFiltered.map(k=>`<div class="note-item" data-note-key="${escapeHTML(k)}"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}" aria-label="Edit note">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}" aria-label="Delete note">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${noteSearchQuery?"No notes match your search.":"No notes yet."}</div>`}
     </div>`;
   }
 
   function renderMore(){
-    const r=reminder(), profile=profileData();
+    const r=reminder();
+    let profile={};
+    try{profile=JSON.parse(localStorage.getItem("hayger_profile_v2")||"{}")}catch{}
     const savedName=profile.name||localStorage.getItem("hayger_profile_name_v1")||"";
-    const avatar=profile.image?`<img src="${escapeHTML(profile.image)}" alt="Profile photo">`:escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
-    return `<div class="container"><div class="profile-hero"><button id="profilePhotoButton" class="profile-avatar${profile.image?" has-image":""}" type="button" aria-label="Change profile photo">${avatar}</button><div class="profile-main"><div class="profile-kicker">YOUR PROFILE</div><h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2><span>Personalize your HAYGER experience</span><div class="profile-photo-actions"><button id="changeProfilePhoto" type="button">${profile.image?"EDIT PHOTO":"SET PROFILE PHOTO"}</button>${profile.image?`<button id="removeProfilePhoto" type="button">REMOVE</button>`:""}</div></div></div><input id="profileImageInput" class="file-input" type="file" accept="image/*">
-      <div class="settings-card" style="margin-top:10px"><div class="setting-title">PROFILE DETAILS</div><div class="profile-form"><label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label><label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label><label><span>GENDER</span><select id="profileGender"><option value="">Prefer not to say</option><option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option><option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option><option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option></select></label></div><button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button></div>
-      <h3 class="profile-settings-heading">SETTINGS</h3>${habitManager()}<div class="settings-card"><div class="setting-row"><div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div><button id="changeDate" class="small-button" type="button">CHANGE</button></div></div>
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Daily reminder</b><span>Optional reminder while HAYGER is open.</span></div><label class="switch"><input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}><span></span></label></div><div class="setting-row"><div class="setting-copy"><b>Reminder time</b><span>Notification permission may be required.</span></div><input id="reminderTime" class="time-input" type="time" value="${escapeHTML(r.time||"20:00")}"></div><div id="reminderStatus" class="reminder-status"></div></div>
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, profile, check-ins, notes and settings.</span></div><button id="exportData" class="small-button" type="button">EXPORT</button></div><div class="setting-row"><div class="setting-copy"><b>Restore a backup</b><span>Import a HAYGER JSON backup from this device.</span></div><button id="importData" class="small-button" type="button">IMPORT</button><input id="importFile" class="file-input" type="file" accept="application/json,.json"></div></div>
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Appearance</b><span>Current theme: ${escapeHTML(theme())}</span></div><button id="cycleThemeMore" class="small-button" type="button">CHANGE</button></div><div class="setting-row"><div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div><label class="switch"><input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}><span></span></label></div></div>
-      ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px"><div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div id="pinSetupError" class="pin-error"></div><div class="goal-controls" style="margin-top:6px"><button id="pinSetupCancel" class="small-button" type="button">CANCEL</button><button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button></div></div>`:""}
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div><button id="resetAll" class="danger-button" type="button">RESET HAYGER</button></div></div></div>`;
+    const initial=escapeHTML((savedName||"H").trim().charAt(0).toUpperCase());
+    return `<div class="container">
+      <div class="profile-hero">
+        <div class="profile-avatar">${initial}</div>
+        <div class="profile-main">
+          <div class="profile-kicker">YOUR PROFILE</div>
+          <h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2>
+          <span>Personalize your HAYGER experience</span>
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-title">PROFILE DETAILS</div>
+        <div class="profile-form">
+          <label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label>
+          <label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label>
+          <label><span>GENDER</span><select id="profileGender">
+            <option value="">Prefer not to say</option>
+            <option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option>
+            <option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option>
+            <option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option>
+          </select></label>
+        </div>
+        <button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button>
+      </div>
+
+      <h3 class="profile-settings-heading">SETTINGS</h3>
+
+      <div class="settings-card">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div>
+          <button id="changeDate" class="small-button" type="button">CHANGE</button>
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Daily reminder</b><span>Optional reminder while HAYGER is open.</span></div>
+          <input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}>
+        </div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Reminder time</b><span>Notification permission may be required.</span></div>
+          <input id="reminderTime" class="time-input" type="time" value="${escapeHTML(r.time||"20:00")}">
+        </div>
+        <div id="reminderStatus" class="reminder-status"></div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, check-ins, notes and settings.</span></div>
+          <button id="exportData" class="small-button" type="button">EXPORT</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>Restore a backup</b><span>Import a HAYGER JSON backup from this device.</span></div>
+          <button id="importData" class="small-button" type="button">IMPORT</button>
+          <input id="importFile" class="file-input" type="file" accept="application/json,.json">
+        </div>
+      </div>
+
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Appearance</b><span>Current theme: ${escapeHTML(theme())}</span></div>
+          <button id="cycleThemeMore" class="small-button" type="button">CHANGE</button>
+        </div>
+        <div class="setting-row">
+          <div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div>
+          <input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}>
+        </div>
+      </div>
+      ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px">
+        <div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
+        <div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div>
+        <div class="pin-setup-row">
+          ${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}
+        </div>
+        <div id="pinSetupError" class="pin-error"></div>
+        <div class="goal-controls" style="margin-top:6px">
+          <button id="pinSetupCancel" class="small-button" type="button">CANCEL</button>
+          <button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button>
+        </div>
+      </div>`:""}
+      <div class="settings-card" style="margin-top:10px">
+        <div class="setting-row">
+          <div class="setting-copy"><b>Reset everything</b><span>This permanently removes local HAYGER data.</span></div>
+          <button id="resetAll" class="danger-button" type="button">RESET HAYGER</button>
+        </div>
+      </div>
+    </div>`;
   }
 
   function phasePanel(){
@@ -1117,9 +1152,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function exportData(){
     const payload={
-      app:"HAYGER",version:5,exportedAt:new Date().toISOString(),
-      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),profile:profileData(),
-      goal:goal(),reminder:reminder(),theme:theme(),habits:habits(),habitLog:habitLog()
+      app:"HAYGER",version:1,exportedAt:new Date().toISOString(),
+      startDate:get(START_KEY)||null,checkins:checkins(),notes:notes(),
+      goal:goal(),reminder:reminder(),theme:theme()
     };
     const blob=new Blob([JSON.stringify(payload,null,2)],{type:"application/json"});
     const url=URL.createObjectURL(blob), a=document.createElement("a");
@@ -1141,13 +1176,10 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         }
         writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
         writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
-        if(d.profile&&typeof d.profile==="object") writeJSON(PROFILE_KEY,d.profile);
         if(Number(d.goal)>0) localStorage.setItem(GOAL_KEY,String(Number(d.goal)));
         else remove(GOAL_KEY);
         if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
         if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
-        if(Array.isArray(d.habits)) writeJSON(HABITS_KEY,d.habits);
-        if(d.habitLog&&typeof d.habitLog==="object") writeJSON(PLAN_KEY,d.habitLog);
         showToast("✓ Backup restored.");
         setTimeout(render,300);
       }catch{showToast("Backup file is not valid.");}
@@ -1171,7 +1203,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           <div class="ring-center">
             <div class="ring-label">DAY</div>
             <div class="ring-number">${day}</div>
-            <div class="hero-streak">🔥 Current streak: ${streakStats().current}</div>
           </div>
         </div>
         <div class="hero-date">${formatDate(current)}</div>
@@ -1186,7 +1217,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
-      ${renderHabitCard()}
     </div>`;
   }
 
@@ -1238,50 +1268,14 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         const age=(document.getElementById("profileAge")?.value||"").trim();
         const gender=document.getElementById("profileGender")?.value||"";
         if(!name){showToast("Please enter your name.");return}
-        const current=profileData();
-        const data={...current,name,age,gender,updatedAt:new Date().toISOString()};
-        localStorage.setItem(PROFILE_KEY,JSON.stringify(data));
+        const data={name,age,gender,updatedAt:new Date().toISOString()};
+        localStorage.setItem("hayger_profile_v2",JSON.stringify(data));
         localStorage.setItem("hayger_profile_name_v1",name);
         showToast("✓ Profile saved.");
         render();
       });
 
-      document.getElementById("addHabitSettings")?.addEventListener("click",()=>{
-        const name=prompt("Name your new habit:","Read for 10 minutes"); if(!name||!name.trim()) return;
-        const hs=habits(); if(hs.length>=8){showToast("Keep up to 8 habits for a focused day.");return;}
-        hs.push({id:"h"+Date.now(),name:name.trim().slice(0,42),icon:"•",active:true}); saveHabits(hs); render();
-      });
-      document.querySelectorAll("[data-remove-habit]").forEach(btn=>btn.addEventListener("click",()=>{
-        const hs=habits().filter(h=>h.id!==btn.dataset.removeHabit); saveHabits(hs); render(); showToast("Habit removed.");
-      }));
-
       document.getElementById("changeDate")?.addEventListener("click",openModal);
-      const imageInput=document.getElementById("profileImageInput");
-      const chooseImage=()=>imageInput?.click();
-      document.getElementById("profilePhotoButton")?.addEventListener("click",chooseImage);
-      document.getElementById("changeProfilePhoto")?.addEventListener("click",chooseImage);
-      document.getElementById("removeProfilePhoto")?.addEventListener("click",()=>{const p=profileData();delete p.image;writeJSON(PROFILE_KEY,p);render();showToast("✓ Profile photo removed.")});
-      imageInput?.addEventListener("change",async e=>{
-        const file=e.target.files?.[0]; if(!file) return;
-        if(!file.type.startsWith("image/")){showToast("Choose an image file.");return}
-        try{
-          const img=await new Promise((resolve,reject)=>{const x=new Image();x.onload=()=>resolve(x);x.onerror=reject;x.src=URL.createObjectURL(file)});
-          const max=512,scale=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas");c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-          const p=profileData();p.image=c.toDataURL("image/jpeg",.82);p.updatedAt=new Date().toISOString();writeJSON(PROFILE_KEY,p);render();showToast("✓ Profile photo updated.");
-        }catch{showToast("Couldn't use that image.")}
-      });
-    }
-
-    if(phaseView==="home"){
-      document.querySelectorAll("[data-habit]").forEach(btn=>btn.addEventListener("click",()=>{
-        const id=btn.dataset.habit, map=habitLog(), key=toInputDate(today());
-        map[key]=map[key]||{}; map[key][id]=!map[key][id]; writeJSON(PLAN_KEY,map); render();
-      }));
-      document.getElementById("addHabit")?.addEventListener("click",()=>{
-        const name=prompt("Name your new habit:","Read for 10 minutes"); if(!name||!name.trim()) return;
-        const hs=habits(); if(hs.length>=8){showToast("Keep up to 8 habits for a focused day.");return;}
-        hs.push({id:"h"+Date.now(),name:name.trim().slice(0,42),icon:"•",active:true}); saveHabits(hs); render();
-      });
     }
 
     if(phaseView==="calendar"){
@@ -1290,13 +1284,13 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("jumpToday").onclick=()=>{
         calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);render();
       };
-      document.querySelectorAll(".cal-day[data-date], .heat-cell[data-date]").forEach(btn=>{
+      document.querySelectorAll(".cal-day[data-date]").forEach(btn=>{
         btn.addEventListener("click",()=>openDayDetail(btn.dataset.date));
       });
     }
 
     if(phaseView==="stats"){
-      document.querySelectorAll("[data-week]").forEach(btn=>btn.addEventListener("click",()=>{selectedWeekKey=btn.dataset.week;render()}));
+      drawWeeklyChart(document.getElementById("weeklyChart"));
 
       const save=document.getElementById("saveNote");
       if(save) save.onclick=()=>{
@@ -1319,7 +1313,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       const saveGoal=document.getElementById("saveGoal");
       if(saveGoal)saveGoal.onclick=()=>{
         let v;
-        if(goalSelect.value===""){showToast("Choose a goal first.");return}
         if(goalSelect.value==="custom"){
           v=Math.round(Number(goalCustom.value));
           if(!v||v<1){showToast("Enter a valid number of days.");return}
@@ -1327,10 +1320,16 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         localStorage.setItem(GOAL_KEY,String(v));showToast(`✓ ${v}-day goal set.`);render();
       };
 
-      document.getElementById("noteSearchBtn")?.addEventListener("click",()=>{noteSearchOpen=!noteSearchOpen;notesMenuOpen=false;render();setTimeout(()=>document.getElementById("noteSearch")?.focus(),50)});
-      document.getElementById("noteMoreBtn")?.addEventListener("click",()=>{notesMenuOpen=!notesMenuOpen;noteSearchOpen=false;render()});
       const noteSearch=document.getElementById("noteSearch");
-      if(noteSearch){noteSearch.addEventListener("input",()=>{noteSearchQuery=noteSearch.value;const cursor=noteSearch.selectionStart;render();const again=document.getElementById("noteSearch");if(again){again.focus();again.setSelectionRange(cursor,cursor)}})}
+      if(noteSearch){
+        noteSearch.addEventListener("input",()=>{
+          noteSearchQuery=noteSearch.value;
+          const cursor=noteSearch.selectionStart;
+          render();
+          const again=document.getElementById("noteSearch");
+          if(again){again.focus();again.setSelectionRange(cursor,cursor)}
+        });
+      }
       document.querySelectorAll("[data-note-edit]").forEach(btn=>btn.addEventListener("click",()=>{
         editingNoteKey=btn.dataset.noteEdit;
         render();
@@ -1349,7 +1348,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     if(phaseView==="awards"){
       document.getElementById("shareProgressBtn")?.addEventListener("click",shareProgress);
       document.getElementById("exportAwards")?.addEventListener("click",exportData);
-      document.querySelectorAll("[data-badge-day]").forEach(btn=>btn.addEventListener("click",()=>{const target=Number(btn.dataset.badgeDay);showToast(target<=day?"🏆 Achievement unlocked!":"Keep going — "+Math.max(0,target-day)+" days to unlock this badge.")}));
     }
 
     if(phaseView==="profile"){
@@ -1376,7 +1374,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
         const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device. This cannot be undone.");
         if(ok){
-          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,PLAN_KEY].forEach(remove);
+          [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
           sessionStorage.removeItem("hayger_unlocked");
           location.reload();
         }
@@ -1485,7 +1483,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     document.getElementById("lockResetLink")?.addEventListener("click",async()=>{
       const ok=await askConfirm("Reset all HAYGER data?","This permanently removes your check-ins, notes, goals and settings from this device — including the PIN. This cannot be undone.");
       if(ok){
-        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY,PROFILE_KEY,HABITS_KEY,PLAN_KEY].forEach(remove);
+        [START_KEY,CHECKINS_KEY,NOTES_KEY,GOAL_KEY,REMINDER_KEY,THEME_KEY,PIN_KEY].forEach(remove);
         sessionStorage.removeItem("hayger_unlocked");
         location.reload();
       }
@@ -1573,6 +1571,26 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   render();
 })();
 </script>
+<script id="hayger-note-actions-js">
+(()=>{const candidates=["hayger_notes","hayger_notes_v1","notes","haygerNotes"];function key(){return candidates.find(k=>localStorage.getItem(k)!=null)||"hayger_notes_v1"}
+function read(){try{const x=JSON.parse(localStorage.getItem(key())||"[]");return Array.isArray(x)?x:[]}catch(e){return[]}}
+function write(x){localStorage.setItem(key(),JSON.stringify(x))}
+window.HAYGER_NOTES={edit(i,text){const a=read();if(!a[i])return;a[i]=typeof a[i]==="string"?text:{...a[i],text};write(a);location.reload()},remove(i){const a=read();if(!a[i])return;if(confirm("Delete this note?")){a.splice(i,1);write(a);location.reload()}}};
+window.addEventListener("load",()=>{
+ document.querySelectorAll("[data-note-index]").forEach((el)=>{
+   const i=Number(el.dataset.noteIndex);if(!Number.isInteger(i))return;
+   if(el.querySelector(".note-actions"))return;
+   const box=document.createElement("div");box.className="note-actions";
+   box.innerHTML='<button type="button" class="note-edit">EDIT</button><button type="button" class="note-delete">DELETE</button>';
+   box.querySelector(".note-edit").onclick=()=>{const a=read(),old=a[i];const oldText=typeof old==="string"?old:(old?.text||"");const n=prompt("Edit note",oldText);if(n!==null&&n.trim())window.HAYGER_NOTES.edit(i,n.trim())};
+   box.querySelector(".note-delete").onclick=()=>window.HAYGER_NOTES.remove(i);
+   el.appendChild(box);
+ });
+});
+})();
+</script>
+
+
 
 </body>
 </html>
