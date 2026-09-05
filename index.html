@@ -415,26 +415,24 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .badge.locked{opacity:.82;background:color-mix(in srgb,var(--accent) 5%,var(--soft));border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent)}.badge.locked .badge-icon{filter:grayscale(.15);opacity:.85}.badge-target{margin-top:3px;color:var(--accent);font-size:7px;font-weight:900}.badge-earned{margin-top:3px;color:#55bd7e;font-size:7px;font-weight:900}.badge.unlocked{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 12%,transparent)}
 @media(max-width:390px){.activity-grid{gap:5px}.week-card{min-width:82px}.week-days{gap:3px}}
 
-/* HAYGER Premium visual system */
-:root{--accent:#9b6b32;--accent-soft:rgba(155,107,50,.14);--bg:#f5f3ef;--surface:#fffdf9;--soft:#eeebe4;--soft2:#e3ded4;--line:#e2ddd4;--shadow:0 18px 50px rgba(45,35,22,.08)}
-[data-theme=dark]{--bg:#0d0f12;--surface:#171a1f;--soft:#20242b;--soft2:#2a3038;--line:#303640;--accent:#e5b66a;--accent-soft:rgba(229,182,106,.15);--shadow:0 24px 70px rgba(0,0,0,.4)}
-body{letter-spacing:-.01em}
-.app-header{padding-left:22px;padding-right:22px;background:color-mix(in srgb,var(--surface) 72%,transparent);backdrop-filter:blur(18px);border-bottom-color:color-mix(in srgb,var(--line) 70%,transparent)}
-.brand{font-size:22px;letter-spacing:2px}.brand-sub{font-size:9px;letter-spacing:2px}
-.app-scroll{padding:24px 18px 30px}.container{max-width:520px}
-.hero-panel{padding:18px 4px 8px}.hero-date{font-size:14px}.hero-tag{background:var(--accent-soft);border-color:transparent;color:var(--accent)}
-.ring-wrap{width:218px;height:218px}.ring-track{stroke:var(--soft2);stroke-width:8}.ring-fill{stroke-width:8}
-.ring-label{letter-spacing:2.8px}.ring-number{font-size:clamp(58px,17vw,82px)}
-.message{margin-top:22px;padding:17px 16px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--shadow);border-radius:20px}
-.checkin{padding:19px;border-radius:22px;box-shadow:var(--shadow);background:var(--surface)}
-.checkin-button{min-height:54px;border-radius:16px;background:var(--primary);color:var(--primaryText);border-color:transparent}
-.checkin-button.done{background:var(--accent);color:#fff}
-.stats-grid{gap:10px}.stat-card{border-radius:18px!important;padding:15px!important;background:var(--surface)!important;box-shadow:0 8px 24px rgba(0,0,0,.035)}
-.card,.panel,.list-card{border-radius:22px!important;box-shadow:var(--shadow)}
-.button{min-height:54px;border-radius:16px}.primary{background:var(--primary)}.secondary{border:1px solid var(--line)}
-.app-tabbar{padding-top:10px;background:color-mix(in srgb,var(--surface) 92%,transparent)}.tab-btn{min-height:48px;border-radius:16px}.tab-btn.active{background:var(--accent-soft)}
-input,textarea,select,.date-input{border-radius:16px!important}
-@media(min-width:520px){.app-scroll{padding-left:24px;padding-right:24px}.hero-panel{padding-top:24px}}
+/* HAYGER Premium Refresh */
+:root{--accent:#6d5dfc;--accent2:#8b7cff;--soft:color-mix(in srgb,var(--accent) 10%,var(--card));--line:color-mix(in srgb,var(--text) 13%,transparent);}
+body{background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34%),var(--bg);letter-spacing:.01em}
+.app-shell{max-width:760px;margin:0 auto;padding:18px 14px 96px}
+.app-header{background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 12px 36px color-mix(in srgb,#000 12%,transparent);border-radius:24px;padding:16px 18px;position:sticky;top:10px;z-index:5}
+.app-header h1{font-size:clamp(25px,7vw,36px);letter-spacing:-.045em}
+.container{animation:premiumIn .35s ease both}
+.section-title{font-size:clamp(24px,6vw,32px);letter-spacing:-.04em;margin-bottom:16px}
+.card,.panel,.stat-card,.goal-card,.award-card{border:1px solid var(--line);border-radius:22px!important;box-shadow:0 10px 28px color-mix(in srgb,#000 8%,transparent);background:var(--card)}
+button,.btn{border-radius:14px!important;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+button:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px color-mix(in srgb,var(--accent) 20%,transparent)}
+input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!important;background:var(--soft)!important}
+.app-tabbar{background:color-mix(in srgb,var(--card) 92%,transparent)!important;backdrop-filter:blur(18px);border:1px solid var(--line)!important;border-radius:24px!important;box-shadow:0 12px 34px color-mix(in srgb,#000 14%,transparent);padding:8px!important}
+.tab.active{background:var(--accent)!important;color:#fff!important;border-radius:15px!important}
+.progress-ring{filter:drop-shadow(0 8px 16px color-mix(in srgb,var(--accent) 22%,transparent))}
+@keyframes premiumIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(max-width:520px){.app-shell{padding:10px 10px 88px}.app-header{top:6px;border-radius:20px;padding:13px}.app-tabbar{left:8px!important;right:8px!important;bottom:8px!important}.card,.panel,.stat-card,.goal-card,.award-card{border-radius:18px!important}}
 </style>
 
 
