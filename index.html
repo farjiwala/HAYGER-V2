@@ -414,6 +414,17 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .switch{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;width:46px;height:26px}.switch input{position:absolute;opacity:0;width:0;height:0}.switch span{position:absolute;inset:0;border:1px solid var(--line);border-radius:999px;background:var(--soft2);transition:.2s}.switch span:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--text);transition:.2s;box-shadow:0 2px 5px rgba(0,0,0,.18)}.switch input:checked+span{background:var(--accent);border-color:var(--accent)}.switch input:checked+span:after{transform:translateX(20px);background:#1b1306}.switch input:focus-visible+span{box-shadow:0 0 0 3px var(--accent-soft)}
 .badge.locked{opacity:.82;background:color-mix(in srgb,var(--accent) 5%,var(--soft));border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent)}.badge.locked .badge-icon{filter:grayscale(.15);opacity:.85}.badge-target{margin-top:3px;color:var(--accent);font-size:7px;font-weight:900}.badge-earned{margin-top:3px;color:#55bd7e;font-size:7px;font-weight:900}.badge.unlocked{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 12%,transparent)}
 @media(max-width:390px){.activity-grid{gap:5px}.week-card{min-width:82px}.week-days{gap:3px}}
+
+/* HAYGER premium polish v2.1 — visual-only, theme-safe enhancements */
+:root{--radius-card:24px}
+.app-header{background:color-mix(in srgb,var(--surface) 86%,transparent);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);position:sticky;top:0;z-index:30}
+.app-scroll{scroll-behavior:smooth}
+.card,.panel,.stat-card,.section-card,.checkin{border-radius:var(--radius-card)!important;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.card:hover,.panel:hover,.stat-card:hover,.section-card:hover{transform:translateY(-2px);box-shadow:0 14px 34px color-mix(in srgb,var(--text) 9%,transparent)}
+.button,.tab-btn,.theme-button,input,textarea,select{transition:all .2s ease}
+.button:focus-visible,.tab-btn:focus-visible,.theme-button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible{outline:3px solid var(--accent-soft);outline-offset:3px}
+@media(max-width:520px){.app-scroll{padding-left:16px;padding-right:16px}.ring-wrap{width:min(198px,68vw);height:min(198px,68vw)}.checkin{padding:15px}.modal{border-radius:24px 24px 0 0}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 </style>
 
 
@@ -467,7 +478,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     </div>
   </section>
 </div>
- 
+
 <div id="updateBanner" class="update-banner" role="status" aria-live="polite">
   <div class="update-icon" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -1213,7 +1224,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           const img=await new Promise((resolve,reject)=>{const x=new Image();x.onload=()=>resolve(x);x.onerror=reject;x.src=URL.createObjectURL(file)});
           const max=512,scale=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas");c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
           const p=profileData();p.image=c.toDataURL("image/jpeg",.82);p.updatedAt=new Date().toISOString();writeJSON(PROFILE_KEY,p);render();showToast("✓ Profile photo updated.");
-                  }catch{showToast("Couldn't use that image.")}
+        }catch{showToast("Couldn't use that image.")}
       });
     }
 
