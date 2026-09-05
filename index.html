@@ -433,6 +433,8 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
 @keyframes premiumIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 @media(max-width:520px){.app-shell{padding:10px 10px 88px}.app-header{top:6px;border-radius:20px;padding:13px}.app-tabbar{left:8px!important;right:8px!important;bottom:8px!important}.card,.panel,.stat-card,.goal-card,.award-card{border-radius:18px!important}}
+
+.quick-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick-insight{padding:14px;border:1px solid var(--border);border-radius:18px;background:var(--card);display:flex;flex-direction:column;gap:4px}.quick-insight-label{font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:700}.quick-insight strong{font-size:24px;line-height:1.1}.quick-insight small{font-size:11px;color:var(--muted)}@media(max-width:520px){.quick-insights{grid-template-columns:1fr 1fr}.quick-insight:last-child{grid-column:span 2}}
 </style>
 
 
@@ -1160,6 +1162,7 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
+      <div class="quick-insights" style="margin-top:14px"><div class="quick-insight"><span class="quick-insight-label">THIS WEEK</span><strong>${weeklyCounts(1)[0]||0}/7</strong><small>days checked in</small></div><div class="quick-insight"><span class="quick-insight-label">BEST STREAK</span><strong>${streakStats().best}</strong><small>days so far</small></div><div class="quick-insight"><span class="quick-insight-label">NEXT STEP</span><strong>${remaining||0}</strong><small>${remaining===1?'day':'days'} to milestone</small></div></div>
     </div>`;
   }
 
