@@ -531,6 +531,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function remove(k){try{localStorage.removeItem(k)}catch{}}
   function readJSON(k,f){try{const v=localStorage.getItem(k);return v?JSON.parse(v):f}catch{return f}}
   function writeJSON(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true}catch{return false}}
+  function persistJSON(k,v,message){
+    if(writeJSON(k,v)) return true;
+    showToast(message||"Couldn't save your changes on this device.");
+    return false;
+  }
   function checkins(){return readJSON(CHECKINS_KEY,{})}
   function notes(){return readJSON(NOTES_KEY,{})}
   function goal(){return Number(get(GOAL_KEY)||0)}
@@ -593,7 +598,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   }
   function pinRecord(){return readJSON(PIN_KEY,null)}
   async function setPin(pin){
-    writeJSON(PIN_KEY,{hash:await sha256Hex(pin)});
+    return writeJSON(PIN_KEY,{hash:await sha256Hex(pin)});
   }
   async function verifyPin(pin){
     const rec=pinRecord();
@@ -859,7 +864,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
   function cycleTheme(){
     const t=theme();
     const next=t==="system"?"light":t==="light"?"dark":"system";
-    set(THEME_KEY,next);
+    if(!set(THEME_KEY,next)){showToast("Couldn't save the theme preference.");return}
     applyTheme();
     render();
   }
@@ -964,10 +969,11 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 
   function activityDays(limit=50){
     const start=parseDate(get(START_KEY)); if(!start) return [];
-    const data=checkins(), out=[];
-    for(let i=0;i<limit;i++){
-      const d=new Date(start);d.setDate(d.getDate()+i);
-      if(d>today()) break;
+    const end=today(), data=checkins(), out=[];
+    const elapsed=Math.max(0,Math.floor((end-start)/86400000)+1);
+    const firstOffset=Math.max(0,elapsed-limit);
+    for(let i=firstOffset;i<elapsed;i++){
+      const d=new Date(start); d.setDate(d.getDate()+i);
       out.push({date:d,status:statusForDate(d,start,data)});
     }
     return out;
@@ -1040,7 +1046,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     return `<div class="container"><div class="profile-hero"><button id="profilePhotoButton" class="profile-avatar${profile.image?" has-image":""}" type="button" aria-label="Change profile photo">${avatar}</button><div class="profile-main"><div class="profile-kicker">YOUR PROFILE</div><h2>${savedName?escapeHTML(savedName):"Set up your profile"}</h2><span>Personalize your HAYGER experience</span><div class="profile-photo-actions"><button id="changeProfilePhoto" type="button">${profile.image?"EDIT PHOTO":"SET PROFILE PHOTO"}</button>${profile.image?`<button id="removeProfilePhoto" type="button">REMOVE</button>`:""}</div></div></div><input id="profileImageInput" class="file-input" type="file" accept="image/*">
       <div class="settings-card" style="margin-top:10px"><div class="setting-title">PROFILE DETAILS</div><div class="profile-form"><label><span>NAME</span><input id="profileName" maxlength="40" value="${escapeHTML(savedName)}" placeholder="Your name"></label><label><span>AGE</span><input id="profileAge" type="number" min="1" max="120" inputmode="numeric" value="${escapeHTML(profile.age||"")}" placeholder="Age"></label><label><span>GENDER</span><select id="profileGender"><option value="">Prefer not to say</option><option value="Male" ${profile.gender==="Male"?"selected":""}>Male</option><option value="Female" ${profile.gender==="Female"?"selected":""}>Female</option><option value="Other" ${profile.gender==="Other"?"selected":""}>Other</option></select></label></div><button id="saveProfile" class="small-button profile-save" type="button">SAVE PROFILE</button></div>
       <h3 class="profile-settings-heading">SETTINGS</h3><div class="settings-card"><div class="setting-row"><div class="setting-copy"><b>Change start date</b><span>Recalculate your Day count from a new date.</span></div><button id="changeDate" class="small-button" type="button">CHANGE</button></div></div>
-      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Daily reminder</b><span>Optional reminder while HAYGER is open.</span></div><label class="switch"><input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}><span></span></label></div><div class="setting-row"><div class="setting-copy"><b>Reminder time</b><span>Notification permission may be required.</span></div><input id="reminderTime" class="time-input" type="time" value="${escapeHTML(r.time||"20:00")}"></div><div id="reminderStatus" class="reminder-status"></div></div>
+      <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Daily reminder</b><span>Reminds you while HAYGER is open; background delivery depends on browser support.</span></div><label class="switch"><input id="reminderEnabled" type="checkbox" ${r.enabled?"checked":""}><span></span></label></div><div class="setting-row"><div class="setting-copy"><b>Reminder time</b><span>Notification permission may be required.</span></div><input id="reminderTime" class="time-input" type="time" value="${escapeHTML(r.time||"20:00")}"></div><div id="reminderStatus" class="reminder-status"></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Backup your HAYGER data</b><span>Export your start date, profile, check-ins, notes and settings.</span></div><button id="exportData" class="small-button" type="button">EXPORT</button></div><div class="setting-row"><div class="setting-copy"><b>Restore a backup</b><span>Import a HAYGER JSON backup from this device.</span></div><button id="importData" class="small-button" type="button">IMPORT</button><input id="importFile" class="file-input" type="file" accept="application/json,.json"></div></div>
       <div class="settings-card" style="margin-top:10px"><div class="setting-row"><div class="setting-copy"><b>Appearance</b><span>Current theme: ${escapeHTML(theme())}</span></div><button id="cycleThemeMore" class="small-button" type="button">CHANGE</button></div><div class="setting-row"><div class="setting-copy"><b>App lock (PIN)</b><span>Require a 4-digit PIN to open HAYGER.</span></div><label class="switch"><input id="pinToggle" type="checkbox" ${(pinEnabled()||pinSetupOpen)?"checked":""}><span></span></label></div></div>
       ${pinSetupOpen?`<div class="pin-setup-card" style="margin-top:10px"><div class="setting-copy"><b>Set a 4-digit PIN</b><span>You'll need this every time you open HAYGER.</span></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-new" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div class="setting-copy" style="margin-top:12px"><b>Confirm PIN</b></div><div class="pin-setup-row">${[0,1,2,3].map(i=>`<input class="pin-box pin-confirm" data-i="${i}" type="password" inputmode="numeric" maxlength="1" pattern="[0-9]*">`).join("")}</div><div id="pinSetupError" class="pin-error"></div><div class="goal-controls" style="margin-top:6px"><button id="pinSetupCancel" class="small-button" type="button">CANCEL</button><button id="pinSetupSave" class="small-button" type="button">SAVE PIN</button></div></div>`:""}
@@ -1196,7 +1202,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           return;
         }
         d[key]={day,at:new Date().toISOString()};
-        writeJSON(CHECKINS_KEY,d);
+        if(!persistJSON(CHECKINS_KEY,d,"Couldn't save today's check-in. Your storage may be full.")) return;
         render();
         showToast("✓ Checked in for today.");
         if(JOURNEY_BADGES.some(b=>b.day===day)){
@@ -1209,8 +1215,9 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         btn.addEventListener("click",()=>{
           const d=checkins();
           if(!d[key]) return;
-          d[key].mood=d[key].mood===btn.dataset.mood?undefined:btn.dataset.mood;
-          writeJSON(CHECKINS_KEY,d);
+          const previous=d[key].mood;
+          if(previous===btn.dataset.mood) delete d[key].mood; else d[key].mood=btn.dataset.mood;
+          if(!persistJSON(CHECKINS_KEY,d,"Couldn't save your mood.")){if(previous===undefined) delete d[key].mood; else d[key].mood=previous;return}
           render();
         });
       });
@@ -1271,7 +1278,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         const n=notes(), value=document.getElementById("dailyNote").value.trim(), key=editingNoteKey||toInputDate(today());
         if(!value){showToast("Write something before saving.");return;}
         n[key]=value;
-        writeJSON(NOTES_KEY,n);
+        if(!persistJSON(NOTES_KEY,n,"Couldn't save your note. Your storage may be full.")) return;
         showToast(editingNoteKey?"✓ Note updated.":"✓ Today's note saved.");
         editingNoteKey=null;
         render();
@@ -1292,7 +1299,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           v=Math.round(Number(goalCustom.value));
           if(!v||v<1){showToast("Enter a valid number of days.");return}
         }else v=Number(goalSelect.value);
-        localStorage.setItem(GOAL_KEY,String(v));showToast(`✓ ${v}-day goal set.`);render();
+        if(!set(GOAL_KEY,String(v))){showToast("Couldn't save your goal on this device.");return}
+        showToast(`✓ ${v}-day goal set.`);render();
       };
 
       document.getElementById("noteSearchBtn")?.addEventListener("click",()=>{noteSearchOpen=!noteSearchOpen;notesMenuOpen=false;render();setTimeout(()=>document.getElementById("noteSearch")?.focus(),50)});
@@ -1308,7 +1316,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
         const key=btn.dataset.noteDelete, map=notes();
         if(!map[key]) return;
         askConfirm("Delete note?","This note will be permanently removed.").then(ok=>{
-          if(ok){delete map[key];writeJSON(NOTES_KEY,map);render();showToast("✓ Note deleted.")}
+          if(ok){delete map[key];if(!persistJSON(NOTES_KEY,map,"Couldn't delete the note.")) return;render();showToast("✓ Note deleted.")}
         });
       }));
 
@@ -1389,7 +1397,7 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
           const confirmPin=confirmBoxes.map(b=>b.value).join("");
           if(pin.length!==4){err.textContent="Enter all 4 digits.";return}
           if(pin!==confirmPin){err.textContent="PINs don't match.";return}
-          await setPin(pin);
+          if(!(await setPin(pin))){err.textContent="Couldn't save the PIN on this device.";return}
           pinSetupOpen=false;
           sessionStorage.setItem("hayger_unlocked","1");
           unlocked=true;
@@ -1493,6 +1501,8 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
     if(!set(START_KEY,value)){if(error) error.textContent="Couldn't save the new start date on this device.";return}
     closeModal();
     phaseView="home";
+    selectedWeekKey=null;
+    calendarCursor=new Date(today().getFullYear(),today().getMonth(),1);
     render();
     showToast("✓ Start date updated. Existing history was kept.");
   });
