@@ -44,3 +44,15 @@ history with Checked/Missed/Upcoming states; tappable weekly Stats; note
 search/menu/edit/delete; simplified Awards with highlighted badge states
 and image sharing; profile photo edit/remove; reminder and PIN toggle
 switches; profile data included in backup/restore.
+
+
+HAYGER ULTRA FINAL POLISH V2.2
+
+Additional fixes in this pass:
+- Change start date now provides an actual date picker instead of silently clearing the challenge data. Existing check-ins and notes are preserved.
+- Check-in statistics now ignore invalid/out-of-challenge dates after a start-date change.
+- Weekly activity rates/counts no longer include future days in the denominator; the current week is measured only against elapsed days.
+- Profile age validation now rejects invalid values outside 1–120.
+- Profile/photo saves report storage failures instead of claiming success.
+- Backup import validates dates, notes, goals, reminders and theme values before applying the backup, and rejects incompatible/corrupt data more gracefully.
+- Service-worker cache version bumped so installed PWAs can receive this build.

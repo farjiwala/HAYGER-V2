@@ -414,27 +414,6 @@ body.has-tabbar .update-banner{bottom:max(86px,calc(78px + env(safe-area-inset-b
 .switch{position:relative;display:inline-flex;align-items:center;flex:0 0 auto;width:46px;height:26px}.switch input{position:absolute;opacity:0;width:0;height:0}.switch span{position:absolute;inset:0;border:1px solid var(--line);border-radius:999px;background:var(--soft2);transition:.2s}.switch span:after{content:"";position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--text);transition:.2s;box-shadow:0 2px 5px rgba(0,0,0,.18)}.switch input:checked+span{background:var(--accent);border-color:var(--accent)}.switch input:checked+span:after{transform:translateX(20px);background:#1b1306}.switch input:focus-visible+span{box-shadow:0 0 0 3px var(--accent-soft)}
 .badge.locked{opacity:.82;background:color-mix(in srgb,var(--accent) 5%,var(--soft));border-color:color-mix(in srgb,var(--accent) 24%,var(--line));box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--accent) 6%,transparent)}.badge.locked .badge-icon{filter:grayscale(.15);opacity:.85}.badge-target{margin-top:3px;color:var(--accent);font-size:7px;font-weight:900}.badge-earned{margin-top:3px;color:#55bd7e;font-size:7px;font-weight:900}.badge.unlocked{background:var(--accent-soft);border-color:var(--accent);box-shadow:0 8px 22px color-mix(in srgb,var(--accent) 12%,transparent)}
 @media(max-width:390px){.activity-grid{gap:5px}.week-card{min-width:82px}.week-days{gap:3px}}
-
-/* HAYGER Premium Refresh */
-:root{--accent:#6d5dfc;--accent2:#8b7cff;--soft:color-mix(in srgb,var(--accent) 10%,var(--card));--line:color-mix(in srgb,var(--text) 13%,transparent);}
-body{background:radial-gradient(circle at 10% 0%,color-mix(in srgb,var(--accent) 12%,transparent),transparent 34%),var(--bg);letter-spacing:.01em}
-.app-shell{max-width:760px;margin:0 auto;padding:18px 14px 96px}
-.app-header{background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(18px);border:1px solid var(--line);box-shadow:0 12px 36px color-mix(in srgb,#000 12%,transparent);border-radius:24px;padding:16px 18px;position:sticky;top:10px;z-index:5}
-.app-header h1{font-size:clamp(25px,7vw,36px);letter-spacing:-.045em}
-.container{animation:premiumIn .35s ease both}
-.section-title{font-size:clamp(24px,6vw,32px);letter-spacing:-.04em;margin-bottom:16px}
-.card,.panel,.stat-card,.goal-card,.award-card{border:1px solid var(--line);border-radius:22px!important;box-shadow:0 10px 28px color-mix(in srgb,#000 8%,transparent);background:var(--card)}
-button,.btn{border-radius:14px!important;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
-button:hover,.btn:hover{transform:translateY(-1px);box-shadow:0 7px 18px color-mix(in srgb,var(--accent) 20%,transparent)}
-input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!important;background:var(--soft)!important}
-.app-tabbar{background:color-mix(in srgb,var(--card) 92%,transparent)!important;backdrop-filter:blur(18px);border:1px solid var(--line)!important;border-radius:24px!important;box-shadow:0 12px 34px color-mix(in srgb,#000 14%,transparent);padding:8px!important}
-.tab.active{background:var(--accent)!important;color:#fff!important;border-radius:15px!important}
-.progress-ring{filter:drop-shadow(0 8px 16px color-mix(in srgb,var(--accent) 22%,transparent))}
-@keyframes premiumIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-@media(max-width:520px){.app-shell{padding:10px 10px 88px}.app-header{top:6px;border-radius:20px;padding:13px}.app-tabbar{left:8px!important;right:8px!important;bottom:8px!important}.card,.panel,.stat-card,.goal-card,.award-card{border-radius:18px!important}}
-
-.quick-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick-insight{padding:14px;border:1px solid var(--border);border-radius:18px;background:var(--card);display:flex;flex-direction:column;gap:4px}.quick-insight-label{font-size:10px;letter-spacing:.12em;color:var(--muted);font-weight:700}.quick-insight strong{font-size:24px;line-height:1.1}.quick-insight small{font-size:11px;color:var(--muted)}@media(max-width:520px){.quick-insights{grid-template-columns:1fr 1fr}.quick-insight:last-child{grid-column:span 2}}
 </style>
 
 
@@ -458,9 +437,14 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
 <canvas id="confettiCanvas" aria-hidden="true"></canvas>
 
 <div id="modal" class="modal-backdrop" aria-hidden="true">
-  <section class="modal" role="dialog" aria-modal="true">
-    <h2>Change start date?</h2>
-    <p>Your current Day count will be recalculated from the new date.</p>
+  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="changeDateTitle">
+    <h2 id="changeDateTitle">Change start date?</h2>
+    <p>Your Day count will be recalculated. Existing check-ins and notes will be kept.</p>
+    <label class="field" style="display:block;margin:0 0 14px">
+      <span class="field-label">New start date</span>
+      <input id="newStartDate" class="date-input" type="date" aria-label="New challenge start date">
+    </label>
+    <div id="changeDateError" class="error" aria-live="polite"></div>
     <div class="modal-actions">
       <button id="cancel" class="button secondary" type="button">Cancel</button>
       <button id="confirm" class="button primary" type="button">Change Date</button>
@@ -560,7 +544,11 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
     return g>0 ? Math.min(100,Math.round(day/g*100)) : 0;
   }
   function completedDays(){
-    return Object.keys(checkins()).filter(k=>checkins()[k]).sort();
+    const start=parseDate(get(START_KEY));
+    return Object.keys(checkins()).filter(k=>{
+      const d=parseDate(k);
+      return !!checkins()[k] && !!d && (!start || (d>=start && d<=today()));
+    }).sort();
   }
   function streakStats(){
     const days=completedDays();
@@ -1030,8 +1018,8 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
     const selected=allWeeks.find(w=>w.key===selectedWeekKey)||allWeeks[allWeeks.length-1];
     const noteMap=notes(),q=noteSearchQuery.trim().toLowerCase();
     const filtered=Object.keys(noteMap).sort().reverse().filter(k=>!q||noteMap[k].toLowerCase().includes(q)).slice(0,50);
-    const weekCards=allWeeks.map((w,i)=>{const rate=Math.round((w.checked/Math.max(1,w.checked+w.missed+w.upcoming))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${Math.max(1,w.checked+w.missed+w.upcoming)}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
-    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed+selected.upcoming))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
+    const weekCards=allWeeks.map((w,i)=>{const elapsed=w.checked+w.missed;const rate=Math.round((w.checked/Math.max(1,elapsed))*100);return `<button class="week-card${w.key===selected?.key?" selected":""}" data-week="${w.key}" type="button"><span>WEEK ${i+1}</span><b>${w.checked}/${elapsed}</b><small>${w.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})}</small><div class="week-mini"><i style="height:${Math.max(8,rate)}%"></i></div></button>`}).join("");
+    const detail=selected?`<div class="week-detail"><div class="week-detail-head"><b>${selected.start.toLocaleDateString(undefined,{month:"short",day:"numeric"})} – ${selected.end.toLocaleDateString(undefined,{month:"short",day:"numeric",year:"numeric"})}</b><strong>${Math.round((selected.checked/Math.max(1,selected.checked+selected.missed))*100)}%</strong></div><div class="week-days">${selected.days.map(d=>`<div class="week-day ${d.status}"><span>${d.date.toLocaleDateString(undefined,{weekday:"short"}).slice(0,3)}</span><b>${d.date.getDate()}</b><i>${d.status==="checked"?"✓":d.status==="missed"?"×":"•"}</i></div>`).join("")}</div><div class="week-totals"><span>✓ ${selected.checked} Checked</span><span>× ${selected.missed} Missed</span><span>• ${selected.upcoming} Upcoming</span></div></div>`:"";
     const noteToolbar=`<div class="notes-toolbar"><div class="notes-toolbar-title">YOUR NOTES</div><div class="notes-toolbar-actions"><button id="noteSearchBtn" class="icon-button" type="button" aria-label="Search notes">⌕</button><button id="noteMoreBtn" class="icon-button" type="button" aria-label="More notes">⋮</button></div></div>`;
     const searchBox=noteSearchOpen?`<input id="noteSearch" class="note-search" type="search" placeholder="Search your notes..." value="${escapeHTML(noteSearchQuery)}">`:"";
     const noteList=filtered.length?`<div class="note-list">${filtered.map(k=>`<div class="note-item"><b>${formatDate(parseDate(k))}</b><p>${escapeHTML(noteMap[k])}</p><div class="note-actions"><button type="button" class="note-edit" data-note-edit="${escapeHTML(k)}">EDIT</button><button type="button" class="note-delete" data-note-delete="${escapeHTML(k)}">DELETE</button></div></div>`).join("")}</div>`:`<div class="note-empty">${q?"No notes match your search.":"No saved notes yet."}</div>`;
@@ -1111,22 +1099,43 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
     reader.onload=()=>{
       try{
         const d=JSON.parse(reader.result);
-        if(d.app!=="HAYGER" || !d.version) throw new Error("Invalid backup");
-        if(d.startDate){
-          const s=parseDate(d.startDate);
-          if(!s || s>today()) throw new Error("Invalid start date");
-          localStorage.setItem(START_KEY,d.startDate);
-        }
-        writeJSON(CHECKINS_KEY,d.checkins&&typeof d.checkins==="object"?d.checkins:{});
-        writeJSON(NOTES_KEY,d.notes&&typeof d.notes==="object"?d.notes:{});
-        if(d.profile&&typeof d.profile==="object") writeJSON(PROFILE_KEY,d.profile);
-        if(Number(d.goal)>0) localStorage.setItem(GOAL_KEY,String(Number(d.goal)));
-        else remove(GOAL_KEY);
-        if(d.reminder&&typeof d.reminder==="object") writeJSON(REMINDER_KEY,{enabled:!!d.reminder.enabled,time:d.reminder.time||"20:00"});
-        if(["system","light","dark"].includes(d.theme)) localStorage.setItem(THEME_KEY,d.theme);
+        if(!d || d.app!=="HAYGER" || Number(d.version)!==1) throw new Error("Invalid backup");
+        const startDate=d.startDate===null||d.startDate===undefined?null:parseDate(d.startDate);
+        if(d.startDate && (!startDate || startDate>today())) throw new Error("Invalid start date");
+        const validMap=(value,kind)=>{
+          if(value===undefined||value===null) return {};
+          if(typeof value!=="object"||Array.isArray(value)) throw new Error(`Invalid ${kind}`);
+          for(const [k,v] of Object.entries(value)){
+            if(!parseDate(k)) throw new Error(`Invalid ${kind} date`);
+            if(kind==="check-ins" && !v) delete value[k];
+            if(kind==="notes" && typeof v!=="string") throw new Error("Invalid note");
+            if(kind==="notes" && v.length>500) throw new Error("Note too long");
+          }
+          return value;
+        };
+        const importedCheckins=validMap(structuredClone(d.checkins||{}),"check-ins");
+        const importedNotes=validMap(structuredClone(d.notes||{}),"notes");
+        const profile=d.profile&&typeof d.profile==="object"&&!Array.isArray(d.profile)?d.profile:{};
+        if(profile.name!==undefined && typeof profile.name!=="string") throw new Error("Invalid profile");
+        const goalValue=Number(d.goal||0);
+        if(!Number.isFinite(goalValue)||goalValue<0||goalValue>9999||!Number.isInteger(goalValue)) throw new Error("Invalid goal");
+        const reminderValue=d.reminder&&typeof d.reminder==="object"&&!Array.isArray(d.reminder)?d.reminder:{enabled:false,time:"20:00"};
+        if(reminderValue.time && !/^\d{2}:\d{2}$/.test(reminderValue.time)) throw new Error("Invalid reminder");
+        if(reminderValue.time){const [h,m]=reminderValue.time.split(":").map(Number);if(h>23||m>59) throw new Error("Invalid reminder")}
+        if(d.theme!==undefined && !["system","light","dark"].includes(d.theme)) throw new Error("Invalid theme");
+
+        const writes=[];
+        if(d.startDate===null||d.startDate===undefined) writes.push(()=>remove(START_KEY)); else writes.push(()=>set(START_KEY,d.startDate));
+        writes.push(()=>writeJSON(CHECKINS_KEY,importedCheckins));
+        writes.push(()=>writeJSON(NOTES_KEY,importedNotes));
+        writes.push(()=>writeJSON(PROFILE_KEY,profile));
+        writes.push(()=>goalValue>0?set(GOAL_KEY,String(goalValue)):remove(GOAL_KEY));
+        writes.push(()=>writeJSON(REMINDER_KEY,{enabled:!!reminderValue.enabled,time:reminderValue.time||"20:00"}));
+        if(d.theme!==undefined) writes.push(()=>set(THEME_KEY,d.theme));
+        if(writes.some(fn=>fn()===false)) throw new Error("Storage error");
         showToast("✓ Backup restored.");
         setTimeout(render,300);
-      }catch{showToast("Backup file is not valid.");}
+      }catch{showToast("Backup file is not valid or is incompatible.");}
     };
     reader.readAsText(file);
   }
@@ -1162,7 +1171,6 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
       </div>
       <div class="milestone" style="margin-top:16px">${remaining===0?`<strong>🏆 Day ${day} milestone reached.</strong>`:`Next milestone: <strong>Day ${next}</strong> · ${remaining} ${remaining===1?"day":"days"} to go`}</div>
       ${g?`<div class="goal-card" style="margin-top:14px"><div class="goal-row"><div class="goal-title">Your goal</div><div class="goal-value">${day} / ${g} days</div></div><div class="progress-track"><div class="progress-fill" style="width:${challengeProgress(day)}%"></div></div></div>`:""}
-      <div class="quick-insights" style="margin-top:14px"><div class="quick-insight"><span class="quick-insight-label">THIS WEEK</span><strong>${weeklyCounts(1)[0]||0}/7</strong><small>days checked in</small></div><div class="quick-insight"><span class="quick-insight-label">BEST STREAK</span><strong>${streakStats().best}</strong><small>days so far</small></div><div class="quick-insight"><span class="quick-insight-label">NEXT STEP</span><strong>${remaining||0}</strong><small>${remaining===1?'day':'days'} to milestone</small></div></div>
     </div>`;
   }
 
@@ -1214,9 +1222,10 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
         const age=(document.getElementById("profileAge")?.value||"").trim();
         const gender=document.getElementById("profileGender")?.value||"";
         if(!name){showToast("Please enter your name.");return}
+        if(age && (!/^\d+$/.test(age) || Number(age)<1 || Number(age)>120)){showToast("Enter an age between 1 and 120.");return}
         const current=profileData();
         const data={...current,name,age,gender,updatedAt:new Date().toISOString()};
-        localStorage.setItem(PROFILE_KEY,JSON.stringify(data));
+        if(!writeJSON(PROFILE_KEY,data)){showToast("Couldn't save your profile on this device.");return}
         localStorage.setItem("hayger_profile_name_v1",name);
         showToast("✓ Profile saved.");
         render();
@@ -1232,9 +1241,13 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
         const file=e.target.files?.[0]; if(!file) return;
         if(!file.type.startsWith("image/")){showToast("Choose an image file.");return}
         try{
-          const img=await new Promise((resolve,reject)=>{const x=new Image();x.onload=()=>resolve(x);x.onerror=reject;x.src=URL.createObjectURL(file)});
+          const objectUrl=URL.createObjectURL(file);
+          const img=await new Promise((resolve,reject)=>{const x=new Image();x.onload=()=>resolve(x);x.onerror=reject;x.src=objectUrl});
           const max=512,scale=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas");c.width=Math.round(img.width*scale);c.height=Math.round(img.height*scale);c.getContext("2d").drawImage(img,0,0,c.width,c.height);
-          const p=profileData();p.image=c.toDataURL("image/jpeg",.82);p.updatedAt=new Date().toISOString();writeJSON(PROFILE_KEY,p);render();showToast("✓ Profile photo updated.");
+          const p=profileData();p.image=c.toDataURL("image/jpeg",.82);p.updatedAt=new Date().toISOString();
+          if(!writeJSON(PROFILE_KEY,p)){showToast("Couldn't save that photo. Storage may be full.");return}
+          URL.revokeObjectURL(objectUrl);
+          render();showToast("✓ Profile photo updated.");
         }catch{showToast("Couldn't use that image.")}
       });
     }
@@ -1325,7 +1338,9 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
       document.getElementById("exportData")?.addEventListener("click",exportData);
       document.getElementById("importData")?.addEventListener("click",()=>document.getElementById("importFile")?.click());
       document.getElementById("importFile")?.addEventListener("change",e=>{
-        const file=e.target.files?.[0];if(file)importData(file);
+        const file=e.target.files?.[0];
+        if(file) importData(file);
+        e.target.value="";
       });
       document.getElementById("cycleThemeMore")?.addEventListener("click",cycleTheme);
       document.getElementById("resetAll")?.addEventListener("click",async()=>{
@@ -1452,7 +1467,15 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
     applyTheme();challenge();
   }
 
-  function openModal(){modal.classList.add("open");modal.setAttribute("aria-hidden","false")}
+  function openModal(){
+    const input=document.getElementById("newStartDate");
+    const error=document.getElementById("changeDateError");
+    if(input) input.value=get(START_KEY)||toInputDate(today());
+    if(input) input.max=toInputDate(today());
+    if(error) error.textContent="";
+    modal.classList.add("open");modal.setAttribute("aria-hidden","false");
+    setTimeout(()=>input?.focus(),50);
+  }
   function closeModal(){modal.classList.remove("open");modal.setAttribute("aria-hidden","true")}
   function showToast(text){
     clearTimeout(toastTimer);toast.textContent=text;toast.classList.add("show");
@@ -1460,7 +1483,19 @@ input,textarea,select{border-radius:14px!important;border:1px solid var(--line)!
   }
 
   document.getElementById("cancel").addEventListener("click",closeModal);
-  document.getElementById("confirm").addEventListener("click",()=>{remove(START_KEY);remove(CHECKINS_KEY);remove(NOTES_KEY);remove(GOAL_KEY);remove(REMINDER_KEY);closeModal();render()});
+  document.getElementById("confirm").addEventListener("click",()=>{
+    const input=document.getElementById("newStartDate");
+    const error=document.getElementById("changeDateError");
+    const value=input?.value||"";
+    const selected=parseDate(value);
+    if(!selected){if(error) error.textContent="Please choose a valid start date.";return}
+    if(selected>today()){if(error) error.textContent="The start date cannot be in the future.";return}
+    if(!set(START_KEY,value)){if(error) error.textContent="Couldn't save the new start date on this device.";return}
+    closeModal();
+    phaseView="home";
+    render();
+    showToast("✓ Start date updated. Existing history was kept.");
+  });
   modal.addEventListener("click",e=>{if(e.target===modal)closeModal()});
   document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModal();closeDayDetail();}});
 
